@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarestudiantes</from-outcome>
+            <to-view-id>/administrarestudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarestudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarestudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrardocentes</from-outcome>
+            <to-view-id>/administrardocentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrardocentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrardocentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrarestudiantes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesestudiante</from-outcome>
+            <to-view-id>/detallesestudiante.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesestudiante.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarestudiantes</from-outcome>
+            <to-view-id>/administrarestudiantes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesestudiante.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrardocentes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesdocente</from-outcome>
+            <to-view-id>/detallesdocente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesdocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrardocentes</from-outcome>
+            <to-view-id>/administrardocentes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesdocente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+
+</faces-config>

@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE ESTUDIANTES</strong></legend>
+
+
+                            <strong><h:outputText value="Nombres Estudiante:" style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerAdministrarEstudiantes.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Apellidos Estudiante:" style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroApellido" value="#{controllerAdministrarEstudiantes.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Doc. Identificación:" style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDocumento" value="#{controllerAdministrarEstudiantes.parametroDocumento}" maxlength="20" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Electronico:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCorreo" value="#{controllerAdministrarEstudiantes.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Estado Estudiante:" style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEstado" value="#{controllerAdministrarEstudiantes.parametroEstado}" disabled="#{controllerAdministrarEstudiantes.todosEstudiantes}" style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 100px">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="TODOS ESTUDIANTES" style="position: absolute; left: 305px; top: 162px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectBooleanCheckbox value="#{controllerAdministrarEstudiantes.todosEstudiantes}" style="position: absolute; left: 440px; top: 159px;" >
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEstudiantes.modificacionTodosEstudiantes}"/>
+                            </p:selectBooleanCheckbox>
+
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <strong><h:outputText value="Departamento:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroDepartamento" value="#{controllerAdministrarEstudiantes.parametroDepartamento}" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEstudiantes.listaDepartamentos}" var="departamentos"
+                                               itemLabel="#{departamentos.nombredepartamento}" itemValue="#{departamentos}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEstudiantes.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Carrera:" style="position: absolute; left: 600px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroCarrera" disabled="#{controllerAdministrarEstudiantes.activoCarrera}" value="#{controllerAdministrarEstudiantes.parametroCarrera}" style="position: absolute; left: 770px; top: 65px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEstudiantes.listaCarreras}" var="carreras"
+                                               itemLabel="#{carreras.nombrecarrera}" itemValue="#{carreras}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEstudiantes.actualizarCarreras()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Plan de Estudio:" style="position: absolute; left: 600px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroPlanEst" disabled="#{controllerAdministrarEstudiantes.activoPlan}" value="#{controllerAdministrarEstudiantes.parametroPlanEst}" style="position: absolute; left: 770px; top: 95px; text-transform: uppercase; width: 200px">
+                                <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEstudiantes.listaPlanesEstudios}" var="plan"
+                                               itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Número Semestre:" style="position: absolute; left: 600px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroSemestre" value="#{controllerAdministrarEstudiantes.parametroSemestre}" maxlength="20" style="position: absolute; left: 770px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerAdministrarEstudiantes.buscarEstudiantesPorParametros()}" update="panelMenu"/>
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoEstudiante" rowKey="#{infoEstudiante.idestudiante}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerAdministrarEstudiantes.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerAdministrarEstudiantes.listaEstudiantes}"
+                                         filteredValue="#{controllerAdministrarEstudiantes.filtrarListaEstudiantes}"
+                                         >
+
+                                <p:column  headerText="Número Identificación"  
+                                           filterMatchMode="contains" id="numeroIDTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.persona.identificacionpersona}" sortBy="#{infoEstudiante.persona.identificacionpersona}"
+                                           >  
+                                    <h:outputText value="#{infoEstudiante.persona.identificacionpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombres"  
+                                           filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.persona.nombrespersona}" sortBy="#{infoEstudiante.persona.nombrespersona}">
+                                    <h:outputText value="#{infoEstudiante.persona.nombrespersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Apellidos"  
+                                           filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.persona.identificacionpersona}" sortBy="#{infoEstudiante.persona.identificacionpersona}">
+                                    <h:outputText value="#{infoEstudiante.persona.apellidospersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Correo Electronico"  
+                                           filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.persona.emailpersona}" sortBy="#{infoEstudiante.persona.emailpersona}">
+                                    <h:outputText value="#{infoEstudiante.persona.emailpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}" sortBy="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}">
+                                    <h:outputText value="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Carrera"  
+                                           filterMatchMode="contains" id="carreraTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEstudiante.planestudio.carrera.nombrecarrera}" sortBy="#{infoEstudiante.planestudio.carrera.nombrecarrera}">
+                                    <h:outputText value="#{infoEstudiante.planestudio.carrera.nombrecarrera}"/>
+                                </p:column>
+
+                                <p:column  headerText="Plan de Estudios"  
+                                           filterMatchMode="contains" id="planEstTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="200"
+                                           filterBy="#{infoEstudiante.planestudio.codigoplanestudio}" sortBy="#{infoEstudiante.planestudio.codigoplanestudio}">
+                                    <h:outputText value="#{infoEstudiante.planestudio.codigoplanestudio}"/>
+                                </p:column>
+
+                                <p:column  headerText="Semestre"  
+                                           filterMatchMode="contains" id="semestreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="100"
+                                           filterBy="#{infoEstudiante.semestreestudiante}" sortBy="#{infoEstudiante.semestreestudiante}">
+                                    <h:outputText value="#{infoEstudiante.semestreestudiante}"/>
+                                </p:column> 
+
+                                <p:column  headerText="Estado"  
+                                           filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="100"
+                                           filterBy="#{infoEstudiante.persona.usuario.strEstado}" sortBy="#{infoEstudiante.persona.usuario.strEstado}">
+                                    <h:outputText value="#{infoEstudiante.persona.usuario.strEstado}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarEstudiantes.verDetallesEstudiante()}" actionListener="#{controllerDetallesEstudiante.recibirIDEstudiantesDetalles(infoEstudiante.idestudiante)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Carga Masiva Estudiantes" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue"/>
+                        <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1100px; top: 455px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerAdministrarEstudiantes.limpiarProcesoBusqueda()}" process="@this"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerAdministrarEstudiantes.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

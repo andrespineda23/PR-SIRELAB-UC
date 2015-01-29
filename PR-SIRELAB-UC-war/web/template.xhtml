@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/general.css" rel="stylesheet" type="text/css" />
+        <title>SIRELAB - UC</title>
+    </h:head>
+
+    <h:body >
+        <h:form id="formT">
+
+            <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="600000" />
+            <p:dialog header="Sesion Caducada" widgetVar="sessionTimeOutDialog"
+                      modal="true" closable="false"  width="370" visible="false" resizable="false">
+                <h:outputText value="La sesion ha caducado, por favor, pulse sobre el siguiente boton  para volver a acceder a la aplicacion" />
+                <p:commandButton id="confirmBackToLogin" action="#{controllerTemplate.cerrarSession()}" value="Volver a acceder a la Aplicación" />
+            </p:dialog>
+
+            <div id="top"  class="top" style="height: 80px; border-bottom: blue; border-color: darkblue" >
+                <fieldset style="position: absolute; left: 45px; top: 5px; height: 70px; width: 90%; border-radius: 10px; ">
+                    <h:graphicImage value="Imagenes/logo-sirelab-uc.png" height="88" width="300" style="position: absolute; top: -3px;"  />  
+                    <h:graphicImage value="Imagenes/colombia.jpg" height="13" width="21" style="position: absolute; top: 11px; left: 980px"  />  
+                    <h:outputText value="#{controllerTemplate.obtenerFechaSistema()}" style="position: absolute; top: 10px; left: 1010px"/>
+
+                    <strong><h:outputText value="Tipo Usuario: " style="position: absolute; top: 40px; left: 905px;text-align: left"/></strong>
+                    <strong><h:outputText value="#{controllerTemplate.usuarioLoginSistema.nombreTipoUsuario}" style="position: absolute; top: 40px; left: 1010px; text-transform: uppercase; color: darkblue"/></strong>
+
+                    <strong><h:outputText value="Usuario: " style="position: absolute; top: 60px; left: 905px;text-align: left"/></strong>
+                    <strong><h:outputText value="#{controllerTemplate.usuarioLoginSistema.userUsuario}" style="position: absolute; top: 60px; left: 1010px; text-transform: uppercase; color: darkblue"/></strong>
+                </fieldset>
+                <ui:insert name="banner">
+                </ui:insert>
+
+                <p:growl id="messages"/>
+
+                <p:menubar id="menubar" style="position: absolute; top: 100px; width: 98%; " styleClass="menubarStyle">
+                    <f:facet name="options">
+                        <p:commandButton value="Información Usuario" id="infoUsuario" 
+                                         icon="ui-icon-person"/>
+
+                        <p:commandButton value="Cerrar Sesión" id="cerrarSesion" 
+                                         icon="ui-icon-power"  actionListener="#{controllerTemplate.cerrarSession()}"
+                                         process="@this"/>
+                    </f:facet>
+                </p:menubar>
+            </div>
+            <div>
+                <div id="content">
+                    <ui:insert name="body" />
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <p:tabView  id="tabMenu"  dynamic="true" styleClass="tabViewMenu" widgetVar="tabMenu" activeIndex="0" >  
+                            <p:tab title="Administración Usuario" id="Usuarios">  
+
+                                <h:outputText value="Estudiantes" style="position: absolute; top: 60px; left: 90px;font-weight: bolder"/>
+                                <p:commandButton id="opcEstudiantes" value="" style="position: absolute; left: 40px; top: 130px;background-image: url(Imagenes/estudiantesuc.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="administrarestudiantes"
+                                                 />
+                                <h:outputText value="Administración de los Estudiantes adscritos a la Universidad. Permite activar, ,...." style="position: absolute; top: 365px; left: 10px;width: 240px; height: 80px;;color: #000000"/>
+
+                                <p:separator style="left: 263px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Docentes" style="position: absolute; top: 60px; left: 375px;font-weight: bolder"/>
+                                <p:commandButton id="opcDocentes" value="" style="position: absolute; left: 305px; top: 130px;background-image: url(Imagenes/docentes.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="administrardocentes"
+                                                 />
+                                <h:outputText value="Administración de los docentes con los cuales cuenta la universidad para los usos de los laboratorios para tareas educativas." style="position: absolute; top: 365px; left: 275px;width: 240px; height: 80px;;color: #000000"/>
+
+                                <p:separator style="left: 526px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Entidad Externa" style="position: absolute; top: 60px; left: 615px;font-weight: bolder"/>
+                                <p:commandButton id="opcEntidadE" value="" style="position: absolute; left: 565px; top: 130px;background-image: url(Imagenes/acuerdoexterno.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" />
+                                <h:outputText value="Administración de los convenios externos con diferentes entidades para el uso de los laboratorios." style="position: absolute; top: 365px; left: 535px;width: 240px; height: 80px;;color: #000000"/>
+
+
+                                <p:separator style="left: 789px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Personal Laboratorio" style="position: absolute; top: 60px; left: 865px;font-weight: bolder"/>
+                                <p:commandButton id="opcLaboratorio" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/personallaboratorio.png); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" />
+                                <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 805px;width: 240px; height: 80px;;color: #000000"/>
+
+
+                                <p:separator style="left: 1052px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Administrador" style="position: absolute; top: 60px; left: 1140px;font-weight: bolder"/>
+                                <p:commandButton id="opcAdministrador" value="" style="position: absolute; left: 1100px; top: 130px;background-image: url(Imagenes/administrador2.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 disabled="#{controllerTemplate.usuarioLoginSistema.nombreTipoUsuario ne 'ADMINISTRADOR' }"/>
+                                <h:outputText value="Administración de perfiles administradores del sistema. Solo los Administradores tienen permiso de uso." style="position: absolute; top: 365px; left: 1070px;width: 240px; height: 80px;color: #000000"/>
+
+
+
+                            </p:tab>
+                            <p:tab title="Planta Fisica-Elementos" id="Planta">
+
+                                <h:outputText value="#{controllerMenuInicial.infoAdministracion}" 
+                                              style="position: absolute; top: 60px; left: 10px;width: 520px; height: 100px;;color: #000000;font-size: 13px"/>
+
+                                <h:outputText value="#{controllerMenuInicial.leyendaImagen}" 
+                                              style="position: absolute; top: 60px; left: 550px;width: 180px; height: 100px;;color: #000000"/>
+
+
+                                <h:outputText value="Sedes" style="position: absolute; top: 185px; left: 97px;font-weight: bolder"/>
+                                <p:commandButton id="opcSedes" value="" style="position: absolute; left: 65px; top: 205px;background-image: url(Imagenes/sede1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+                                <h:outputText value="Edificios" style="position: absolute; top: 185px; left: 247px;font-weight: bolder"/>
+                                <p:commandButton id="opcEdificios" value="" style="position: absolute; left: 220px; top: 205px;background-image: url(Imagenes/error.png); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+                                <h:outputText value="Laboratorios" style="position: absolute; top: 185px; left: 397px;font-weight: bolder"/>
+                                <p:commandButton id="opcLaboratorios" value="" style="position: absolute; left: 385px; top: 205px;background-image: url(Imagenes/error.png); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+                                <h:outputText value="Salas de Laboratorio" style="position: absolute; top: 185px; left: 547px;font-weight: bolder"/>
+                                <p:commandButton id="opcSalas" value="" style="position: absolute; left: 560px; top: 205px;background-image: url(Imagenes/error.png); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+
+                                <h:outputText value="Modulos de Trabajo" style="position: absolute; top: 320px; left: 135px;font-weight: bolder"/>
+                                <p:commandButton id="opcModulos" value="" style="position: absolute; left: 145px; top: 340px;background-image: url(Imagenes/modulostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+                                <h:outputText value="Equipos de Trabajo" style="position: absolute; top: 320px; left: 300px;font-weight: bolder"/>
+                                <p:commandButton id="opcEquipos" value="" style="position: absolute; left: 307px; top: 340px;background-image: url(Imagenes/equipostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+                                <h:outputText value="Areas de Profundización" style="position: absolute; top: 320px; left: 453px;font-weight: bolder"/>
+                                <p:commandButton id="opcAreas" value="" style="position: absolute; left: 475px; top: 340px;background-image: url(Imagenes/areaprofundizacion1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 95px; height: 95px; " process="@this" />
+
+
+
+
+                                <p:carousel numVisible="1" id="carouselInfo" effect="easeInStrong" autoPlayInterval="2000"  circular="true" 
+                                            itemStyle="height:350px;width:550px;background-color: transparent" 
+                                            style="margin-bottom:0;position: absolute; top: 50px; left: 740px;background-color: transparent">
+                                    <p:tab title="Godfather Part I">
+                                        <h:panelGrid columns="2" cellpadding="10">
+                                            <p:graphicImage value="Imagenes/bien.png"   />
+                                            <h:outputText
+                                                value="The story begins as Don Vito Corleone..." />
+                                        </h:panelGrid>
+                                    </p:tab>
+                                    <p:tab title="Godfather Part II">
+                                        <h:panelGrid columns="2" cellpadding="10">
+                                            <p:graphicImage value="Imagenes/bien.png"  />
+                                            <h:outputText value="Francis Ford Coppola's..." />
+                                        </h:panelGrid>
+                                    </p:tab>
+                                    <p:tab title="Godfather Part III">
+                                        <h:panelGrid columns="2" cellpadding="10">
+                                            <p:graphicImage value="Imagenes/bien.png" />
+                                            <h:outputText value="After a break of more than 15 years..." />
+                                        </h:panelGrid>
+                                    </p:tab>
+                                </p:carousel>
+
+                            </p:tab>
+                            <p:tab title="Estructura Universidad" id="EstructuraU">  
+                            </p:tab>
+                            <p:tab title="Recursos Laboratorios" id="RecursosLab">  
+                            </p:tab>
+                            <p:tab title="Reservas de Equipos de Laboratorio" id="ReservasLab">  
+                            </p:tab>
+
+                        </p:tabView>
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

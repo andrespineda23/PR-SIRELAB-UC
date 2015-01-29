@@ -1,0 +1,99 @@
+body {
+    background-color: #F2F2F2;
+    background: url("http://www.ucentral.edu.co/images/template_images/ucentral/fondos/fondo_template_default.jpg") center fixed;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+.menubarStyle{
+    color: #000000;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+}
+
+.panelFunciones{
+    left: 12px;
+    color: #000000 ;
+    border-color: #000000;
+    border-width: 1px;
+    width: 98%; 
+    height: 490px;
+    position: absolute; 
+    top: 150px;
+    font-size: 12px;
+    background-color: transparent;
+}
+
+.tabViewMenu{
+    position: absolute;
+    left: 10px;
+    top: 30px;
+    height: 455px;
+    width: 1315px;
+    background-color: transparent;
+    border-color: #000000;
+    border-width: 1px;
+}
+
+.separatorMenuInicial{
+    position: absolute; 
+    top: 40px;
+    width: 1px;
+    height: 405px;
+}
+
+.fieldsetBusqueda{
+    position: absolute !important; 
+    left: 90px !important; 
+    top: 40px !important; 
+    width: 1130px !important; 
+    height: 180px !important; 
+    border-radius: 10px !important; 
+    text-align: left !important;
+    font-size: 12px;
+}
+
+.fieldsetResultados{
+    position: absolute !important; 
+    left: 30px !important; 
+    top: 240px !important; 
+    width: 1260px !important; 
+    height: 190px !important; 
+    border-radius: 10px !important; 
+    text-align: left !important;
+    font-size: 12px;
+}
+
+.fieldsetDatosPersonales{
+    position: absolute !important; 
+    left: 20px !important; 
+    top: 40px !important; 
+    width: 970px !important; 
+    height: 420px !important; 
+    border-radius: 10px !important; 
+    text-align: left !important;
+    font-size: 12px;
+}
+
+.fieldsetOpcionesDetalles{
+    position: absolute !important; 
+    left: 1040px !important; 
+    top: 110px !important; 
+    width: 250px !important; 
+    height: 310px !important; 
+    border-radius: 10px !important; 
+    text-align: left !important;
+    font-size: 12px;
+}

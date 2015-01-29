@@ -1,0 +1,324 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE DOCENTES</strong></legend>
+
+
+                            <strong><h:outputText value="Nombres Docente:" style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerAdministrarDocentes.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Apellidos Docente:" style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroApellido" value="#{controllerAdministrarDocentes.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Doc. Identificación:" style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDocumento" value="#{controllerAdministrarDocentes.parametroDocumento}" maxlength="20" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Electronico:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCorreo" value="#{controllerAdministrarDocentes.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Estado Docente:" style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEstado" value="#{controllerAdministrarDocentes.parametroEstado}" disabled="#{controllerAdministrarDocentes.todosDocentes}" style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 100px">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="TODOS DOCENTES" style="position: absolute; left: 305px; top: 162px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectBooleanCheckbox value="#{controllerAdministrarDocentes.todosDocentes}" style="position: absolute; left: 440px; top: 159px;" >
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarDocentes.modificacionTodosDocentes}"/>
+                            </p:selectBooleanCheckbox>
+
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <strong><h:outputText value="Facultad:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroFacultad" value="#{controllerAdministrarDocentes.parametroFacultad}" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Faculad" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarDocentes.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarDocentes.actualizarFacultades()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Departamento:" style="position: absolute; left: 600px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroDepartamento" disabled="#{controllerAdministrarDocentes.activoDepartamento}" value="#{controllerAdministrarDocentes.parametroDepartamento}" style="position: absolute; left: 770px; top: 65px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarDocentes.listaDepartamentos}" var="departamentos"
+                                               itemLabel="#{departamentos.nombredepartamento}" itemValue="#{departamentos}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Cargo:" style="position: absolute; left: 600px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCargo" value="#{controllerAdministrarDocentes.parametroCargo}" maxlength="45" style="position: absolute; left: 770px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerAdministrarDocentes.buscarDocentesPorParametros()}" update="panelMenu"/>
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoDocente" rowKey="#{infoDocente.iddocente}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerAdministrarDocentes.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerAdministrarDocentes.listaDocentes}"
+                                         filteredValue="#{controllerAdministrarDocentes.filtrarListaDocentes}"
+                                         >
+
+                                <p:column  headerText="Número Identificación"  
+                                           filterMatchMode="contains" id="numeroIDTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.persona.identificacionpersona}" sortBy="#{infoDocente.persona.identificacionpersona}"
+                                           >  
+                                    <h:outputText value="#{infoDocente.persona.identificacionpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombres"  
+                                           filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.persona.nombrespersona}" sortBy="#{infoDocente.persona.nombrespersona}">
+                                    <h:outputText value="#{infoDocente.persona.nombrespersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Apellidos"  
+                                           filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.persona.identificacionpersona}" sortBy="#{infoDocente.persona.identificacionpersona}">
+                                    <h:outputText value="#{infoDocente.persona.apellidospersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Correo Electronico"  
+                                           filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.persona.emailpersona}" sortBy="#{infoDocente.persona.emailpersona}">
+                                    <h:outputText value="#{infoDocente.persona.emailpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.departamento.facultad.nombrefacultad}" sortBy="#{infoDocente.departamento.facultad.nombrefacultad}">
+                                    <h:outputText value="#{infoDocente.departamento.facultad.nombrefacultad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDocente.departamento.nombredepartamento}" sortBy="#{infoDocente.departamento.nombredepartamento}">
+                                    <h:outputText value="#{infoDocente.departamento.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Cargo"  
+                                           filterMatchMode="contains" id="cargoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="200"
+                                           filterBy="#{infoDocente.cargodocente}" sortBy="#{infoDocente.cargodocente}">
+                                    <h:outputText value="#{infoDocente.cargodocente}"/>
+                                </p:column> 
+
+                                <p:column  headerText="Estado"  
+                                           filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="100"
+                                           filterBy="#{infoDocente.persona.usuario.strEstado}" sortBy="#{infoDocente.persona.usuario.strEstado}">
+                                    <h:outputText value="#{infoDocente.persona.usuario.strEstado}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarDocentes.verDetallesDocente()}" actionListener="#{controllerDetallesDocente.recibirIDDocentesDetalles(infoDocente.iddocente)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Docente" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerAdministrarDocentes.dispararDialogoNuevoDocente()}"/>
+                        <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1100px; top: 455px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerAdministrarDocentes.limpiarProcesoBusqueda()}" process="@this"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerAdministrarDocentes.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroDocente" header="Registro Nuevo Docente" widgetVar="NuevoRegistroDocente" closable="false" resizable="false"  draggable="false"  modal="true" height="490" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información personal del docente" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoDocente" style="border: none;">
+                            <strong><h:outputText value="*Nombres: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombresDocente" maxlength="45" value="#{controllerAdministrarDocentes.nuevoNombresDocente}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombresDocente" value="Nombres del docente" />
+
+                            <strong><h:outputText value="*Apellidos: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoApellidoDocente" maxlength="45" value="#{controllerAdministrarDocentes.nuevoApellidoDocente}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoApellidoDocente" value="Apellidos del docente" />
+
+                            <strong><h:outputText value="*Correo Electronico: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCorreoDocente" maxlength="45" value="#{controllerAdministrarDocentes.nuevoCorreoDocente}" style=" width: 202px; position: absolute; left: 220px; top: 130px; " onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCorreoDocente" value="Correo electronico institucional" />
+
+                            <strong><h:outputText  value="*Número Identificación: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="nuevoIdentificacionDocente" maxlength="20" value="#{controllerAdministrarDocentes.nuevoIdentificacionDocente}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarDocentes.modificarIdentificacionDocente()}"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoIdentificacionDocente" value="Numero de identificación" />
+
+                            <strong><h:outputText value="Numero Telefonico 1: " style=" position: absolute; top: 195px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNumero1Docente" maxlength="20" value="#{controllerAdministrarDocentes.nuevoNumero1Docente}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero1Docente" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Numero Telefonico 2:  " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNumero2Docente" maxlength="20" value="#{controllerAdministrarDocentes.nuevoNumero2Docente}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero2Docente" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Dirección Residencia: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:inputText id="nuevoDireccionDocente" maxlength="45" value="#{controllerAdministrarDocentes.nuevoDireccionDocente}" style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDireccionDocente" value="Dirección de residencia" />
+
+                            <strong><h:outputText value="*Cargo: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCargoDocente" maxlength="45" value="#{controllerAdministrarDocentes.nuevoCargoDocente}" style=" width: 202px; position: absolute; left: 220px; top: 280px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCargoDocente" value="Cargo desempeñado"/>
+
+                            <strong><h:outputText value="*Facultad: " style=" position: absolute; top: 315px; left: 50px" /></strong>
+                            <p:selectOneMenu id="nuevoFacultadDocente" value="#{controllerAdministrarDocentes.nuevoFacultadDocente}"
+                                             style=" width: 212px; position: absolute; left: 220px; top: 310px; text-transform: uppercase">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarDocentes.listaFacultades}" var="facultadN"
+                                               itemLabel="#{facultadN.nombrefacultad}" itemValue="#{facultadN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarDocentes.actualizarNuevoFacultades()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento: " style=" position: absolute; top: 345px; left: 50px" /></strong>
+                            <p:selectOneMenu id="nuevoDepartamentoDocente" disabled="#{controllerAdministrarDocentes.activoNuevoDepartamento}" value="#{controllerAdministrarDocentes.nuevoDepartamentoDocente}" 
+                                             style=" width: 212px; position: absolute; left: 220px; top: 340px; text-transform: uppercase">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarDocentes.listaDepartamentos}" var="departamentoN"
+                                               itemLabel="#{departamentoN.nombredepartamento}" itemValue="#{departamentoN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre de Usuario: " style=" position: absolute; top: 375px; left: 50px" /></strong>
+                            <p:inputText id="nuevoUsuarioDocente" maxlength="45" readonly="true" value="#{controllerAdministrarDocentes.nuevoUserDocente}" style=" width: 202px; position: absolute; left: 220px; top: 370px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoUsuarioDocente" value="Nombre Usuario" />
+
+                            <strong><h:outputText value="*Contraseña Usuario: " style=" position: absolute; top: 405px; left: 50px" /></strong>
+                            <p:password id="nuevoPasswordDocente" maxlength="45" readonly="true" value="#{controllerAdministrarDocentes.nuevoPassDocente}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:password>
+
+                            <p:commandButton id="limpiarDoc" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarDocentes.limpiarRegistroDocente()}" update="nuevoDocente" process="@this"/>
+                            <p:commandButton id="agregarDoc" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarDocentes.registrarNuevoDocente()}"  />
+                            <p:commandButton id="cancelarDoc" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarDocentes.registrarNuevoDocente()}" update="nuevoDocente" onclick="NuevoRegistroDocente.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="errorNombreApellidoDocente" header="ATENCIÓN..!" widgetVar="errorNombreApellidoDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombres-Apellidos se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEmailDocente" header="ATENCIÓN..!" widgetVar="errorEmailDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El correo electronico se encuentra vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocumentoDocente" header="ATENCIÓN..!" widgetVar="errorDocumentoDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo numero identificación vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosDocente" header="ATENCIÓN..!" widgetVar="errorNumerosDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDireccionDocente" header="ATENCIÓN..!" widgetVar="errorDireccionDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUniversidadDocente" header="ATENCIÓN..!" widgetVar="errorUniversidadDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Facultad-Departamento-Cargo son obligatorios o el semestre esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUserPassDocente" header="ATENCIÓN..!" widgetVar="errorUserPassDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Usuario y Password son obligatorios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocenteRegistrado" header="ERROR..!" widgetVar="errorDocenteRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El docente registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoDocente" header="Información de Registro" widgetVar="registroExitosoDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el nuevo docente en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoDocente" header="Información de Registro" widgetVar="registroFallidoDocente"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>>
+
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

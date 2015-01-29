@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 25px;left: 1010px"  />  
+
+                        <fieldset class="fieldsetDatosPersonales">
+                            <legend style="font-size: 14px; color: darkblue"><strong>DATOS PERSONALES</strong></legend>
+
+                            <strong><h:outputText value="*Nombres Estudiante" style="position: absolute; left: 150px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.nombreEstudiante}"  style="position: absolute; left: 150px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Apellidos Estudiante" style="position: absolute; left: 400px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.apellidoEstudiante}" style="position: absolute; left: 400px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Identificación Personal" style="position: absolute; left: 650px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.identificacionEstudiante}" style="position: absolute; left: 650px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Email Personal" style="position: absolute; left: 150px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.correoEstudiante}" style="position: absolute; left: 150px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Tipo de Usuario" style="position: absolute; left: 400px; top: 120px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesEstudiante.estudianteDetalles.persona.usuario.tipousuario.nombretipousuario}" style="position: absolute; left: 400px; top: 145px; width: 200px; text-transform: uppercase"/>
+                            <strong><h:outputText value="Estado Usuario" style="position: absolute; left: 650px; top: 120px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesEstudiante.estudianteDetalles.persona.usuario.strEstado}" style="position: absolute; left: 650px; top: 145px; width: 200px; text-transform: uppercase"/>
+
+                            <strong><h:outputText value="Número Telefonico 1" style="position: absolute; left: 150px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.telefono1Estudiante}" style="position: absolute; left: 150px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Número Telefonico 2" style="position: absolute; left: 400px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.telefono2Estudiante}" style="position: absolute; left: 400px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Dirección Residencia" style="position: absolute; left: 650px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.direccionEstudiante}" style="position: absolute; left: 650px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Facultad" style="position: absolute; left: 150px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.facultadEstudiante}"
+                                             style="position: absolute; left: 150px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="facultadEstudiante">
+                                <f:selectItems value="#{controllerDetallesEstudiante.listaFacultad}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.actualizarFacultades()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento" style="position: absolute; left: 400px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesEstudiante.activoDepartamento}" value="#{controllerDetallesEstudiante.departamentoEstudiante}"
+                                             style="position: absolute; left: 400px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="departamentoEstudiante">
+                                <f:selectItem itemLabel="Nombre Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesEstudiante.listaDepartamento}" var="departamentos"
+                                               itemLabel="#{departamentos.nombredepartamento}" itemValue="#{departamentos}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Carrera" style="position: absolute; left: 650px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesEstudiante.activoCarrera}" value="#{controllerDetallesEstudiante.carreraEstudiante}"
+                                             style="position: absolute; left: 650px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="carreraEstudiante">
+                                <f:selectItem itemLabel="Nombre Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesEstudiante.listaCarrera}" var="carrera"
+                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.actualizarCarreras()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Plan de Estudios" style="position: absolute; left: 150px; top: 330px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesEstudiante.activoPlanEstudio}" value="#{controllerDetallesEstudiante.carreraEstudiante}"
+                                             style="position: absolute; left: 150px; top: 355px; width: 200px; text-transform: uppercase"
+                                             id="planEstudioEstudiante">
+                                <f:selectItem itemLabel="Nombre Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesEstudiante.listaPlanEstudios}" var="plan"
+                                               itemLabel="#{plan.codigoplanestudio}" itemValue="#{plan}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Número Semestre" style="position: absolute; left: 400px; top: 330px;color: green"/></strong>
+                            <p:inputText maxlength="2" readonly="#{controllerDetallesEstudiante.activarEditar}" value="#{controllerDetallesEstudiante.semestreEstudiante}" style="position: absolute; left: 400px; top: 355px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEstudiante.modificacionesRegistroEstudiante()}"/>
+                            </p:inputText>
+
+                        </fieldset>
+
+                        <fieldset class="fieldsetOpcionesDetalles">
+                            <legend style="font-size: 14px; color: darkblue"><strong>OPCIONES DE TRABAJO</strong></legend>
+
+                            <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 230px"  />  
+                            <p:tooltip for="infoRegistro" value="Solo el perfil ADMINISTRADOR puede 
+                                       editar la información del estudiante"/>
+
+                            <p:commandButton value="ACTIVAR" onclick="dlgActivarUsuario.show()" disabled="#{controllerDetallesEstudiante.disabledActivar}" id="activar" style="position: absolute; left: 70px; top: 60px; width: 120px; text-align: center"/>
+                            <p:commandButton value="INACTIVAR" onclick="dlgInactivarUsuario.show()" disabled="#{controllerDetallesEstudiante.disabledInactivar}" id="inactivar" style="position: absolute; left: 70px; top: 110px; width: 120px; text-align: center"/>
+                            <p:commandButton value="EDITAR" disabled="#{controllerDetallesEstudiante.disabledEditar}" id="editar" style="position: absolute; left: 70px; top: 160px; width: 120px; text-align: center" actionListener="#{controllerDetallesEstudiante.activarEditarRegistro()}" process="@this"/>
+                            <p:commandButton value="RESTAURAR" disabled="#{controllerDetallesEstudiante.activarEditar}" id="restaurar" style="position: absolute; left: 70px; top: 210px; width: 120px; text-align: center" actionListener="#{controllerDetallesEstudiante.restaurarInformacionEstudiante()}" process="@this"/>
+                            <p:commandButton value="GUARDAR" rendered="#{controllerDetallesEstudiante.visibleGuardar}" id="guardar" style="position: absolute; left: 70px; top: 260px; width: 120px; text-align: center" actionListener="#{controllerDetallesEstudiante.almacenarModificacionesEstudiante()}" process="@this"/>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="administrarestudiantes" process="@this" icon="ui-icon-arrowthick-1-w" />
+                    </p:panel>
+
+                    <p:dialog id="dlgActivarUsuario" header="ATENCIÓN...!" widgetVar="dlgActivarUsuario"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a ACTIVAR el usuario. ¿Desea activar el estudiante actual?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgActivarUsuario.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesEstudiante.activarEstudiante()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgActivarUsuario.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="dlgInactivarUsuario" header="ATENCIÓN...!" widgetVar="dlgInactivarUsuario"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a INACTIVAR el usuario. ¿Desea continuar con la inactivación del estudiante?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgInactivarUsuario.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesEstudiante.inactivarEstudiante()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgInactivarUsuario.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNombreApellidoEstudiante" header="ATENCIÓN..!" widgetVar="errorNombreApellidoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombres-Apellidos se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEmailEstudiante" header="ATENCIÓN..!" widgetVar="errorEmailEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El correo electronico se encuentra vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocumentoEstudiante" header="ATENCIÓN..!" widgetVar="errorDocumentoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo numero identificación vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosEstudiante" header="ATENCIÓN..!" widgetVar="errorNumerosEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDireccionEstudiante" header="ATENCIÓN..!" widgetVar="errorDireccionEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUniversidadEstudiante" header="ATENCIÓN..!" widgetVar="errorUniversidadEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Semestre-Facultad-Departamento-Carrera-PlanEstudios son obligatorios o el semestre esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstudianteRegistrado" header="ERROR..!" widgetVar="errorEstudianteRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El estudiante registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEstudiante" header="Información de Registro" widgetVar="registroExitosoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la modificación del estudiante." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEstudiante" header="Información de Registro" widgetVar="registroFallidoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="mensajeNoCambiosReg" header="Información de Registro" widgetVar="mensajeNoCambiosReg"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="No se altero el estado de la información del registro, el proceso de guardado fue omitido." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="confirmarGuardar" header="Información de Registro" widgetVar="confirmarGuardar"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Existen modificaciones en proceso. Guarde los cambios primero para realizar el proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

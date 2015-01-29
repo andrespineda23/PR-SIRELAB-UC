@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/general.css" rel="stylesheet" type="text/css" />
+        <title>SIRELAB - UC</title>
+    </h:head>
+
+    <h:body >
+        <h:form id="form">
+
+            <div id="top"  class="top" style="height: 80px; border-bottom: blue; border-color: darkblue" >
+                <fieldset style="position: absolute; left: 45px; top: 5px; height: 70px; width: 90%; border-radius: 10px; ">
+                    <h:graphicImage value="Imagenes/logo-sirelab-uc.png" height="88" width="300" style="position: absolute;top: -3px;"  />  
+                    <h:graphicImage value="Imagenes/colombia.jpg" height="13" width="21" style="position: absolute; top: 11px; left: 980px"  />  
+                    <h:outputText value="#{controllerTemplate.obtenerFechaSistema()}" style="position: absolute; top: 10px; left: 1010px;"/>
+                </fieldset>
+                <ui:insert name="banner">
+                </ui:insert>
+
+                <p:growl id="messages"/>
+
+                <p:menubar id="menubar" style="position: absolute; top: 100px; width: 98%; " styleClass="menubarStyle">
+                    <f:facet name="options">
+                        <p:commandButton value="Iniciar Sesion" id="iniciarSesion" 
+                                         actionListener="#{controllerLogin.dispararDialogoLoginUsuario()}" process="@this" 
+                                         icon="ui-icon-person"/>
+
+                        <p:commandButton value="Registrar Estudiante" id="registrarEst" 
+                                         actionListener="#{controllerLogin.dispararDialogoNuevoEstudiante()}" process="@this"
+                                         icon="ui-icon-disk"/>
+                    </f:facet>
+
+                </p:menubar>
+
+                <p:dialog widgetVar="loginUsuario"  id="loginUsuario" header="Información - SIRELAB"  resizable="false" draggable="false" modal="true" height="150" width="400" style="font-size: 12px" closable="false">  
+
+                    <center><strong><h:outputText value="Ingrese las credenciales del usuario" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+
+                    <h:outputText value="Usuario: " style="position: absolute; top: 50px; left: 30px;"/>
+                    <p:inputText id="usuarioLogin" maxlength="45"  style="position: absolute; top: 45px; left: 150px; width: 200px" value="#{controllerLogin.usuarioLogin}">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+
+                    <h:outputText value="Contraseña: " style="position: absolute; top: 80px; left: 30px;"/>
+                    <p:password id="passwordLogin" maxlength="45" style="position: absolute; top: 75px; left: 150px; width: 200px" value="#{controllerLogin.passwordLogin}">
+                        <p:ajax process="@this" update="@this"/>
+                    </p:password>
+
+                    <p:commandLink value="¿Olvido su contraseña?" style="position: absolute; top: 130px; left: 20px" process="@this" actionListener="#{controllerLogin.dispararDialogoRecuperarContrasenia()}"/>
+                    <p:commandButton value="Aceptar" style="position: absolute; top: 120px; left: 220px"  process="@this" action="#{controllerLogin.retornarPaginaSiguiente()}" actionListener="#{controllerLogin.loginUsuario()}"/>
+                    <p:commandButton value="Cancelar" style="position: absolute; top: 120px; left: 300px" process="@this" onclick="loginUsuario.hide()"/> 
+
+                </p:dialog>
+
+                <p:dialog widgetVar="recuperarContrasenia"  id="recuperarContrasenia" header="Información - SIRELAB"  resizable="false" draggable="false" modal="true" height="150" width="400" style="font-size: 12px" closable="false">  
+
+                    <center><strong><h:outputText value="Ingrese las credenciales del usuario" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+
+                    <h:outputText value="Correo Electronico: " style="position: absolute; top: 50px; left: 30px;"/>
+                    <p:inputText id="correoRecuperacion" maxlength="45" value="#{controllerLogin.correoRecuperacion}" style="position: absolute; top: 45px; left: 150px; width: 200px">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+
+                    <h:outputText value="Numero Documento: " style="position: absolute; top: 80px; left: 30px;"/>
+                    <p:password id="documentoRecuperacion" maxlength="20" value="#{controllerLogin.identificacionRecuperacion}" style="position: absolute; top: 75px; left: 150px; width: 200px">
+                        <p:ajax process="@this" update="@this"/>
+                    </p:password>
+
+                    <p:commandButton value="Aceptar" style="position: absolute; top: 120px; left: 220px" actionListener="#{controllerLogin.recuperarContraseñaUsuario()}" process="@this" />
+                    <p:commandButton value="Cancelar" style="position: absolute; top: 120px; left: 300px" process="@this" actionListener="#{controllerLogin.cancelarRecuperarContrasenia()}" onclick="recuperarContrasenia.hide()" update="recuperarContrasenia"/> 
+
+                </p:dialog>
+            </div>
+
+
+            <p:panel header="SIRELAB - UC" styleClass="panelFunciones">
+            </p:panel>
+
+        </h:form>
+
+        <h:form id="formularioDialogos"  >
+
+            <p:dialog id="NuevoRegistroEstudiante" header="Registro Nuevo Estudiante" widgetVar="NuevoRegistroEstudiante" closable="false" resizable="false"  draggable="false"  modal="true" height="520" width="480" style=" padding: 0px">  
+
+                <center><strong><h:outputText value="Ingrese la información personal del estudiante" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.Los caracteres especiales estan prohibidos."/>
+
+                <p:panel id="nuevoEstudiante" style="border: none;">
+                    <strong><h:outputText value="*Nombres: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                    <p:inputText id="nuevoNombresEstudiante" maxlength="45" value="#{controllerLogin.nombreEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoNombresEstudiante" value="Nombres del estudiante" />
+
+                    <strong><h:outputText value="*Apellidos: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                    <p:inputText id="nuevoApellidoEstudiante" maxlength="45" value="#{controllerLogin.apellidoEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoApellidoEstudiante" value="Apellidos del estudiante" />
+
+                    <strong><h:outputText value="*Correo Electronico: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                    <p:inputText id="nuevoCorreoEstudiante" maxlength="45" value="#{controllerLogin.correoEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 130px; " onclick="select();">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoCorreoEstudiante" value="Correo electronico institucional" />
+
+                    <strong><h:outputText  value="*Número Identificación: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                    <p:inputText id="nuevoIdentificacionEstudiante" maxlength="20" value="#{controllerLogin.identificacionEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoIdentificacionEstudiante" value="Numero de identificación" />
+
+                    <strong><h:outputText value="Numero Telefonico 1: " style=" position: absolute; top: 195px; left: 50px;" /></strong>
+                    <p:inputText id="nuevoNumero1Estudiante" maxlength="20" value="#{controllerLogin.telefono1Estudiante}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoNumero1Estudiante" value="Numero telefonico" />
+
+                    <strong><h:outputText value="Numero Telefonico 2:  " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                    <p:inputText id="nuevoNumero2Estudiante" maxlength="20" value="#{controllerLogin.telefono2Estudiante}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoNumero2Estudiante" value="Numero telefonico" />
+
+                    <strong><h:outputText value="Dirección Residencia: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                    <p:inputText id="nuevoDireccionEstudiante" maxlength="45" value="#{controllerLogin.direccionEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoDireccionEstudiante" value="Dirección de residencia" />
+
+                    <strong><h:outputText value="*Numero Semestre: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                    <p:inputText id="nuevoSemestreEstudiante" maxlength="2" value="#{controllerLogin.semestreEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 280px; text-transform: uppercase">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoSemestreEstudiante" value="Numero de semestre actual"/>
+
+                    <strong><h:outputText value="*Departamento: " style=" position: absolute; top: 315px; left: 50px" /></strong>
+                    <p:selectOneMenu id="nuevoDepartamentoEstudiante" value="#{controllerLogin.departamentoEstudiante}"
+                                     style=" width: 212px; position: absolute; left: 220px; top: 310px; text-transform: uppercase">
+                        <f:selectItem itemLabel="Nombre Departamento" itemValue="null" />
+                        <f:selectItems value="#{controllerLogin.listasDepartamentos}" var="departamentos"
+                                       itemLabel="#{departamentos.nombredepartamento}" itemValue="#{departamentos}"/>
+                        <f:converter converterId="ConverterGenerico" />
+                        <p:ajax event="change" process="@this" update="@this" listener="#{controllerLogin.actualizarDepartamentos()}"/>
+                    </p:selectOneMenu>
+
+                    <strong><h:outputText value="*Carrera: " style=" position: absolute; top: 345px; left: 50px" /></strong>
+                    <p:selectOneMenu id="nuevoCarreraEstudiante" disabled="#{controllerLogin.activoCarrera}" value="#{controllerLogin.carreraEstudiante}" 
+                                     style=" width: 212px; position: absolute; left: 220px; top: 340px; text-transform: uppercase">
+                        <f:selectItem itemLabel="Nombre Carrera" itemValue="null" />
+                        <f:selectItems value="#{controllerLogin.listaCarreras}" var="carreras"
+                                       itemLabel="#{carreras.nombrecarrera}" itemValue="#{carreras}"/>
+                        <f:converter converterId="ConverterGenerico" />
+                        <p:ajax event="change" process="@this" update="@this" listener="#{controllerLogin.actualizarCarreras()}"/>
+                    </p:selectOneMenu>
+
+                    <strong><h:outputText value="*Plan Estudios: " style=" position: absolute; top: 375px; left: 50px" /></strong>
+                    <p:selectOneMenu id="nuevoPlanEstudioEstudiante" disabled="#{controllerLogin.activoPlan}" value="#{controllerLogin.planEstudioEstudiante}" 
+                                     style=" width: 212px; position: absolute; left: 220px; top: 370px; text-transform: uppercase"
+                                     >
+                        <f:selectItem itemLabel="Codigo Plan de Estudios" itemValue="null" />
+                        <f:selectItems value="#{controllerLogin.listaPlanesEstudios}" var="planes"
+                                       itemLabel="#{planes.codigoplanestudio}" itemValue="#{planes}"/>
+                        <f:converter converterId="ConverterGenerico" />
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:selectOneMenu>
+
+                    <strong><h:outputText value="*Nombre de Usuario: " style=" position: absolute; top: 405px; left: 50px" /></strong>
+                    <p:inputText id="nuevoUsuarioEstudiante" maxlength="45" value="#{controllerLogin.userEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:inputText>
+                    <p:watermark for="nuevoUsuarioEstudiante" value="Nombre Usuario" />
+
+                    <strong><h:outputText value="*Contraseña Usuario: " style=" position: absolute; top: 435px; left: 50px" /></strong>
+                    <p:password id="nuevoPasswordEstudiante" maxlength="45" value="#{controllerLogin.passwordEstudiante}" style=" width: 202px; position: absolute; left: 220px; top: 430px;">
+                        <p:ajax event="change" process="@this" update="@this"/>
+                    </p:password>
+
+                    <p:commandButton id="limpiarEst" value="Limpiar" style="position: absolute; left: 20px; top: 480px;" actionListener="#{controllerLogin.cancelarRegistroEstudiante()}" update="nuevoEstudiante" process="@this"/>
+                    <p:commandButton id="agregarEst" value="Aceptar" style="position: absolute; left: 270px; top: 480px;"  process="@this" actionListener="#{controllerLogin.registrarNuevoEstudiante()}"  />
+                    <p:commandButton id="cancelarEst" value="Cancelar" style="position: absolute; left: 360px; top: 480px;" actionListener="#{controllerLogin.cancelarRegistroEstudiante()}" update="nuevoEstudiante" onclick="NuevoRegistroEstudiante.hide();"  process="@this"/>
+                </p:panel>
+            </p:dialog>
+
+            <p:dialog id="errorNombreApellidoEstudiante" header="ATENCIÓN..!" widgetVar="errorNombreApellidoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Nombres-Apellidos se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorEmailEstudiante" header="ATENCIÓN..!" widgetVar="errorEmailEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El correo electronico se encuentra vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorDocumentoEstudiante" header="ATENCIÓN..!" widgetVar="errorDocumentoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El campo numero identificación vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorNumerosEstudiante" header="ATENCIÓN..!" widgetVar="errorNumerosEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorDireccionEstudiante" header="ATENCIÓN..!" widgetVar="errorDireccionEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorUniversidadEstudiante" header="ATENCIÓN..!" widgetVar="errorUniversidadEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Semestre-Departamento-Carrera-PlanEstudios son obligatorios o el semestre esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorUserPassEstudiante" header="ATENCIÓN..!" widgetVar="errorUserPassEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Usuario y Password son obligatorios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorEstudianteRegistrado" header="ERROR..!" widgetVar="errorEstudianteRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El estudiante registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="registroExitosoEstudiante" header="Información de Registro" widgetVar="registroExitosoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                <h:outputText value="Se ha registrado con ÉXITO el nuevo estudiante. Para ser activado, conracte a un encargado de laboratorio para su activación." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="registroFallidoEstudiante" header="Información de Registro" widgetVar="registroFallidoEstudiante"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="cambioContraseniaOK" header="Información de Registro" widgetVar="cambioContraseniaOK"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El cambio de contraseña se ha realizado con exito. Por favor, revise la bandera de entrada de su email para obtener la nueva contraseña." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorUsuarioNoExiste" header="Información de Registro" widgetVar="errorUsuarioNoExiste"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="El usuario solicitado no se encuentra registrado en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorCredencialesLogin" header="Información de Registro" widgetVar="errorCredencialesLogin"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Usuario-Contraseña son obligatorios para este proceso." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+            <p:dialog id="errorDatosRecuperacion" header="ERROR...!" widgetVar="errorDatosRecuperacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                <h:outputText value="Los campos Correo-Numero Identificación son obligatorios para este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+            </p:dialog>
+
+        </h:form>  
+    </h:body>
+</html>
