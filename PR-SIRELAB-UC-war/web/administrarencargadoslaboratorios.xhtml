@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE PERSONAL LABORATORIO</strong></legend>
+
+
+                            <strong><h:outputText value="Nombres Personal:" style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerAdministrarEncargadosLaboratorios.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Apellidos Personal:" style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroApellido" value="#{controllerAdministrarEncargadosLaboratorios.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Doc. Identificación:" style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDocumento" value="#{controllerAdministrarEncargadosLaboratorios.parametroDocumento}" maxlength="20" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Electronico:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCorreo" value="#{controllerAdministrarEncargadosLaboratorios.parametroDocumento}" maxlength="45" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Estado Personal:" style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEstado" value="#{controllerAdministrarEncargadosLaboratorios.parametroEstado}" disabled="#{controllerAdministrarEncargadosLaboratorios.todosEncargadosLaboratorios}" style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 100px">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="TODOS PERSONAL" style="position: absolute; left: 310px; top: 162px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectBooleanCheckbox value="#{controllerAdministrarEncargadosLaboratorios.todosEncargadosLaboratorios}" style="position: absolute; left: 440px; top: 159px;" >
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.modificacionTodosEncargadosLaboratorios}"/>
+                            </p:selectBooleanCheckbox>
+
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <strong><h:outputText value="Facultad:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroFacultad" value="#{controllerAdministrarEncargadosLaboratorios.parametroFacultad}" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Faculad" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarFacultades()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Departamento:" style="position: absolute; left: 600px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroDepartamento" disabled="#{controllerAdministrarEncargadosLaboratorios.activoDepartamento}" value="#{controllerAdministrarEncargadosLaboratorios.parametroDepartamento}" style="position: absolute; left: 770px; top: 65px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaDepartamentos}" var="departamentos"
+                                               itemLabel="#{departamentos.nombredepartamento}" itemValue="#{departamentos}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Laboratorio:" style="position: absolute; left: 600px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroLaboratorio" disabled="#{controllerAdministrarEncargadosLaboratorios.activoLaboratorio}" value="#{controllerAdministrarEncargadosLaboratorios.parametroLaboratorio}" style="position: absolute; left: 770px; top: 95px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerAdministrarEncargadosLaboratorios.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1070px; top: 25px; " ajax="false" actionListener="#{controllerAdministrarEncargadosLaboratorios.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerAdministrarEncargadosLaboratorios.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerAdministrarEncargadosLaboratorios.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerAdministrarEncargadosLaboratorios.buscarEncargadosLaboratoriosPorParametros()}" update="panelMenu"/>
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoPersonal" rowKey="#{infoPersonal.idencargadolaboratorio}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerAdministrarEncargadosLaboratorios.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerAdministrarEncargadosLaboratorios.listaEncargadosLaboratorios}"
+                                         filteredValue="#{controllerAdministrarEncargadosLaboratorios.filtrarListaEncargadosLaboratorios}"
+                                         >
+
+                                <p:column  headerText="Número Identificación"  
+                                           filterMatchMode="contains" id="numeroIDTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.persona.identificacionpersona}" sortBy="#{infoPersonal.persona.identificacionpersona}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Número Identificación"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.persona.identificacionpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombres"  
+                                           filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.persona.nombrespersona}" sortBy="#{infoPersonal.persona.nombrespersona}">
+                                    <f:facet name="header"><h:outputText value="Nombres"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.persona.nombrespersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Apellidos"  
+                                           filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.persona.apellidospersona}" sortBy="#{infoPersonal.persona.apellidospersona}">
+                                    <f:facet name="header"><h:outputText value="Apellidos"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.persona.apellidospersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Correo Electronico"  
+                                           filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.persona.emailpersona}" sortBy="#{infoPersonal.persona.emailpersona}">
+                                    <f:facet name="header"><h:outputText value="Correo Electronico"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.persona.emailpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.laboratorio.departamento.facultad.nombrefacultad}" sortBy="#{infoPersonal.laboratorio.departamento.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Facultad"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.laboratorio.departamento.facultad.nombrefacultad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoPersonal.laboratorio.departamento.nombredepartamento}" sortBy="#{infoPersonal.laboratorio.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Departamento"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.laboratorio.departamento.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Laboratorio"  
+                                           filterMatchMode="contains" id="laboratorioTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="200"
+                                           filterBy="#{infoPersonal.laboratorio.nombrelaboratorio}" sortBy="#{infoPersonal.laboratorio.nombrelaboratorio}">
+                                    <f:facet name="header"><h:outputText value="Laboratorio"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.laboratorio.nombrelaboratorio}"/>
+                                </p:column> 
+
+                                <p:column  headerText="Estado"  
+                                           filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="100"
+                                           filterBy="#{infoPersonal.persona.usuario.strEstado}" sortBy="#{infoPersonal.persona.usuario.strEstado}">
+                                    <f:facet name="header"><h:outputText value="Estado"/></f:facet>
+                                    <h:outputText value="#{infoPersonal.persona.usuario.strEstado}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarEncargadosLaboratorios.verDetallesEncargadoLaboratorio()}" actionListener="#{controllerDetallesEncargadoLaboratorio.recibirIDEncargadoLaboratorioDetalles(infoPersonal.idencargadolaboratorio)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Personal" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerAdministrarEncargadosLaboratorios.dispararDialogoNuevoEncargadoLaboratorio()}"/>
+                        <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1100px; top: 455px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarProcesoBusqueda()}" process="@this"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroEncargadoLaboratorio" header="Registro Nuevo Personal" widgetVar="NuevoRegistroEncargadoLaboratorio" closable="false" resizable="false"  draggable="false"  modal="true" height="490" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información personal del encargado de laboratorio" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoEncargadoLaboratorio" style="border: none;">
+                            <strong><h:outputText value="*Nombres: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombresEncargadoLaboratorio" maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.nuevoNombresEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombresEncargadoLaboratorio" value="Nombres del personal" />
+
+                            <strong><h:outputText value="*Apellidos: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoApellidoEncargadoLaboratorio" maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.nuevoApellidoEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoApellidoEncargadoLaboratorio" value="Apellidos del personal" />
+
+                            <strong><h:outputText value="*Correo Electronico: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCorreoEncargadoLaboratorio" maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.nuevoCorreoEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 130px; " onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCorreoEncargadoLaboratorio" value="Correo electronico institucional" />
+
+                            <strong><h:outputText  value="*Número Identificación: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="nuevoIdentificacionEncargadoLaboratorio" maxlength="20" value="#{controllerAdministrarEncargadosLaboratorios.nuevoIdentificacionEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.modificarIdentificacionEncargadoLaboratorio()}"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoIdentificacionEncargadoLaboratorio" value="Numero de identificación" />
+
+                            <strong><h:outputText value="Numero Telefonico 1: " style=" position: absolute; top: 195px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNumero1EncargadoLaboratorio" maxlength="20" value="#{controllerAdministrarEncargadosLaboratorios.nuevoNumero1EncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero1EncargadoLaboratorio" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Numero Telefonico 2:  " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNumero2EncargadoLaboratorio" maxlength="20" value="#{controllerAdministrarEncargadosLaboratorios.nuevoNumero2EncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero2EncargadoLaboratorio" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Dirección Residencia: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:inputText id="nuevoDireccionEncargadoLaboratorio" maxlength="45" value="#{controllerAdministrarEncargadosLaboratorios.nuevoDireccionEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDireccionEncargadoLaboratorio" value="Dirección de residencia" />
+
+                            <strong><h:outputText value="*Facultad: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:selectOneMenu id="nuevoFacultadEncargadoLaboratorio" value="#{controllerAdministrarEncargadosLaboratorios.nuevoFacultadEncargadoLaboratorio}"
+                                             style=" width: 212px; position: absolute; left: 220px; top: 280px; text-transform: uppercase">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaFacultades}" var="facultadN"
+                                               itemLabel="#{facultadN.nombrefacultad}" itemValue="#{facultadN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarNuevoFacultades()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento: " style=" position: absolute; top: 315px; left: 50px" /></strong>
+                            <p:selectOneMenu id="nuevoDepartamentoEncargadoLaboratorio" disabled="#{controllerAdministrarEncargadosLaboratorios.activoNuevoDepartamento}" value="#{controllerAdministrarEncargadosLaboratorios.nuevoDepartamentoEncargadoLaboratorio}" 
+                                             style=" width: 212px; position: absolute; left: 220px; top: 310px; text-transform: uppercase">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaDepartamentos}" var="departamentoN"
+                                               itemLabel="#{departamentoN.nombredepartamento}" itemValue="#{departamentoN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEncargadosLaboratorios.actualizarNuevoDepartamento()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Laboratorio: " style=" position: absolute; top: 345px; left: 50px" /></strong>
+                            <p:selectOneMenu id="nuevoLaboratorioEncargadoLaboratorio" disabled="#{controllerAdministrarEncargadosLaboratorios.activoNuevoLaboratorio}" value="#{controllerAdministrarEncargadosLaboratorios.nuevoLaboratorioEncargadoLaboratorio}" 
+                                             style=" width: 212px; position: absolute; left: 220px; top: 340px; text-transform: uppercase">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerAdministrarEncargadosLaboratorios.listaLaboratorios}" var="laboratorioN"
+                                               itemLabel="#{laboratorioN.nombrelaboratorio}" itemValue="#{laboratorioN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre de Usuario: " style=" position: absolute; top: 375px; left: 50px" /></strong>
+                            <p:inputText id="nuevoUsuarioEncargadoLaboratorio" maxlength="45" readonly="true" value="#{controllerAdministrarEncargadosLaboratorios.nuevoUserEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 370px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoUsuarioEncargadoLaboratorio" value="Nombre Usuario" />
+
+                            <strong><h:outputText value="*Contraseña Usuario: " style=" position: absolute; top: 405px; left: 50px" /></strong>
+                            <p:inputText id="nuevoPasswordEncargadoLaboratorio" maxlength="45" readonly="true" value="#{controllerAdministrarEncargadosLaboratorios.nuevoPassEncargadoLaboratorio}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <p:commandButton id="limpiarEL" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarRegistroEncargadoLaboratorio()}" update="nuevoEncargadoLaboratorio" process="@this"/>
+                            <p:commandButton id="agregarEL" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarEncargadosLaboratorios.registrarNuevoEncargadoLaboratorio()}"  />
+                            <p:commandButton id="cancelarEL" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEncargadosLaboratorios.registrarNuevoEncargadoLaboratorio()}" update="nuevoEncargadoLaboratorio" onclick="NuevoRegistroEncargadoLaboratorio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="errorNombreApellidoEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorNombreApellidoEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombres-Apellidos se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEmailEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorEmailEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El correo electronico se encuentra vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocumentoEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorDocumentoEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo numero identificación vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorNumerosEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDireccionEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorDireccionEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUniversidadEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorUniversidadEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Facultad-Departamento-Laboratorio son obligatorios o el semestre esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUserPassEncargadoLaboratorio" header="ATENCIÓN..!" widgetVar="errorUserPassEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Usuario y Password son obligatorios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorPersonalRegistrado" header="ERROR..!" widgetVar="errorPersonalRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El personal registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEncargadoLaboratorio" header="Información de Registro" widgetVar="registroExitosoEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el nuevo personal en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEncargadoLaboratorio" header="Información de Registro" widgetVar="registroFallidoEncargadoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

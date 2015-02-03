@@ -86,6 +86,9 @@ public class Facultad implements Serializable {
     }
 
     public String getNombrefacultad() {
+        if(nombrefacultad != null){
+            nombrefacultad = nombrefacultad.toUpperCase();
+        }
         return nombrefacultad;
     }
 

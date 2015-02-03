@@ -54,11 +54,11 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM Laboratorio p");
-            //query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Laboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.err.println("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
+            System.out.println("Error consultarLaboratorios LaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -68,13 +68,29 @@ public class LaboratorioDAO implements LaboratorioDAOInterface {
         try {
             em.clear();
             Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.idlaboratorio=:idRegistro");
-            //query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
             Laboratorio registro = (Laboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.err.println("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarLaboratorioPorID LaboratorioDAO : " + e.toString());
             return null;
         }
     }
+
+    @Override
+    public List<Laboratorio> buscarLaboratorioPorIDDepartamento(BigInteger idDepartamento) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Laboratorio p WHERE p.departamento.iddepartamento=:idDepartamento");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idDepartamento", idDepartamento);
+            List<Laboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error buscarLaboratorioPorIDDepartamento LaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
 }

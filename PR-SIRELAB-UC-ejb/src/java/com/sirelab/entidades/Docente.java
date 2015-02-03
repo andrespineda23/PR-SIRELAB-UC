@@ -73,6 +73,9 @@ public class Docente implements Serializable {
     }
 
     public String getCargodocente() {
+        if(cargodocente != null){
+            cargodocente = cargodocente.toUpperCase();
+        }
         return cargodocente;
     }
 

@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.EntidadExterna;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,4 +27,8 @@ public interface EntidadExternaDAOInterface {
     public EntidadExterna buscarEntidadExternaPorID(BigInteger idRegistro);
 
     public EntidadExterna buscarEntidadExternaPorIDPersona(BigInteger idPersona);
+
+    public EntidadExterna buscarEntidadExternaPorCorreoNumDocumento(String correo, String documento);
+
+    public List<EntidadExterna> buscarEntidadesExternasPorFiltrado(Map<String, String> filters);
 }

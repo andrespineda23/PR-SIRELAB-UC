@@ -25,4 +25,6 @@ public interface LaboratorioDAOInterface {
 
     public Laboratorio buscarLaboratorioPorID(BigInteger idRegistro);
 
+    public List<Laboratorio> buscarLaboratorioPorIDDepartamento(BigInteger idDepartamento);
+
 }

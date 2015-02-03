@@ -5,7 +5,11 @@ import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.PlanEstudios;
+import com.sirelab.exporter.ExportarPDF;
+import com.sirelab.exporter.ExportarPDFTablasAnchas;
+import com.sirelab.exporter.ExportarXLS;
 import com.sirelab.utilidades.Utilidades;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +21,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.column.Column;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.export.Exporter;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -43,6 +49,8 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     //
     private boolean activoCarrera, activoPlan;
     //
+    private boolean activarExport;
+    //
     private List<Estudiante> listaEstudiantes;
     private List<Estudiante> filtrarListaEstudiantes;
     //
@@ -56,6 +64,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
 
     @PostConstruct
     public void init() {
+        activarExport = true;
         activoCarrera = true;
         activoPlan = true;
         parametroNombre = null;
@@ -127,13 +136,23 @@ public class ControllerAdministrarEstudiantes implements Serializable {
         try {
             RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
+            listaEstudiantes = null;
             listaEstudiantes = administrarEstudiantesBO.consultarEstudiantesPorParametro(filtros);
             if (listaEstudiantes != null) {
                 if (listaEstudiantes.size() > 0) {
+                    activarExport = false;
                     activarFiltrosTabla();
+                } else {
+                    activarExport = true;
+                    context.execute("consultaSinDatos.show();");
                 }
+            } else {
+                context.execute("consultaSinDatos.show()");
             }
             context.update("form:datosBusqueda");
+            context.update("form:exportarXLS");
+            context.update("form:exportarXML");
+            context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarEstudiantes buscarEstudiantesPorParametros : " + e.toString());
         }
@@ -141,6 +160,7 @@ public class ControllerAdministrarEstudiantes implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         desactivarFiltrosTabla();
+        activarExport = true;
         activoCarrera = true;
         activoPlan = true;
         parametroNombre = null;
@@ -254,6 +274,23 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     public String verDetallesEstudiante() {
         limpiarProcesoBusqueda();
         return "detallesestudiante";
+    }
+
+    //EXPORTAR
+    public void exportPDF() throws IOException {
+        DataTable tabla = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formT:form:datosBusqueda");
+        FacesContext context = FacesContext.getCurrentInstance();
+        Exporter exporter = new ExportarPDFTablasAnchas();
+        exporter.export(context, tabla, "Administrar_Estudiantes_PDF", false, false, "UTF-8", null, null);
+        context.responseComplete();
+    }
+
+    public void exportXLS() throws IOException {
+        DataTable tabla = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formT:form:datosBusqueda");
+        FacesContext context = FacesContext.getCurrentInstance();
+        Exporter exporter = new ExportarXLS();
+        exporter.export(context, tabla, "Administrar_Estudiantes_XLS", false, false, "UTF-8", null, null);
+        context.responseComplete();
     }
 
     // GET - SET
@@ -407,6 +444,14 @@ public class ControllerAdministrarEstudiantes implements Serializable {
 
     public void setAltoTabla(String altoTabla) {
         this.altoTabla = altoTabla;
+    }
+
+    public boolean isActivarExport() {
+        return activarExport;
+    }
+
+    public void setActivarExport(boolean activarExport) {
+        this.activarExport = activarExport;
     }
 
 }

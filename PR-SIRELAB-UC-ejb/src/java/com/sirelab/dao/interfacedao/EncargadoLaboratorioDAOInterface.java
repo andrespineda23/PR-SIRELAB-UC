@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.EncargadoLaboratorio;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,4 +27,8 @@ public interface EncargadoLaboratorioDAOInterface {
     public EncargadoLaboratorio buscarEncargadoLaboratorioPorID(BigInteger idRegistro);
 
     public EncargadoLaboratorio buscarEncargadoLaboratorioPorIDPersona(BigInteger idPersona);
+
+    public EncargadoLaboratorio buscarEncargadoLaboratorioPorPorCorreoNumDocumento(String correo, String documento);
+
+    public List<EncargadoLaboratorio> buscarEncargadosLaboratoriosPorFiltrado(Map<String, String> filters);
 }

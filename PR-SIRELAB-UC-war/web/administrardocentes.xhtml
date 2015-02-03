@@ -78,6 +78,12 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:inputText>
 
+                            <p:commandButton id="exportarXLS" disabled="#{controllerAdministrarDocentes.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1070px; top: 25px; " ajax="false" actionListener="#{controllerAdministrarDocentes.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerAdministrarDocentes.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerAdministrarDocentes.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
                             <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
                                              actionListener="#{controllerAdministrarDocentes.buscarDocentesPorParametros()}" update="panelMenu"/>
 
@@ -100,6 +106,7 @@
                                            width="300"
                                            filterBy="#{infoDocente.persona.identificacionpersona}" sortBy="#{infoDocente.persona.identificacionpersona}"
                                            >  
+                                    <f:facet name="header"><h:outputText value="Número Identificación"/></f:facet>
                                     <h:outputText value="#{infoDocente.persona.identificacionpersona}"/>
                                 </p:column>
 
@@ -107,13 +114,15 @@
                                            filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoDocente.persona.nombrespersona}" sortBy="#{infoDocente.persona.nombrespersona}">
+                                    <f:facet name="header"><h:outputText value="Nombres"/></f:facet>
                                     <h:outputText value="#{infoDocente.persona.nombrespersona}"/>
                                 </p:column>
 
                                 <p:column  headerText="Apellidos"  
                                            filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
-                                           filterBy="#{infoDocente.persona.identificacionpersona}" sortBy="#{infoDocente.persona.identificacionpersona}">
+                                           filterBy="#{infoDocente.persona.apellidospersona}" sortBy="#{infoDocente.persona.apellidospersona}">
+                                    <f:facet name="header"><h:outputText value="Apellidos"/></f:facet>
                                     <h:outputText value="#{infoDocente.persona.apellidospersona}"/>
                                 </p:column>
 
@@ -121,6 +130,7 @@
                                            filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoDocente.persona.emailpersona}" sortBy="#{infoDocente.persona.emailpersona}">
+                                    <f:facet name="header"><h:outputText value="Correo Electronico"/></f:facet>
                                     <h:outputText value="#{infoDocente.persona.emailpersona}"/>
                                 </p:column>
 
@@ -128,6 +138,7 @@
                                            filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoDocente.departamento.facultad.nombrefacultad}" sortBy="#{infoDocente.departamento.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Facultad"/></f:facet>
                                     <h:outputText value="#{infoDocente.departamento.facultad.nombrefacultad}"/>
                                 </p:column>
 
@@ -135,6 +146,7 @@
                                            filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoDocente.departamento.nombredepartamento}" sortBy="#{infoDocente.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Departamento"/></f:facet>
                                     <h:outputText value="#{infoDocente.departamento.nombredepartamento}"/>
                                 </p:column>
 
@@ -142,6 +154,7 @@
                                            filterMatchMode="contains" id="cargoTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="200"
                                            filterBy="#{infoDocente.cargodocente}" sortBy="#{infoDocente.cargodocente}">
+                                    <f:facet name="header"><h:outputText value="Cargo"/></f:facet>
                                     <h:outputText value="#{infoDocente.cargodocente}"/>
                                 </p:column> 
 
@@ -149,11 +162,13 @@
                                            filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
                                            width="100"
                                            filterBy="#{infoDocente.persona.usuario.strEstado}" sortBy="#{infoDocente.persona.usuario.strEstado}">
+                                    <f:facet name="header"><h:outputText value="Estado"/></f:facet>
                                     <h:outputText value="#{infoDocente.persona.usuario.strEstado}"/>
                                 </p:column>
 
                                 <p:column  headerText="Ver"  
                                            filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
                                     <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarDocentes.verDetallesDocente()}" actionListener="#{controllerDetallesDocente.recibirIDDocentesDetalles(infoDocente.iddocente)}"/>
                                 </p:column>
 
@@ -255,9 +270,9 @@
                             <p:watermark for="nuevoUsuarioDocente" value="Nombre Usuario" />
 
                             <strong><h:outputText value="*Contraseña Usuario: " style=" position: absolute; top: 405px; left: 50px" /></strong>
-                            <p:password id="nuevoPasswordDocente" maxlength="45" readonly="true" value="#{controllerAdministrarDocentes.nuevoPassDocente}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
+                            <p:inputText id="nuevoPasswordDocente" maxlength="45" readonly="true" value="#{controllerAdministrarDocentes.nuevoPassDocente}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
                                 <p:ajax event="change" process="@this" update="@this"/>
-                            </p:password>
+                            </p:inputText>
 
                             <p:commandButton id="limpiarDoc" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarDocentes.limpiarRegistroDocente()}" update="nuevoDocente" process="@this"/>
                             <p:commandButton id="agregarDoc" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarDocentes.registrarNuevoDocente()}"  />
@@ -315,7 +330,12 @@
                         <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
                     </p:dialog>
 
-                </h:form>>
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
 
 
             </ui:define>

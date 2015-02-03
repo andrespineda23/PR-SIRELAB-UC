@@ -123,4 +123,130 @@
     </navigation-rule>
 
 
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarentidadesexternas</from-outcome>
+            <to-view-id>/administrarentidadesexternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarentidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarentidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrarentidadesexternas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesentidadexterna</from-outcome>
+            <to-view-id>/detallesentidadexterna.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesentidadexterna.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarentidadesexternas</from-outcome>
+            <to-view-id>/administrarentidadesexternas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesentidadexterna.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administraradministradores</from-outcome>
+            <to-view-id>/administraradministradores.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administraradministradores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administraradministradores.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarencargadoslaboratorios</from-outcome>
+            <to-view-id>/administrarencargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarencargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarencargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+        <navigation-rule>
+        <from-view-id>/administrarencargadoslaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesencargadolaboratorio</from-outcome>
+            <to-view-id>/detallesencargadolaboratorio.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesencargadolaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarencargadoslaboratorios</from-outcome>
+            <to-view-id>/administrarencargadoslaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesencargadolaboratorio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    
 </faces-config>

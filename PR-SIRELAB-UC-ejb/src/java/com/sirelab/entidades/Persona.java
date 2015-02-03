@@ -116,6 +116,9 @@ public class Persona implements Serializable {
     }
 
     public String getIdentificacionpersona() {
+        if(identificacionpersona != null){
+            identificacionpersona = identificacionpersona.toUpperCase();
+        }
         return identificacionpersona;
     }
 
@@ -124,6 +127,9 @@ public class Persona implements Serializable {
     }
 
     public String getNombrespersona() {
+        if(nombrespersona != null){
+            nombrespersona = nombrespersona.toUpperCase();
+        }
         return nombrespersona;
     }
 
@@ -132,6 +138,9 @@ public class Persona implements Serializable {
     }
 
     public String getApellidospersona() {
+        if(apellidospersona != null){
+            apellidospersona = apellidospersona.toUpperCase();
+        }
         return apellidospersona;
     }
 
@@ -164,6 +173,9 @@ public class Persona implements Serializable {
     }
 
     public String getDireccionpersona() {
+        if(direccionpersona != null){
+            direccionpersona = direccionpersona.toUpperCase();
+        }
         return direccionpersona;
     }
 

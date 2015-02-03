@@ -87,6 +87,9 @@ public class EntidadExterna implements Serializable {
     }
 
     public String getNombreentidad() {
+        if(nombreentidad != null){
+            nombreentidad = nombreentidad.toUpperCase();
+        }
         return nombreentidad;
     }
 

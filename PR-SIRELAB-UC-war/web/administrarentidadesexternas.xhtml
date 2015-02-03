@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE ENTIDADES</strong></legend>
+
+
+                            <strong><h:outputText value="Primer Nombre: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerAdministrarEntidadesExternas.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Segundo Nombre: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroApellido" value="#{controllerAdministrarEntidadesExternas.parametroApellido}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Doc. Identificación:" style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDocumento" value="#{controllerAdministrarEntidadesExternas.parametroDocumento}" maxlength="20" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Electronico:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCorreo" value="#{controllerAdministrarEntidadesExternas.parametroCorreo}" maxlength="45" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Estado Entidad:" style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEstado" value="#{controllerAdministrarEntidadesExternas.parametroEstado}" disabled="#{controllerAdministrarEntidadesExternas.todosEntidadesExternas}" style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 100px">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="TODOS ENTIDADES" style="position: absolute; left: 305px; top: 162px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectBooleanCheckbox value="#{controllerAdministrarEntidadesExternas.todosEntidadesExternas}" style="position: absolute; left: 440px; top: 159px;" >
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEntidadesExternas.modificacionTodosEntidadesExternas}"/>
+                            </p:selectBooleanCheckbox>
+
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <strong><h:outputText value="ID Entidad:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroIDUnico" value="#{controllerAdministrarEntidadesExternas.parametroIDUnico}" maxlength="20" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Auxiliar:" style="position: absolute; left: 600px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombreUnico" value="#{controllerAdministrarEntidadesExternas.parametroNombreUnico}" maxlength="45" style="position: absolute; left: 770px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Elect. Auxiliar:" style="position: absolute; left: 600px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroEmailUnico" value="#{controllerAdministrarEntidadesExternas.parametroEmailUnico}" maxlength="45" style="position: absolute; left: 770px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            
+                            <p:commandButton id="exportarXLS" disabled="#{controllerAdministrarEntidadesExternas.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1070px; top: 25px; " ajax="false" actionListener="#{controllerAdministrarEntidadesExternas.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerAdministrarEntidadesExternas.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerAdministrarEntidadesExternas.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerAdministrarEntidadesExternas.buscarEntidadesExternasPorParametros()}" update="panelMenu"/>
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoEntidad" rowKey="#{infoEntidad.identidadexterna}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerAdministrarEntidadesExternas.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerAdministrarEntidadesExternas.listaEntidadesExternas}"
+                                         filteredValue="#{controllerAdministrarEntidadesExternas.filtrarListaEntidadesExternas}"
+                                         >
+
+                                <p:column  headerText="Número Identificación"  
+                                           filterMatchMode="contains" id="numeroIDTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.persona.identificacionpersona}" sortBy="#{infoEntidad.persona.identificacionpersona}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Número Identificación"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.persona.identificacionpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Primer Nombre"  
+                                           filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.persona.nombrespersona}" sortBy="#{infoEntidad.persona.nombrespersona}">
+                                    <f:facet name="header"><h:outputText value="Primer Nombre"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.persona.nombrespersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Segundo Nombre"  
+                                           filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.persona.apellidospersona}" sortBy="#{infoEntidad.persona.apellidospersona}">
+                                    <f:facet name="header"><h:outputText value="Segundo Nombre"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.persona.apellidospersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="Correo Electronico"  
+                                           filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.persona.emailpersona}" sortBy="#{infoEntidad.persona.emailpersona}">
+                                    <f:facet name="header"><h:outputText value="Correo Electronico"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.persona.emailpersona}"/>
+                                </p:column>
+
+                                <p:column  headerText="ID Entidad"  
+                                           filterMatchMode="contains" id="idUnicoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.identidadexterna}" sortBy="#{infoEntidad.identidadexterna}">
+                                    <f:facet name="header"><h:outputText value="ID Entidad"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.identidadexterna}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Auxiliar"  
+                                           filterMatchMode="contains" id="nombreUnicoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.nombreentidad}" sortBy="#{infoEntidad.nombreentidad}">
+                                    <f:facet name="header"><h:outputText value="Nombre Auxiliar"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.nombreentidad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Correo Electronico Auxiliar"  
+                                           filterMatchMode="contains" id="emailUnicoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEntidad.emailentidad}" sortBy="#{infoEntidad.emailentidad}">
+                                    <f:facet name="header"><h:outputText value="Correo Electronico Auxiliar"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.emailentidad}"/>
+                                </p:column> 
+
+                                <p:column  headerText="Estado"  
+                                           filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="100"
+                                           filterBy="#{infoEntidad.persona.usuario.strEstado}" sortBy="#{infoEntidad.persona.usuario.strEstado}">
+                                    <f:facet name="header"><h:outputText value="Estado"/></f:facet>
+                                    <h:outputText value="#{infoEntidad.persona.usuario.strEstado}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarEntidadesExternas.verDetallesEntidadExterna()}" actionListener="#{controllerDetallesEntidadExterna.recibirIDEntidadesExternasDetalles(infoEntidad.identidadexterna)}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nueva Entidad" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerAdministrarEntidadesExternas.dispararDialogoNuevoEntidadExterna()}"/>
+                        <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1100px; top: 455px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" process="@this"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerAdministrarEntidadesExternas.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroEntidad" header="Registro Nuevo Entidad" widgetVar="NuevoRegistroEntidad" closable="false" resizable="false"  draggable="false"  modal="true" height="490" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información personal de la entidad externa" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoEntidadExterna" style="border: none;">
+                            <strong><h:outputText value="*Primer Nombre: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombresEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoNombresEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombresEntidadExterna" value="Nombres de la entidad" />
+
+                            <strong><h:outputText value="*Segundo Nombre: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoApellidoEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoApellidoEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoApellidoEntidadExterna" value="Apellidos de la entidad" />
+
+                            <strong><h:outputText value="*Correo Electronico: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCorreoEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoCorreoEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 130px; " onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCorreoEntidadExterna" value="Correo electronico entidad" />
+
+                            <strong><h:outputText  value="*Número Identificación: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="nuevoIdentificacionEntidadExterna" maxlength="20" value="#{controllerAdministrarEntidadesExternas.nuevoIdentificacionEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEntidadesExternas.modificarIdentificacionEntidadExterna()}"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoIdentificacionEntidadExterna" value="Numero de identificación" />
+
+                            <strong><h:outputText value="Numero Telefonico 1: " style=" position: absolute; top: 195px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNumero1EntidadExterna" maxlength="20" value="#{controllerAdministrarEntidadesExternas.nuevoNumero1EntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero1EntidadExterna" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Numero Telefonico 2:  " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNumero2EntidadExterna" maxlength="20" value="#{controllerAdministrarEntidadesExternas.nuevoNumero2EntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNumero2EntidadExterna" value="Numero telefonico" />
+
+                            <strong><h:outputText value="Dirección Residencia: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:inputText id="nuevoDireccionEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoDireccionEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDireccionEntidadExterna" value="Dirección de la entidad" />
+
+                            <strong><h:outputText value="*ID Entidad: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:inputText id="nuevoIDUnicoEntidadExterna" maxlength="20" value="#{controllerAdministrarEntidadesExternas.nuevoIDUnicoEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 280px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoIDUnicoEntidadExterna" value="ID de la entidad"/>
+
+                            <strong><h:outputText value="Nombre Auxiliar: " style=" position: absolute; top: 315px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNombreUnicoEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoNombreUnicoEntidadExterna}" style=" width: 212px; position: absolute; left: 220px; top: 310px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreUnicoEntidadExterna" value="Nombre auxiliar entidad"/>
+
+                            <strong><h:outputText value="Correo Elect. Auxiliar: " style=" position: absolute; top: 345px; left: 50px" /></strong>
+                            <p:inputText id="nuevoEmailUnicoEntidadExterna" maxlength="45" value="#{controllerAdministrarEntidadesExternas.nuevoEmailUnicoEntidadExterna}" style=" width: 212px; position: absolute; left: 220px; top: 340px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoEmailUnicoEntidadExterna" value="Correo elect. auxiliar entidad"/>
+
+                            <strong><h:outputText value="*Nombre de Usuario: " style=" position: absolute; top: 375px; left: 50px" /></strong>
+                            <p:inputText id="nuevoUsuarioEntidadExterna" maxlength="45" readonly="true" value="#{controllerAdministrarEntidadesExternas.nuevoUserEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 370px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoUsuarioEntidadExterna" value="Nombre Usuario" />
+
+                            <strong><h:outputText value="*Contraseña Usuario: " style=" position: absolute; top: 405px; left: 50px" /></strong>
+                            <p:inputText id="nuevoPasswordEntidadExterna" maxlength="45" readonly="true" value="#{controllerAdministrarEntidadesExternas.nuevoPassEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 400px;">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <p:commandButton id="limpiarEntidad" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarEntidadesExternas.limpiarRegistroEntidadExterna()}" update="nuevoEntidadExterna" process="@this"/>
+                            <p:commandButton id="agregarEntidad" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarEntidadesExternas.registrarNuevoEntidadExterna()}"  />
+                            <p:commandButton id="cancelarEntidad" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEntidadesExternas.registrarNuevoEntidadExterna()}" update="nuevoEntidadExterna" onclick="NuevoRegistroEntidad.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="errorNombreApellidoEntidadExterna" header="ATENCIÓN..!" widgetVar="errorNombreApellidoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Primer-Segundo Nombre se encuentran vacios o se encuentran erroneos y/o el nombre auxiliar esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEmailEntidadExterna" header="ATENCIÓN..!" widgetVar="errorEmailEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El correo electronico se encuentra vacio o erroneo y/o el correo auxiliar esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocumentoEntidadExterna" header="ATENCIÓN..!" widgetVar="errorDocumentoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos NumeroIdentificación-ID EntidadExterna estan vacios o erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosEntidadExterna" header="ATENCIÓN..!" widgetVar="errorNumerosEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDireccionEntidadExterna" header="ATENCIÓN..!" widgetVar="errorDireccionEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorUserPassEntidadExterna" header="ATENCIÓN..!" widgetVar="errorUserPassEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Usuario y Password son obligatorios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEntidadExternaRegistrado" header="ERROR..!" widgetVar="errorEntidadExternaRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="La entidad registrada ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEntidadExterna" header="Información de Registro" widgetVar="registroExitosoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la nueva entidad en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEntidadExterna" header="Información de Registro" widgetVar="registroFallidoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

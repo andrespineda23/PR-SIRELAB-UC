@@ -91,6 +91,9 @@ public class Carrera implements Serializable {
     }
 
     public String getNombrecarrera() {
+        if(nombrecarrera != null){
+            nombrecarrera = nombrecarrera.toUpperCase();
+        }
         return nombrecarrera;
     }
 

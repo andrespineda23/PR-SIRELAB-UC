@@ -4,10 +4,12 @@ import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.entidades.Persona;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -131,5 +133,98 @@ public class PersonaDAO implements PersonaDAOInterface {
             System.out.println("Error obtenerPersonaLoginUserPassword PersonaDAO : " + e.toString());
             return null;
         }
+    }
+
+    @Override
+    public List<Persona> buscarAdministradoresPorFiltrado(Map<String, String> filters) {
+        try {
+            final String alias = "a";
+            final StringBuilder jpql = new StringBuilder();
+            String jpql2;
+            jpql.append("SELECT a FROM ").append(Persona.class.getSimpleName()).append(" " + alias);
+            //
+            jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
+            //
+            System.out.println("jpql2.toString() : " + jpql2.toString());
+            TypedQuery<Persona> tq = em.createQuery(jpql2.toString(), Persona.class);
+            tq = asignarValores(tq, filters);
+            return tq.getResultList();
+        } catch (Exception e) {
+            System.out.println("Error buscarPersonasPorFiltrado PersonaDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    private String adicionarFiltros(String jpql, Map<String, String> filters, String alias) {
+        final StringBuilder wheres = new StringBuilder();
+        wheres.append(" WHERE a.usuario.tipousuario.nombretipousuario = 'ADMINISTRADOR'");
+        int camposFiltro = 1;
+        if (null != filters && !filters.isEmpty()) {
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                    if (camposFiltro > 0) {
+                        wheres.append(" AND ");
+                    }
+                    if ("parametroEstado".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "usuario.estado");
+                        wheres.append("= :").append(entry.getKey());
+                        camposFiltro++;
+                    }
+                    if ("parametroNombre".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".nombrespersona")
+                                .append(") Like :parametroNombre");
+                        camposFiltro++;
+                    }
+                    if ("parametroApellido".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".apellidospersona")
+                                .append(") Like :parametroApellido");
+                        camposFiltro++;
+                    }
+                    if ("parametroDocumento".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".identificacionpersona")
+                                .append(") Like :parametroDocumento");
+                        camposFiltro++;
+                    }
+                    if ("parametroCorreo".equals(entry.getKey())) {
+                        wheres.append("UPPER(").append(alias)
+                                .append(".emailpersona")
+                                .append(") Like :parametroCorreo");
+                        camposFiltro++;
+                    }
+                }
+            }
+        }
+        jpql = jpql + wheres /*+ " ORDER BY " + alias + ".id ASC"*/;
+
+        System.out.println(jpql);
+
+        if (jpql.trim()
+                .endsWith("WHERE")) {
+            jpql = jpql.replace("WHERE", "");
+        }
+        return jpql;
+    }
+
+    private TypedQuery<Persona> asignarValores(TypedQuery<Persona> tq, Map<String, String> filters) {
+
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            if (null != entry.getValue() && !entry.getValue().isEmpty()) {
+                if (("parametroCorreo".equals(entry.getKey()))
+                        || ("parametroDocumento".equals(entry.getKey()))
+                        || ("parametroNombre".equals(entry.getKey()))
+                        || ("parametroCargo".equals(entry.getKey()))
+                        || ("parametroApellido".equals(entry.getKey()))) {
+                    //
+                    tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
+                }
+                if (("parametroEstado".equals(entry.getKey()))) {
+                    tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
+                }
+            }
+        }
+        return tq;
     }
 }

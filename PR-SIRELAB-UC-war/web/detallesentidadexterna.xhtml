@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 25px;left: 1010px"  />  
+
+                        <fieldset class="fieldsetDatosPersonales">
+                            <legend style="font-size: 14px; color: darkblue"><strong>DATOS PERSONALES</strong></legend>
+
+                            <strong><h:outputText value="*Nombres EntidadExterna" style="position: absolute; left: 150px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.nombreEntidadExterna}"  style="position: absolute; left: 150px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Apellidos EntidadExterna" style="position: absolute; left: 400px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.apellidoEntidadExterna}" style="position: absolute; left: 400px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Identificación Personal" style="position: absolute; left: 650px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.identificacionEntidadExterna}" style="position: absolute; left: 650px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Email Personal" style="position: absolute; left: 150px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.correoEntidadExterna}" style="position: absolute; left: 150px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Tipo de Usuario" style="position: absolute; left: 400px; top: 120px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.persona.usuario.tipousuario.nombretipousuario}" style="position: absolute; left: 400px; top: 145px; width: 200px; text-transform: uppercase"/>
+                            <strong><h:outputText value="Estado Usuario" style="position: absolute; left: 650px; top: 120px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesEntidadExterna.entidadExternaDetalles.persona.usuario.strEstado}" style="position: absolute; left: 650px; top: 145px; width: 200px; text-transform: uppercase"/>
+
+                            <strong><h:outputText value="Número Telefonico 1" style="position: absolute; left: 150px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.telefono1EntidadExterna}" style="position: absolute; left: 150px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Número Telefonico 2" style="position: absolute; left: 400px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.telefono2EntidadExterna}" style="position: absolute; left: 400px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Dirección Residencia" style="position: absolute; left: 650px; top: 190px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.direccionEntidadExterna}" style="position: absolute; left: 650px; top: 215px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*ID Entidad" style="position: absolute; left: 150px; top: 260px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.idUnicoEntidadExterna}" style="position: absolute; left: 150px; top: 285px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Auxiliar" style="position: absolute; left: 400px; top: 260px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.nombreUnicoEntidadExterna}" style="position: absolute; left: 400px; top: 285px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Correo Elect. Auxiliar" style="position: absolute; left: 650px; top: 260px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesEntidadExterna.activarEditar}" value="#{controllerDetallesEntidadExterna.emailUnicoEntidadExterna}" style="position: absolute; left: 650px; top: 285px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesEntidadExterna.modificacionesRegistroEntidadExterna()}"/>
+                            </p:inputText>
+
+                        </fieldset>
+
+                        <fieldset class="fieldsetOpcionesDetalles">
+                            <legend style="font-size: 14px; color: darkblue"><strong>OPCIONES DE TRABAJO</strong></legend>
+
+                            <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 230px"  />  
+                            <p:tooltip for="infoRegistro" value="Solo el perfil ADMINISTRADOR puede 
+                                       editar la información del entidadexterna"/>
+
+                            <p:commandButton value="ACTIVAR" onclick="dlgActivarUsuario.show()" disabled="#{controllerDetallesEntidadExterna.disabledActivar}" id="activar" style="position: absolute; left: 70px; top: 60px; width: 120px; text-align: center"/>
+                            <p:commandButton value="INACTIVAR" onclick="dlgInactivarUsuario.show()" disabled="#{controllerDetallesEntidadExterna.disabledInactivar}" id="inactivar" style="position: absolute; left: 70px; top: 110px; width: 120px; text-align: center"/>
+                            <p:commandButton value="EDITAR" disabled="#{controllerDetallesEntidadExterna.disabledEditar}" id="editar" style="position: absolute; left: 70px; top: 160px; width: 120px; text-align: center" actionListener="#{controllerDetallesEntidadExterna.activarEditarRegistro()}" process="@this"/>
+                            <p:commandButton value="RESTAURAR" disabled="#{controllerDetallesEntidadExterna.activarEditar}" id="restaurar" style="position: absolute; left: 70px; top: 210px; width: 120px; text-align: center" actionListener="#{controllerDetallesEntidadExterna.restaurarInformacionEntidadExterna()}" process="@this"/>
+                            <p:commandButton value="GUARDAR" rendered="#{controllerDetallesEntidadExterna.visibleGuardar}" id="guardar" style="position: absolute; left: 70px; top: 260px; width: 120px; text-align: center" actionListener="#{controllerDetallesEntidadExterna.almacenarModificacionesEntidadExterna()}" process="@this"/>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="administrarentidadesexternas" process="@this" icon="ui-icon-arrowthick-1-w" />
+                    </p:panel>
+
+                    <p:dialog id="dlgActivarUsuario" header="ATENCIÓN...!" widgetVar="dlgActivarUsuario"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a ACTIVAR el usuario. ¿Desea activar de la entidad actual?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgActivarUsuario.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesEntidadExterna.activarEntidadExterna()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgActivarUsuario.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="dlgInactivarUsuario" header="ATENCIÓN...!" widgetVar="dlgInactivarUsuario"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a INACTIVAR el usuario. ¿Desea continuar con la inactivación de la entidad?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgInactivarUsuario.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesEntidadExterna.inactivarEntidadExterna()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgInactivarUsuario.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNombreApellidoEntidadExterna" header="ATENCIÓN..!" widgetVar="errorNombreApellidoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Primer-Segundo Nombre se encuentran vacios o se encuentran erroneos y/o el nombre auxiliar esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEmailEntidadExterna" header="ATENCIÓN..!" widgetVar="errorEmailEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El correo electronico se encuentra vacio o erroneo y/o el correo auxiliar esta erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDocumentoEntidadExterna" header="ATENCIÓN..!" widgetVar="errorDocumentoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos NumeroIdentificacion-IDEntidad estan vacio o erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosEntidadExterna" header="ATENCIÓN..!" widgetVar="errorNumerosEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Telefono 1-2 se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorDireccionEntidadExterna" header="ATENCIÓN..!" widgetVar="errorDireccionEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo dirección se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+
+                    <p:dialog id="errorEntidadExternaRegistrado" header="ERROR..!" widgetVar="errorEntidadExternaRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="La entidad registrada ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEntidadExterna" header="Información de Registro" widgetVar="registroExitosoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la modificación de la entidad." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEntidadExterna" header="Información de Registro" widgetVar="registroFallidoEntidadExterna"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="mensajeNoCambiosReg" header="Información de Registro" widgetVar="mensajeNoCambiosReg"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="No se altero el estado de la información del registro, el proceso de guardado fue omitido." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="confirmarGuardar" header="Información de Registro" widgetVar="confirmarGuardar"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Existen modificaciones en proceso. Guarde los cambios primero para realizar el proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

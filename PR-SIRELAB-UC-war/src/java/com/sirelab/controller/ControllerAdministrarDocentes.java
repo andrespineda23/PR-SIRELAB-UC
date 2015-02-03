@@ -6,7 +6,10 @@ import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.Usuario;
+import com.sirelab.exporter.ExportarPDFTablasAnchas;
+import com.sirelab.exporter.ExportarXLS;
 import com.sirelab.utilidades.Utilidades;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +20,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.column.Column;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.export.Exporter;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -41,6 +46,8 @@ public class ControllerAdministrarDocentes implements Serializable {
     //
     private boolean activoDepartamento;
     //
+    private boolean activarExport;
+    //
     private List<Docente> listaDocentes;
     private List<Docente> filtrarListaDocentes;
     //
@@ -60,6 +67,7 @@ public class ControllerAdministrarDocentes implements Serializable {
     @PostConstruct
     public void init() {
         activoDepartamento = true;
+        activarExport = true;
         activoNuevoDepartamento = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -125,13 +133,23 @@ public class ControllerAdministrarDocentes implements Serializable {
         try {
             RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
+            listaDocentes = null;
             listaDocentes = administrarDocentesBO.consultarDocentesPorParametro(filtros);
             if (listaDocentes != null) {
                 if (listaDocentes.size() > 0) {
+                    activarExport = false;
                     activarFiltrosTabla();
+                } else {
+                    activarExport = true;
+                    context.execute("consultaSinDatos.show();");
                 }
+            } else {
+                context.execute("consultaSinDatos.show()");
             }
             context.update("form:datosBusqueda");
+            context.update("form:exportarXLS");
+            context.update("form:exportarXML");
+            context.update("form:exportarPDF");
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarDocentes buscarDocentesPorParametros : " + e.toString());
         }
@@ -139,6 +157,7 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         desactivarFiltrosTabla();
+        activarExport = true;
         activoDepartamento = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -251,7 +270,7 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public void limpiarRegistroDocente() {
         listaDepartamentos = null;
-        activoNuevoDepartamento = false;
+        activoNuevoDepartamento = true;
         nuevoDepartamentoDocente = new Departamento();
         nuevoApellidoDocente = null;
         nuevoCargoDocente = null;
@@ -340,8 +359,8 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public boolean validaDocenteYaRegistrado() {
         boolean retorno = true;
-        Docente estudianteRegistrado = administrarDocentesBO.obtenerDocentePorCorreoNumDocumento(nuevoCorreoDocente, nuevoIdentificacionDocente);
-        if (estudianteRegistrado != null) {
+        Docente docenteRegistrado = administrarDocentesBO.obtenerDocentePorCorreoNumDocumento(nuevoCorreoDocente, nuevoIdentificacionDocente);
+        if (docenteRegistrado != null) {
             retorno = false;
         }
         return retorno;
@@ -412,13 +431,30 @@ public class ControllerAdministrarDocentes implements Serializable {
         boolean validar = validarIdentificacionDocente();
         if (validar == true) {
             nuevoUserDocente = nuevoIdentificacionDocente;
-            nuevoPassDocente = nuevoIdentificacionDocente + "UC";
+            nuevoPassDocente = nuevoIdentificacionDocente;
         } else {
             nuevoUserDocente = null;
             nuevoPassDocente = null;
         }
         context.update("formT:formularioDialogos:nuevoPasswordDocente");
         context.update("formT:formularioDialogos:nuevoUsuarioDocente");
+    }
+
+    //EXPORTAR
+    public void exportPDF() throws IOException {
+        DataTable tabla = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formT:form:datosBusqueda");
+        FacesContext context = FacesContext.getCurrentInstance();
+        Exporter exporter = new ExportarPDFTablasAnchas();
+        exporter.export(context, tabla, "Administrar_Docentes_PDF", false, false, "UTF-8", null, null);
+        context.responseComplete();
+    }
+
+    public void exportXLS() throws IOException {
+        DataTable tabla = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formT:form:datosBusqueda");
+        FacesContext context = FacesContext.getCurrentInstance();
+        Exporter exporter = new ExportarXLS();
+        exporter.export(context, tabla, "Administrar_Docentes_XLS", false, false, "UTF-8", null, null);
+        context.responseComplete();
     }
 
     // GET - SET
@@ -652,6 +688,14 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public void setNuevoPassDocente(String nuevoPassDocente) {
         this.nuevoPassDocente = nuevoPassDocente;
+    }
+
+    public boolean isActivarExport() {
+        return activarExport;
+    }
+
+    public void setActivarExport(boolean activarExport) {
+        this.activarExport = activarExport;
     }
 
 }

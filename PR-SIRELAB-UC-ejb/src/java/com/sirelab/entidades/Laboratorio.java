@@ -76,6 +76,9 @@ public class Laboratorio implements Serializable {
     }
 
     public String getNombrelaboratorio() {
+        if(nombrelaboratorio != null){
+            nombrelaboratorio = nombrelaboratorio.toUpperCase();
+        }
         return nombrelaboratorio;
     }
 

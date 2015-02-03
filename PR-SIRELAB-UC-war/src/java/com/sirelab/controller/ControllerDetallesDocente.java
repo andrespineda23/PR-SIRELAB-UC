@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sirelab.controller;
 
 import com.sirelab.bo.interfacebo.AdministrarDocentesBOInterface;
@@ -11,6 +6,7 @@ import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,7 +23,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesDocente {
+public class ControllerDetallesDocente implements Serializable {
 
     @EJB
     AdministrarDocentesBOInterface administrarDocentesBO;

@@ -39,6 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PlanEstudios.findByCodigoplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.codigoplanestudio = :codigoplanestudio"),
     @NamedQuery(name = "PlanEstudios.findByNombreplanestudio", query = "SELECT p FROM PlanEstudios p WHERE p.nombreplanestudio = :nombreplanestudio")})
 public class PlanEstudios implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planestudios")
+    private Collection<Asignatura> asignaturaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,6 +85,9 @@ public class PlanEstudios implements Serializable {
     }
 
     public String getCodigoplanestudio() {
+        if(codigoplanestudio != null){
+            codigoplanestudio = codigoplanestudio.toUpperCase();
+        }
         return codigoplanestudio;
     }
 
@@ -91,6 +96,9 @@ public class PlanEstudios implements Serializable {
     }
 
     public String getNombreplanestudio() {
+        if(nombreplanestudio != null){
+            nombreplanestudio = nombreplanestudio.toUpperCase();
+        }
         return nombreplanestudio;
     }
 
@@ -138,6 +146,15 @@ public class PlanEstudios implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.PlanEstudios[ idplanestudios=" + idplanestudios + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Asignatura> getAsignaturaCollection() {
+        return asignaturaCollection;
+    }
+
+    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
+        this.asignaturaCollection = asignaturaCollection;
     }
     
 }

@@ -87,6 +87,12 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:inputText>
 
+                            <p:commandButton id="exportarXLS" disabled="#{controllerAdministrarEstudiantes.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1070px; top: 25px; " ajax="false" actionListener="#{controllerAdministrarEstudiantes.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerAdministrarEstudiantes.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerAdministrarEstudiantes.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
                             <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
                                              actionListener="#{controllerAdministrarEstudiantes.buscarEstudiantesPorParametros()}" update="panelMenu"/>
 
@@ -108,7 +114,8 @@
                                            filterMatchMode="contains" id="numeroIDTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoEstudiante.persona.identificacionpersona}" sortBy="#{infoEstudiante.persona.identificacionpersona}"
-                                           >  
+                                           >
+                                    <f:facet name="header"><h:outputText value="Número Identificación"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.persona.identificacionpersona}"/>
                                 </p:column>
 
@@ -116,13 +123,15 @@
                                            filterMatchMode="contains" id="nombresTabla" filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoEstudiante.persona.nombrespersona}" sortBy="#{infoEstudiante.persona.nombrespersona}">
+                                    <f:facet name="header"><h:outputText value="Nombres"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.persona.nombrespersona}"/>
                                 </p:column>
 
                                 <p:column  headerText="Apellidos"  
                                            filterMatchMode="contains" id="apellidosTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
-                                           filterBy="#{infoEstudiante.persona.identificacionpersona}" sortBy="#{infoEstudiante.persona.identificacionpersona}">
+                                           filterBy="#{infoEstudiante.persona.apellidospersona}" sortBy="#{infoEstudiante.persona.apellidospersona}">
+                                    <f:facet name="header"><h:outputText value="Apellidos"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.persona.apellidospersona}"/>
                                 </p:column>
 
@@ -130,6 +139,7 @@
                                            filterMatchMode="contains" id="correoTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoEstudiante.persona.emailpersona}" sortBy="#{infoEstudiante.persona.emailpersona}">
+                                    <f:facet name="header"><h:outputText value="Correo Electronico"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.persona.emailpersona}"/>
                                 </p:column>
 
@@ -137,6 +147,7 @@
                                            filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}" sortBy="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Departamento"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.planestudio.carrera.departamento.nombredepartamento}"/>
                                 </p:column>
 
@@ -144,6 +155,7 @@
                                            filterMatchMode="contains" id="carreraTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="300"
                                            filterBy="#{infoEstudiante.planestudio.carrera.nombrecarrera}" sortBy="#{infoEstudiante.planestudio.carrera.nombrecarrera}">
+                                    <f:facet name="header"><h:outputText value="Carrera"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.planestudio.carrera.nombrecarrera}"/>
                                 </p:column>
 
@@ -151,6 +163,7 @@
                                            filterMatchMode="contains" id="planEstTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="200"
                                            filterBy="#{infoEstudiante.planestudio.codigoplanestudio}" sortBy="#{infoEstudiante.planestudio.codigoplanestudio}">
+                                    <f:facet name="header"><h:outputText value="Plan de Estudios"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.planestudio.codigoplanestudio}"/>
                                 </p:column>
 
@@ -158,6 +171,7 @@
                                            filterMatchMode="contains" id="semestreTabla"  filterStyle="display: none; visibility: hidden;" 
                                            width="100"
                                            filterBy="#{infoEstudiante.semestreestudiante}" sortBy="#{infoEstudiante.semestreestudiante}">
+                                    <f:facet name="header"><h:outputText value="Semestre"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.semestreestudiante}"/>
                                 </p:column> 
 
@@ -165,11 +179,13 @@
                                            filterMatchMode="contains" id="estadoTabla" filterStyle="display: none; visibility: hidden;" 
                                            width="100"
                                            filterBy="#{infoEstudiante.persona.usuario.strEstado}" sortBy="#{infoEstudiante.persona.usuario.strEstado}">
+                                    <f:facet name="header"><h:outputText value="Estado"/></f:facet>
                                     <h:outputText value="#{infoEstudiante.persona.usuario.strEstado}"/>
                                 </p:column>
 
                                 <p:column  headerText="Ver"  
                                            filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
                                     <p:commandLink value="Detalles" style="color: blue" action="#{controllerAdministrarEstudiantes.verDetallesEstudiante()}" actionListener="#{controllerDetallesEstudiante.recibirIDEstudiantesDetalles(infoEstudiante.idestudiante)}"/>
                                 </p:column>
 
@@ -184,6 +200,11 @@
 
 
                     </p:panel>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
                 </h:form>
 
             </ui:define>

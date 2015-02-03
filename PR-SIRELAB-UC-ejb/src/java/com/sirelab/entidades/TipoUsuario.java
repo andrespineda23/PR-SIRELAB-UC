@@ -71,6 +71,9 @@ public class TipoUsuario implements Serializable {
     }
 
     public String getNombretipousuario() {
+        if(nombretipousuario != null){
+            nombretipousuario = nombretipousuario.toUpperCase();
+        }
         return nombretipousuario;
     }
 

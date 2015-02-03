@@ -3,6 +3,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.Persona;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -25,4 +26,6 @@ public interface PersonaDAOInterface {
     public Persona buscarPersonaPorCorreoYNumeroIdentificacion(String correo, String identificacion);
 
     public Persona obtenerPersonaLoginUserPassword(String usuario, String password);
+
+    public List<Persona> buscarAdministradoresPorFiltrado(Map<String, String> filters);
 }

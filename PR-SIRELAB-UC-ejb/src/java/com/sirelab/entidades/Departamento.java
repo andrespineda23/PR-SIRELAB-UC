@@ -81,7 +81,7 @@ public class Departamento implements Serializable {
     }
 
     public String getNombredepartamento() {
-        if (nombredepartamento != null && !nombredepartamento.isEmpty()) {
+        if(nombredepartamento != null){
             nombredepartamento = nombredepartamento.toUpperCase();
         }
         return nombredepartamento;
