@@ -286,7 +286,7 @@
 
                             <p:commandButton id="limpiarEL" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarRegistroEncargadoLaboratorio()}" update="nuevoEncargadoLaboratorio" process="@this"/>
                             <p:commandButton id="agregarEL" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarEncargadosLaboratorios.registrarNuevoEncargadoLaboratorio()}"  />
-                            <p:commandButton id="cancelarEL" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEncargadosLaboratorios.registrarNuevoEncargadoLaboratorio()}" update="nuevoEncargadoLaboratorio" onclick="NuevoRegistroEncargadoLaboratorio.hide();"  process="@this"/>
+                            <p:commandButton id="cancelarEL" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEncargadosLaboratorios.limpiarRegistroEncargadoLaboratorio()}" update="nuevoEncargadoLaboratorio" onclick="NuevoRegistroEncargadoLaboratorio.hide();"  process="@this"/>
                         </p:panel>
                     </p:dialog>
 

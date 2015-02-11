@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE EDIFICIOS</strong></legend>
+
+
+                            <strong><h:outputText value="Descripción Edificio: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarEdificios.parametroDescripcion}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Dirección Edificio: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroApellido" value="#{controllerGestionarEdificios.parametroDireccion}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Sede:" style="position: absolute; left: 30px; top: 100px; text-transform: uppercase; width: 250px"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarEdificios.parametroSede}"
+                                             style="position: absolute; left: 200px; top: 95px; width: 200px; text-transform: uppercase"
+                                             id="parametroSede">
+                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarEdificios.listaSedes}" var="sede"
+                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarEdificios.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarEdificios.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarEdificios.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarEdificios.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Edificios" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarEdificios.buscarEdificiosPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarEdificios.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoEdi" rowKey="#{infoEdi.idedificio}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarEdificios.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarEdificios.listaEdificios}"
+                                         filteredValue="#{controllerGestionarEdificios.filtrarListaEdificios}"
+                                         >
+
+                                <p:column  headerText="Descripción Edificio"  
+                                           filterMatchMode="contains" id="descripcionTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEdi.descripcionedificio}" sortBy="#{infoEdi.descripcionedificio}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Descripción Edificio"/></f:facet>
+                                    <h:outputText value="#{infoEdi.descripcionedificio}"/>
+                                </p:column>
+
+                                <p:column  headerText="Dirección Edificio"  
+                                           filterMatchMode="contains" id="direccionTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEdi.direccion}" sortBy="#{infoEdi.direccion}">
+                                    <f:facet name="header"><h:outputText value="Dirección Edificio"/></f:facet>
+                                    <h:outputText value="#{infoEdi.direccion}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Sede"  
+                                           filterMatchMode="contains" id="sedeTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoEdi.sede.nombresede}" sortBy="#{infoEdi.sede.nombresede}">
+                                    <f:facet name="header"><h:outputText value="Nombre Sede"/></f:facet>
+                                    <h:outputText value="#{infoEdi.sede.nombresede}"/>
+                                </p:column>
+
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Edificio" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarEdificios.dispararDialogoNuevoEdificio()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarEdificios.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroEdificio" header="Registro Nuevo Edificio" widgetVar="NuevoRegistroEdificio" closable="false" resizable="false"  draggable="false"  modal="true" height="205" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nuevo edificio" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoEdificio" style="border: none;">
+                            <strong><h:outputText value="Descripción Edificio: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoDescripcionEdificio" maxlength="45" value="#{controllerGestionarEdificios.nuevoDescripcionEdificio}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDescripcionEdificio" value="Descripción del edificio" />
+
+                            <strong><h:outputText value="Dirección Edificio: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoDireccionEdificio" maxlength="45" value="#{controllerGestionarEdificios.nuevoDireccionEdificio}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDireccionEdificio" value="Dirección del edificio" />
+
+                            <strong><h:outputText value="*Sede: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarEdificios.nuevoSedeEdificio}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 130px; "
+                                             id="nuevoSedeEdificio">
+                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarEdificios.listaSedes}" var="sede"
+                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="limpiarEdificio" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarEdificios.limpiarRegistroEdificio()}" update="nuevoEdificio" process="@this"/>
+                            <p:commandButton id="agregarEdificio" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarEdificios.registrarNuevoEdificio()}"  />
+                            <p:commandButton id="cancelarEdificio" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarEdificios.limpiarRegistroEdificio()}" update="nuevoEdificio" onclick="NuevoRegistroEdificio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroEdificio" header="Registro Editar Edificio" widgetVar="EditarRegistroEdificio" closable="false" resizable="false"  draggable="false"  modal="true" height="205" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del edificio a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarEdificio" style="border: none;">
+                            <strong><h:outputText value="Descripción Edificio: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarDescripcionEdificio" maxlength="45" value="#{controllerGestionarEdificios.editarDescripcion}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarDescripcionEdificio" value="Descripción del edificio" />
+
+                            <strong><h:outputText value="Dirección Edificio: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="editarDireccionEdificio" maxlength="45" value="#{controllerGestionarEdificios.editarDireccion}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarDireccionEdificio" value="Dirección del edificio" />
+
+                            <strong><h:outputText value="*Sede: " style="position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarEdificios.editarSede}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 130px; "
+                                             id="editarSedeEdificio">
+                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarEdificios.listaSedes}" var="sede"
+                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="limpiarEEdificio" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarEdificios.limpiarEditarEdificio()}" update="editarEdificio" process="@this"/>
+                            <p:commandButton id="agregarEEdificio" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarEdificios.modificarInformacionEdificio()}"  />
+                            <p:commandButton id="cancelarEEdificio" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarEdificios.limpiarEditarEdificio()}" update="editarEdificio" onclick="EditarRegistroEdificio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionEdificio" header="ATENCIÓN..!" widgetVar="errorInformacionEdificio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Descripción-Direccion se encuentran erroneos . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorSedeEdificio" header="ATENCIÓN..!" widgetVar="errorSedeEdificio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Sede se encuentra vacio. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEdificio" header="Información de Registro" widgetVar="registroExitosoEdificio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el edificio en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEdificio" header="Información de Registro" widgetVar="registroFallidoEdificio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el edificio para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

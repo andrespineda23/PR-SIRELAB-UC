@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -38,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PeriodoAcademico.findByFechainicial", query = "SELECT p FROM PeriodoAcademico p WHERE p.fechainicial = :fechainicial"),
     @NamedQuery(name = "PeriodoAcademico.findByFechafinal", query = "SELECT p FROM PeriodoAcademico p WHERE p.fechafinal = :fechafinal")})
 public class PeriodoAcademico implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,11 +83,14 @@ public class PeriodoAcademico implements Serializable {
     }
 
     public String getDetalleperiodo() {
+        if (null != detalleperiodo) {
+            return detalleperiodo.toUpperCase();
+        }
         return detalleperiodo;
     }
 
     public void setDetalleperiodo(String detalleperiodo) {
-        this.detalleperiodo = detalleperiodo;
+        this.detalleperiodo = detalleperiodo.toUpperCase();
     }
 
     public Date getFechainicial() {
@@ -130,5 +133,5 @@ public class PeriodoAcademico implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.PeriodoAcademico[ idperiodoacademico=" + idperiodoacademico + " ]";
     }
-    
+
 }

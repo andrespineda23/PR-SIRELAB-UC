@@ -179,7 +179,7 @@
 
                 <h:form id="formularioDialogos"  >
 
-                    <p:dialog id="NuevoRegistroEntidad" header="Registro Nuevo Entidad" widgetVar="NuevoRegistroEntidad" closable="false" resizable="false"  draggable="false"  modal="true" height="490" width="480" style=" padding: 0px">  
+                    <p:dialog id="NuevoRegistroEntidadExterna" header="Registro Nuevo Entidad" widgetVar="NuevoRegistroEntidadExterna" closable="false" resizable="false"  draggable="false"  modal="true" height="490" width="480" style=" padding: 0px">  
 
                         <center><strong><h:outputText value="Ingrese la información personal de la entidad externa" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
                         <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
@@ -207,7 +207,7 @@
 
                             <strong><h:outputText  value="*Número Identificación: " style=" position: absolute; top: 165px; left: 50px" /></strong>
                             <p:inputText id="nuevoIdentificacionEntidadExterna" maxlength="20" value="#{controllerAdministrarEntidadesExternas.nuevoIdentificacionEntidadExterna}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();">
-                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdministrarEntidadesExternas.modificarIdentificacionEntidadExterna()}"/>
+                                <p:ajax event="change" process="@this" update="@this nuevoUsuarioEntidadExterna nuevoPasswordEntidadExterna" listener="#{controllerAdministrarEntidadesExternas.modificarIdentificacionEntidadExterna()}"/>
                             </p:inputText>
                             <p:watermark for="nuevoIdentificacionEntidadExterna" value="Numero de identificación" />
 
@@ -260,7 +260,7 @@
 
                             <p:commandButton id="limpiarEntidad" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarEntidadesExternas.limpiarRegistroEntidadExterna()}" update="nuevoEntidadExterna" process="@this"/>
                             <p:commandButton id="agregarEntidad" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarEntidadesExternas.registrarNuevoEntidadExterna()}"  />
-                            <p:commandButton id="cancelarEntidad" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEntidadesExternas.registrarNuevoEntidadExterna()}" update="nuevoEntidadExterna" onclick="NuevoRegistroEntidad.hide();"  process="@this"/>
+                            <p:commandButton id="cancelarEntidad" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarEntidadesExternas.limpiarRegistroEntidadExterna()}" update="nuevoEntidadExterna" onclick="NuevoRegistroEntidadExterna.hide();"  process="@this"/>
                         </p:panel>
                     </p:dialog>
 

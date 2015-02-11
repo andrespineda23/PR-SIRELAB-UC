@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sirelab.bo;
 
 import com.sirelab.bo.interfacebo.AdministrarDocentesBOInterface;
-import com.sirelab.dao.interfacedao.CarreraDAOInterface;
 import com.sirelab.dao.interfacedao.DepartamentoDAOInterface;
 import com.sirelab.dao.interfacedao.DocenteDAOInterface;
-import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
-import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
 import com.sirelab.dao.interfacedao.TipoUsuarioDAOInterface;
 import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Departamento;
@@ -108,6 +100,25 @@ public class AdministrarDocentesBO implements AdministrarDocentesBOInterface {
             docenteDAO.editarDocente(docente);
         } catch (Exception e) {
             System.out.println("Error AdministrarDocentesBO actualizarInformacionDocente : " + e.toString());
+        }
+    }
+
+   //@Override 
+    public void actualizarInformacionPersona(Persona persona) {
+        try {
+            personaDAO.editarPersona(persona);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarDocentesBO actualizarInformacionPersona : " + e.toString());
+        }
+    }
+
+    //@Override 
+    public void actualizarInformacionUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarDocentesBO actualizarInformacionUsuario : " + e.toString());
+
         }
     }
 

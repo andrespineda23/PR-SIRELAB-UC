@@ -81,14 +81,14 @@ public class Departamento implements Serializable {
     }
 
     public String getNombredepartamento() {
-        if(nombredepartamento != null){
-            nombredepartamento = nombredepartamento.toUpperCase();
+        if (null != nombredepartamento) {
+            return nombredepartamento.toUpperCase();
         }
         return nombredepartamento;
     }
 
     public void setNombredepartamento(String nombredepartamento) {
-        this.nombredepartamento = nombredepartamento;
+        this.nombredepartamento = nombredepartamento.toUpperCase();
     }
 
     @XmlTransient

@@ -83,22 +83,25 @@ public class Carrera implements Serializable {
     }
 
     public String getCodigocarrera() {
+        if (null != codigocarrera) {
+            return codigocarrera.toUpperCase();
+        }
         return codigocarrera;
     }
 
     public void setCodigocarrera(String codigocarrera) {
-        this.codigocarrera = codigocarrera;
+        this.codigocarrera = codigocarrera.toUpperCase();
     }
 
     public String getNombrecarrera() {
-        if(nombrecarrera != null){
-            nombrecarrera = nombrecarrera.toUpperCase();
+        if (null != nombrecarrera) {
+            return nombrecarrera.toUpperCase();
         }
         return nombrecarrera;
     }
 
     public void setNombrecarrera(String nombrecarrera) {
-        this.nombrecarrera = nombrecarrera;
+        this.nombrecarrera = nombrecarrera.toUpperCase();
     }
 
     public Departamento getDepartamento() {

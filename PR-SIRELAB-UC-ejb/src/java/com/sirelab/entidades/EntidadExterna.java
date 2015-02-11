@@ -79,22 +79,25 @@ public class EntidadExterna implements Serializable {
     }
 
     public String getIdentificacionentidad() {
+        if (null != identificacionentidad) {
+            return identificacionentidad.toUpperCase();
+        }
         return identificacionentidad;
     }
 
     public void setIdentificacionentidad(String identificacionentidad) {
-        this.identificacionentidad = identificacionentidad;
+        this.identificacionentidad = identificacionentidad.toUpperCase();
     }
 
     public String getNombreentidad() {
-        if(nombreentidad != null){
-            nombreentidad = nombreentidad.toUpperCase();
+        if (null != nombreentidad) {
+            return nombreentidad.toUpperCase();
         }
         return nombreentidad;
     }
 
     public void setNombreentidad(String nombreentidad) {
-        this.nombreentidad = nombreentidad;
+        this.nombreentidad = nombreentidad.toUpperCase();
     }
 
     public String getEmailentidad() {

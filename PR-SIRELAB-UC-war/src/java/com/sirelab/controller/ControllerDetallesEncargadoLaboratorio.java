@@ -25,10 +25,10 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @SessionScoped
 public class ControllerDetallesEncargadoLaboratorio implements Serializable {
-
+    
     @EJB
     AdministrarEncargadosLaboratoriosBOInterface administrarEncargadosLaboratoriosBO;
-
+    
     private EncargadoLaboratorio encargadoLaboratorioDetalles;
     private BigInteger idEncargadoLaboratorio;
     private boolean activarEditar, disabledEditar;
@@ -44,10 +44,10 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     private boolean activoDepartamento, activoLaboratorio;
     private String nombreEncargadoLaboratorio, apellidoEncargadoLaboratorio, correoEncargadoLaboratorio, identificacionEncargadoLaboratorio;
     private String telefono1EncargadoLaboratorio, telefono2EncargadoLaboratorio, direccionEncargadoLaboratorio;
-
+    
     public ControllerDetallesEncargadoLaboratorio() {
     }
-
+    
     @PostConstruct
     public void init() {
         activoDepartamento = true;
@@ -63,7 +63,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             disabledEditar = false;
         }
     }
-
+    
     public void asignarValoresVariablesEncargadoLaboratorio() {
         laboratorioEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio();
         nombreEncargadoLaboratorio = encargadoLaboratorioDetalles.getPersona().getNombrespersona();
@@ -76,7 +76,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         facultadEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento().getFacultad();
         departamentoEncargadoLaboratorio = encargadoLaboratorioDetalles.getLaboratorio().getDepartamento();
     }
-
+    
     public void recibirIDEncargadoLaboratorioDetalles(BigInteger idEncargadoLaboratorio) {
         this.idEncargadoLaboratorio = idEncargadoLaboratorio;
         encargadoLaboratorioDetalles = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(idEncargadoLaboratorio);
@@ -89,7 +89,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         asignarValoresVariablesEncargadoLaboratorio();
     }
-
+    
     public void activarEditarRegistro() {
         activarEditar = false;
         disabledEditar = true;
@@ -98,7 +98,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         listaFacultad = administrarEncargadosLaboratoriosBO.obtenerListaFacultades();
         RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
-
+    
     public void restaurarInformacionEncargadoLaboratorio() {
         encargadoLaboratorioDetalles = new EncargadoLaboratorio();
         encargadoLaboratorioDetalles = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorIDEncargadoLaboratorio(idEncargadoLaboratorio);
@@ -122,7 +122,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         laboratorioEncargadoLaboratorio = null;
         RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
-
+    
     public void actualizarFacultades() {
         try {
             if (Utilidades.validarNulo(facultadEncargadoLaboratorio)) {
@@ -148,7 +148,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarFacultades : " + e.toString());
         }
     }
-
+    
     public void actualizarDepartamentos() {
         try {
             if (Utilidades.validarNulo(departamentoEncargadoLaboratorio)) {
@@ -167,7 +167,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             System.out.println("Error ControllerDetallesEncargadoLaboratorio actualizarDepartamentos : " + e.toString());
         }
     }
-
+    
     public void almacenarModificacionesEncargadoLaboratorio() {
         RequestContext context = RequestContext.getCurrentInstance();
         if (modificacionRegistro == true) {
@@ -205,7 +205,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             restaurarInformacionEncargadoLaboratorio();
         }
     }
-
+    
     public void modificarInformacionEncargadoLaboratorio() {
         RequestContext context = RequestContext.getCurrentInstance();
         try {
@@ -217,6 +217,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             encargadoLaboratorioDetalles.getPersona().setTelefono1persona(telefono1EncargadoLaboratorio);
             encargadoLaboratorioDetalles.getPersona().setTelefono2persona(telefono2EncargadoLaboratorio);
             encargadoLaboratorioDetalles.setLaboratorio(laboratorioEncargadoLaboratorio);
+            administrarEncargadosLaboratoriosBO.actualizarInformacionPersona(encargadoLaboratorioDetalles.getPersona());
             administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
             context.execute("registroExitosoEncargadoLaboratorio.show()");
             restaurarInformacionEncargadoLaboratorio();
@@ -225,7 +226,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             context.execute("registroFallidoEncargadoLaboratorio.show()");
         }
     }
-
+    
     public boolean validarNombreApellidoEncargadoLaboratorio() {
         boolean retorno = true;
         if ((Utilidades.validarNulo(nombreEncargadoLaboratorio)) && (Utilidades.validarNulo(apellidoEncargadoLaboratorio))) {
@@ -240,7 +241,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public boolean validarCorreoEncargadoLaboratorio() {
         boolean retorno = true;
         if (Utilidades.validarNulo(correoEncargadoLaboratorio)) {
@@ -253,7 +254,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public boolean validarIdentificacionEncargadoLaboratorio() {
         boolean retorno = true;
         if (Utilidades.validarNulo(identificacionEncargadoLaboratorio)) {
@@ -262,7 +263,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public boolean validarDatosNumericosEncargadoLaboratorio() {
         boolean retorno = true;
         if (Utilidades.validarNulo(telefono1EncargadoLaboratorio)) {
@@ -277,15 +278,15 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public boolean validarDireccionEncargadoLaboratorio() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(direccionEncargadoLaboratorio)) {
-            retorno = false;
+        if (Utilidades.validarNulo(direccionEncargadoLaboratorio)) {
+            
         }
         return retorno;
     }
-
+    
     public boolean validarDatosUniversidadEncargadoLaboratorio() {
         boolean retorno = true;
         if (Utilidades.validarNulo(laboratorioEncargadoLaboratorio) && Utilidades.validarNulo(departamentoEncargadoLaboratorio) && Utilidades.validarNulo(facultadEncargadoLaboratorio)) {
@@ -294,7 +295,7 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public boolean validaEncargadoLaboratorioYaRegistrado() {
         boolean retorno = true;
         EncargadoLaboratorio encargadoLaboratorioRegistrado = administrarEncargadosLaboratoriosBO.obtenerEncargadoLaboratorioPorCorreoNumDocumento(correoEncargadoLaboratorio, identificacionEncargadoLaboratorio);
@@ -305,20 +306,20 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
         }
         return retorno;
     }
-
+    
     public void modificacionesRegistroEncargadoLaboratorio() {
         if (modificacionRegistro == false) {
             modificacionRegistro = true;
         }
     }
-
+    
     public void activarEncargadoLaboratorio() {
         try {
             RequestContext context = RequestContext.getCurrentInstance();
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(true);
                 encargadoLaboratorioDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
+                administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 restaurarInformacionEncargadoLaboratorio();
                 context.execute("registroExitosoEncargadoLaboratorio.show()");
                 context.update("formT:form:panelMenu");
@@ -329,14 +330,14 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
             System.out.println("Error ControllerDetallesEncargadosLaboratorios activarEncargadoLaboratorio : " + e.toString());
         }
     }
-
+    
     public void inactivarEncargadoLaboratorio() {
         try {
             RequestContext context = RequestContext.getCurrentInstance();
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(false);
                 encargadoLaboratorioDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEncargadosLaboratoriosBO.actualizarInformacionEncargadoLaboratorio(encargadoLaboratorioDetalles);
+                administrarEncargadosLaboratoriosBO.actualizarInformacionUsuario(encargadoLaboratorioDetalles.getPersona().getUsuario());
                 encargadoLaboratorioDetalles = new EncargadoLaboratorio();
                 context.update("formT:form:panelMenu");
                 restaurarInformacionEncargadoLaboratorio();
@@ -354,185 +355,185 @@ public class ControllerDetallesEncargadoLaboratorio implements Serializable {
     public EncargadoLaboratorio getEncargadoLaboratorioDetalles() {
         return encargadoLaboratorioDetalles;
     }
-
+    
     public void setEncargadoLaboratorioDetalles(EncargadoLaboratorio encargadoLaboratorioDetalles) {
         this.encargadoLaboratorioDetalles = encargadoLaboratorioDetalles;
     }
-
+    
     public boolean isActivarEditar() {
         return activarEditar;
     }
-
+    
     public void setActivarEditar(boolean activarEditar) {
         this.activarEditar = activarEditar;
     }
-
+    
     public boolean isModificacionRegistro() {
         return modificacionRegistro;
     }
-
+    
     public void setModificacionRegistro(boolean modificacionRegistro) {
         this.modificacionRegistro = modificacionRegistro;
     }
-
+    
     public boolean isDisabledEditar() {
         return disabledEditar;
     }
-
+    
     public void setDisabledEditar(boolean disabledEditar) {
         this.disabledEditar = disabledEditar;
     }
-
+    
     public boolean isDisabledActivar() {
         return disabledActivar;
     }
-
+    
     public void setDisabledActivar(boolean disabledActivar) {
         this.disabledActivar = disabledActivar;
     }
-
+    
     public boolean isDisabledInactivar() {
         return disabledInactivar;
     }
-
+    
     public void setDisabledInactivar(boolean disabledInactivar) {
         this.disabledInactivar = disabledInactivar;
     }
-
+    
     public boolean isVisibleGuardar() {
         return visibleGuardar;
     }
-
+    
     public void setVisibleGuardar(boolean visibleGuardar) {
         this.visibleGuardar = visibleGuardar;
     }
-
+    
     public List<Facultad> getListaFacultad() {
         return listaFacultad;
     }
-
+    
     public void setListaFacultad(List<Facultad> listaFacultad) {
         this.listaFacultad = listaFacultad;
     }
-
+    
     public Facultad getFacultadEncargadoLaboratorio() {
         return facultadEncargadoLaboratorio;
     }
-
+    
     public void setFacultadEncargadoLaboratorio(Facultad facultadEncargadoLaboratorio) {
         this.facultadEncargadoLaboratorio = facultadEncargadoLaboratorio;
     }
-
+    
     public List<Departamento> getListaDepartamento() {
         return listaDepartamento;
     }
-
+    
     public void setListaDepartamento(List<Departamento> listaDepartamento) {
         this.listaDepartamento = listaDepartamento;
     }
-
+    
     public Departamento getDepartamentoEncargadoLaboratorio() {
         return departamentoEncargadoLaboratorio;
     }
-
+    
     public void setDepartamentoEncargadoLaboratorio(Departamento departamentoEncargadoLaboratorio) {
         this.departamentoEncargadoLaboratorio = departamentoEncargadoLaboratorio;
     }
-
+    
     public boolean isActivoDepartamento() {
         return activoDepartamento;
     }
-
+    
     public void setActivoDepartamento(boolean activoDepartamento) {
         this.activoDepartamento = activoDepartamento;
     }
-
+    
     public BigInteger getIdEncargadoLaboratorio() {
         return idEncargadoLaboratorio;
     }
-
+    
     public void setIdEncargadoLaboratorio(BigInteger idEncargadoLaboratorio) {
         this.idEncargadoLaboratorio = idEncargadoLaboratorio;
     }
-
+    
     public String getNombreEncargadoLaboratorio() {
         return nombreEncargadoLaboratorio;
     }
-
+    
     public void setNombreEncargadoLaboratorio(String nombreEncargadoLaboratorio) {
         this.nombreEncargadoLaboratorio = nombreEncargadoLaboratorio;
     }
-
+    
     public String getApellidoEncargadoLaboratorio() {
         return apellidoEncargadoLaboratorio;
     }
-
+    
     public void setApellidoEncargadoLaboratorio(String apellidoEncargadoLaboratorio) {
         this.apellidoEncargadoLaboratorio = apellidoEncargadoLaboratorio;
     }
-
+    
     public String getCorreoEncargadoLaboratorio() {
         return correoEncargadoLaboratorio;
     }
-
+    
     public void setCorreoEncargadoLaboratorio(String correoEncargadoLaboratorio) {
         this.correoEncargadoLaboratorio = correoEncargadoLaboratorio;
     }
-
+    
     public String getIdentificacionEncargadoLaboratorio() {
         return identificacionEncargadoLaboratorio;
     }
-
+    
     public void setIdentificacionEncargadoLaboratorio(String identificacionEncargadoLaboratorio) {
         this.identificacionEncargadoLaboratorio = identificacionEncargadoLaboratorio;
     }
-
+    
     public String getTelefono1EncargadoLaboratorio() {
         return telefono1EncargadoLaboratorio;
     }
-
+    
     public void setTelefono1EncargadoLaboratorio(String telefono1EncargadoLaboratorio) {
         this.telefono1EncargadoLaboratorio = telefono1EncargadoLaboratorio;
     }
-
+    
     public String getTelefono2EncargadoLaboratorio() {
         return telefono2EncargadoLaboratorio;
     }
-
+    
     public void setTelefono2EncargadoLaboratorio(String telefono2EncargadoLaboratorio) {
         this.telefono2EncargadoLaboratorio = telefono2EncargadoLaboratorio;
     }
-
+    
     public String getDireccionEncargadoLaboratorio() {
         return direccionEncargadoLaboratorio;
     }
-
+    
     public void setDireccionEncargadoLaboratorio(String direccionEncargadoLaboratorio) {
         this.direccionEncargadoLaboratorio = direccionEncargadoLaboratorio;
     }
-
+    
     public List<Laboratorio> getListaLaboratorio() {
         return listaLaboratorio;
     }
-
+    
     public void setListaLaboratorio(List<Laboratorio> listaLaboratorio) {
         this.listaLaboratorio = listaLaboratorio;
     }
-
+    
     public Laboratorio getLaboratorioEncargadoLaboratorio() {
         return laboratorioEncargadoLaboratorio;
     }
-
+    
     public void setLaboratorioEncargadoLaboratorio(Laboratorio laboratorioEncargadoLaboratorio) {
         this.laboratorioEncargadoLaboratorio = laboratorioEncargadoLaboratorio;
     }
-
+    
     public boolean isActivoLaboratorio() {
         return activoLaboratorio;
     }
-
+    
     public void setActivoLaboratorio(boolean activoLaboratorio) {
         this.activoLaboratorio = activoLaboratorio;
     }
-
+    
 }

@@ -156,7 +156,9 @@ public class ControllerAdministrarDocentes implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
-        desactivarFiltrosTabla();
+        if (null != listaDocentes) {
+            desactivarFiltrosTabla();
+        }
         activarExport = true;
         activoDepartamento = true;
         parametroNombre = null;
@@ -242,12 +244,12 @@ public class ControllerAdministrarDocentes implements Serializable {
         try {
             if (Utilidades.validarNulo(nuevoFacultadDocente)) {
                 activoNuevoDepartamento = false;
-                nuevoDepartamentoDocente = new Departamento();
+                nuevoDepartamentoDocente = null;
                 listaDepartamentos = administrarDocentesBO.obtenerDepartamentosPorIDFacultad(nuevoFacultadDocente.getIdfacultad());
             } else {
                 listaDepartamentos = null;
                 activoNuevoDepartamento = false;
-                nuevoDepartamentoDocente = new Departamento();
+                nuevoDepartamentoDocente = null;
             }
             RequestContext context = RequestContext.getCurrentInstance();
             context.update("formT:formularioDialogos:nuevoDepartamentoDocente");
@@ -271,12 +273,12 @@ public class ControllerAdministrarDocentes implements Serializable {
     public void limpiarRegistroDocente() {
         listaDepartamentos = null;
         activoNuevoDepartamento = true;
-        nuevoDepartamentoDocente = new Departamento();
+        nuevoDepartamentoDocente = null;
         nuevoApellidoDocente = null;
         nuevoCargoDocente = null;
         nuevoCorreoDocente = null;
         nuevoDireccionDocente = null;
-        nuevoFacultadDocente = new Facultad();
+        nuevoFacultadDocente = null;
         nuevoIdentificacionDocente = null;
         nuevoNombresDocente = null;
         nuevoNumero1Docente = null;
@@ -339,8 +341,8 @@ public class ControllerAdministrarDocentes implements Serializable {
 
     public boolean validarDireccionDocente() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(nuevoDireccionDocente)) {
-            retorno = false;
+        if (Utilidades.validarNulo(nuevoDireccionDocente)) {
+
         }
         return retorno;
     }

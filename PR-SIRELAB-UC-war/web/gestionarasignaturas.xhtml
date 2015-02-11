@@ -1,0 +1,338 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE ASIGNATURAS</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Asignatura: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarAsignaturas.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Creditos Asignatura: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCreditos" value="#{controllerGestionarAsignaturas.parametroCreditos}" maxlength="10" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Facultad: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.parametroFacultad}"
+                                             style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px"
+                                             id="parametroFacultad">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarFacultades()}" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Nombre Departamento: " style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.parametroDepartamento}"
+                                             style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px"
+                                             disabled="#{controllerGestionarAsignaturas.activarDepartamento}" id="parametroDepartamento">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaDepartamentos}" var="depa"
+                                               itemLabel="#{depa.nombredepartamento}" itemValue="#{depa}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this"  listener="#{controllerGestionarAsignaturas.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Nombre Carrera: " style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.parametroCarrera}"
+                                             style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 250px"
+                                             disabled="#{controllerGestionarAsignaturas.activarCarrera}" id="parametroCarrera">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaCarreras}" var="carrera"
+                                               itemLabel="#{carrera.nombrecarrera}" itemValue="#{carrera}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarCarreras()}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarAsignaturas.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarAsignaturas.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarAsignaturas.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarAsignaturas.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+
+                            <strong><h:outputText value="Plan de Estudio:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroPlanEstudio" value="#{controllerGestionarAsignaturas.parametroPlanEstudio}" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px"
+                                             disabled="#{controllerGestionarAsignaturas.activarPlanEstudio}"
+                                             >
+                                <f:selectItem itemLabel="Seleccione Plan Estudio" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaPlanesEstudios}" var="planEst"
+                                               itemLabel="#{planEst.codigoplanestudio}" itemValue="#{planEst}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton value="Buscar Asignaturas" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarAsignaturas.buscarAsignaturasPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarAsignaturas.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoAsign" rowKey="#{infoAsign.idasignatura}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarAsignaturas.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarAsignaturas.listaAsignaturas}"
+                                         filteredValue="#{controllerGestionarAsignaturas.filtrarListaAsignaturas}"
+                                         >
+
+                                <p:column  headerText="Nombre Asignatura"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.nombreasignatura}" sortBy="#{infoAsign.nombreasignatura}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Asignatura"/></f:facet>
+                                    <h:outputText value="#{infoAsign.nombreasignatura}"/>
+                                </p:column>
+
+                                <p:column  headerText="Creditos Asignatura"  
+                                           filterMatchMode="contains" id="codigoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.numerocreditos}" sortBy="#{infoAsign.numerocreditos}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Creditos Asignatura"/></f:facet>
+                                    <h:outputText value="#{infoAsign.numerocreditos}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.planestudios.carrera.departamento.facultad.nombrefacultad}" sortBy="#{infoAsign.planestudios.carrera.departamento.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Nombre Facultad"/></f:facet>
+                                    <h:outputText value="#{infoAsign.planestudios.carrera.departamento.facultad.nombrefacultad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.planestudios.carrera.departamento.nombredepartamento}" sortBy="#{infoAsign.planestudios.carrera.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Nombre Departamento"/></f:facet>
+                                    <h:outputText value="#{infoAsign.planestudios.carrera.departamento.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Carrera"  
+                                           filterMatchMode="contains" id="carreraTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.planestudios.carrera.nombrecarrera}" sortBy="#{infoAsign.planestudios.carrera.nombrecarrera}">
+                                    <f:facet name="header"><h:outputText value="Nombre Carrera"/></f:facet>
+                                    <h:outputText value="#{infoAsign.planestudios.carrera.nombrecarrera}"/>
+                                </p:column>
+
+                                <p:column  headerText="Plan de Estudios"  
+                                           filterMatchMode="contains" id="planEstudioTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoAsign.planestudios.codigoplanestudio}" sortBy="#{infoAsign.planestudios.codigoplanestudio}">
+                                    <f:facet name="header"><h:outputText value="Plan de Estudios"/></f:facet>
+                                    <h:outputText value="#{infoAsign.planestudios.codigoplanestudio}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Asignatura" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarAsignaturas.dispararDialogoNuevAsignatura()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarAsignaturas.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroAsignatura" header="Registro Nuevo Asignatura" widgetVar="NuevoRegistroAsignatura" closable="false" resizable="false"  draggable="false"  modal="true" height="300" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información de la nueva asignatura" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoAsignatura" style="border: none;">
+                            <strong><h:outputText value="*Nombre Asignatura: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreAsignatura" maxlength="45" value="#{controllerGestionarAsignaturas.nuevoNombreAsignatura}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreAsignatura" value="Nombre del plan estudio" />
+
+                            <strong><h:outputText value="*Creditos Asignatura: " style=" position: absolute; top: 105px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoCreditosAsignatura" maxlength="10" value="#{controllerGestionarAsignaturas.nuevoCreditoAsignatura}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCreditosAsignatura" value="Creditos del plan estudio" />
+
+                            <strong><h:outputText value="*Nombre Facultad " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.nuevoFacultadAsignatura}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase"
+                                             id="nuevoFacultadAsignatura">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaFacultades}" var="facultadN"
+                                               itemLabel="#{facultadN.nombrefacultad}" itemValue="#{facultadN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoFacultades(0)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre Departamento: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.nuevoDepartamentoAsignatura}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoDepartamento}" id="nuevoDepartamentoAsignatura">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaDepartamentos}" var="departamen"
+                                               itemLabel="#{departamen.nombredepartamento}" itemValue="#{departamen}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoDepartamentos(0)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre Carrera: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.nuevoCarreraAsignatura}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoCarrera}" id="nuevoCarreraAsignatura">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaCarreras}" var="carre"
+                                               itemLabel="#{carre.nombrecarrera}" itemValue="#{departamen}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoCarreras(0)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Plan de Estudios: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.nuevoPlanEstudioAsignatura}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoCarrera}" id="nuevoPlanEstudioAsignatura">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaPlanesEstudios}" var="planEN"
+                                               itemLabel="#{planEN.codigoplanestudio}" itemValue="#{planEN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="limpiarAsignatura" value="Limpiar" style="position: absolute; left: 20px; top: 260px;" actionListener="#{controllerGestionarAsignaturas.limpiarRegistroAsignatura()}" update="nuevoAsignatura" process="@this"/>
+                            <p:commandButton id="agregarAsignatura" value="Aceptar" style="position: absolute; left: 270px; top: 260px;"  process="@this" actionListener="#{controllerGestionarAsignaturas.registrarNuevoAsignatura()}"  />
+                            <p:commandButton id="cancelarAsignatura" value="Cancelar" style="position: absolute; left: 360px; top: 260px;" actionListener="#{controllerGestionarAsignaturas.limpiarRegistroAsignatura()}" update="nuevoAsignatura" onclick="NuevoRegistroAsignatura.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroAsignatura" header="Registro Editar Asignatura" widgetVar="EditarRegistroAsignatura" closable="false" resizable="false"  draggable="false"  modal="true" height="300" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información de la asignatura a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarAsignatura" style="border: none;">
+
+                            <strong><h:outputText value="*Nombre Asignatura: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreAsignatura" maxlength="45" value="#{controllerGestionarAsignaturas.editarNombre}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreAsignatura" value="Nombre del carrera" />
+
+                            <strong><h:outputText value="*Creditos Asignatura: " style=" position: absolute; top: 105px; left: 50px;" /></strong>
+                            <p:inputText id="editarCreditosAsignatura" maxlength="10" value="#{controllerGestionarAsignaturas.editarCreditos}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarCreditosAsignatura" value="Creditos de la carrera" />
+
+                            <strong><h:outputText value="*Nombre Facultad: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.editarFacultad}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase"
+                                             id="editarFacultadAsignatura">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaFacultades}" var="facultadE"
+                                               itemLabel="#{facultadE.nombrefacultad}" itemValue="#{facultadE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoFacultades(1)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre Departamento: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.editarDepartamento}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoDepartamento}" id="editarDepartamentoAsignatura">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaDepartamentos}" var="departamentoE"
+                                               itemLabel="#{departamentoE.nombredepartamento}" itemValue="#{departamentoE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoDepartamentos(1)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Nombre Carrera: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.editarCarrera}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoCarrera}" id="editarCarreraAsignatura">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaCarreras}" var="carreraE"
+                                               itemLabel="#{carreraE.nombrecarrera}" itemValue="#{carreraE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarAsignaturas.actualizarNuevoCarreras(1)}" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Plan de Estudio: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarAsignaturas.editarPlanEstudio}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarAsignaturas.activarNuevoPlanEstudio}" id="editarPlanEstudioAsignatura">
+                                <f:selectItem itemLabel="Seleccione Carrera" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarAsignaturas.listaPlanesEstudios}" var="planEE"
+                                               itemLabel="#{planEE.codigoplanestudio}" itemValue="#{planEE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="limpiarEAsignatura" value="Limpiar" style="position: absolute; left: 20px; top: 260px;" actionListener="#{controllerGestionarAsignaturas.limpiarEditarAsignatura()}" update="editarAsignatura" process="@this"/>
+                            <p:commandButton id="agregarEAsignatura" value="Aceptar" style="position: absolute; left: 270px; top: 260px;"  process="@this" actionListener="#{controllerGestionarAsignaturas.modificarInformacionAsignatura()}"  />
+                            <p:commandButton id="cancelarEAsignatura" value="Cancelar" style="position: absolute; left: 360px; top: 260px;" actionListener="#{controllerGestionarAsignaturas.limpiarEditarAsignatura()}" update="editarAsignatura" onclick="EditarRegistroAsignatura.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionAsignatura" header="ATENCIÓN..!" widgetVar="errorInformacionAsignatura"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombre-Creditos se encuentran erroneos y/o vacios . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstructuraAsignatura" header="ATENCIÓN..!" widgetVar="errorFacultadDepartamentoAsignatura"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Facultad-Departamento-Carrera-PlanEstudio se encuentran vacios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoAsignatura" header="Información de Registro" widgetVar="registroExitosoAsignatura"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la asignatura en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoAsignatura" header="Información de Registro" widgetVar="registroFallidoAsignatura"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el carrera para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

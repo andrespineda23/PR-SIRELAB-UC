@@ -276,7 +276,7 @@
 
                             <p:commandButton id="limpiarDoc" value="Limpiar" style="position: absolute; left: 20px; top: 450px;" actionListener="#{controllerAdministrarDocentes.limpiarRegistroDocente()}" update="nuevoDocente" process="@this"/>
                             <p:commandButton id="agregarDoc" value="Aceptar" style="position: absolute; left: 270px; top: 450px;"  process="@this" actionListener="#{controllerAdministrarDocentes.registrarNuevoDocente()}"  />
-                            <p:commandButton id="cancelarDoc" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarDocentes.registrarNuevoDocente()}" update="nuevoDocente" onclick="NuevoRegistroDocente.hide();"  process="@this"/>
+                            <p:commandButton id="cancelarDoc" value="Cancelar" style="position: absolute; left: 360px; top: 450px;" actionListener="#{controllerAdministrarDocentes.limpiarRegistroDocente()}" update="nuevoDocente" onclick="NuevoRegistroDocente.hide();"  process="@this"/>
                         </p:panel>
                     </p:dialog>
 

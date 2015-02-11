@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE LABORATORIOS</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Laboratorio: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarPlantaLaboratorios.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Facultad: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.parametroFacultad}"
+                                             style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px"
+                                             id="parametroFacultad">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaLaboratorios.actualizarFacultades()}" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Nombre Departamento: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.parametroDepartamento}"
+                                             style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px"
+                                             disabled="#{controllerGestionarPlantaLaboratorios.activarDepartamento}" id="parametroDepartamento">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaDepartamentos}" var="depa"
+                                               itemLabel="#{depa.nombredepartamento}" itemValue="#{depa}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarPlantaLaboratorios.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarPlantaLaboratorios.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarPlantaLaboratorios.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarPlantaLaboratorios.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Laboratorios" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarPlantaLaboratorios.buscarLaboratoriosPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoDep" rowKey="#{infoDep.idlaboratorio}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarPlantaLaboratorios.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarPlantaLaboratorios.listaLaboratorios}"
+                                         filteredValue="#{controllerGestionarPlantaLaboratorios.filtrarListaLaboratorios}"
+                                         >
+
+                                <p:column  headerText="Nombre Laboratorio"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.nombrelaboratorio}" sortBy="#{infoDep.nombrelaboratorio}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Laboratorio"/></f:facet>
+                                    <h:outputText value="#{infoDep.nombrelaboratorio}"/>
+                                </p:column>
+
+
+                                <p:column  headerText="Nombre Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.departamento.facultad.nombrefacultad}" sortBy="#{infoDep.departamento.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Nombre Facultad"/></f:facet>
+                                    <h:outputText value="#{infoDep.departamento.facultad.nombrefacultad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.departamento.nombredepartamento}" sortBy="#{infoDep.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Nombre Departamento"/></f:facet>
+                                    <h:outputText value="#{infoDep.departamento.nombredepartamento}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Laboratorio" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarPlantaLaboratorios.dispararDialogoNuevoLaboratorio()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroLaboratorio" header="Registro Nuevo Laboratorio" widgetVar="NuevoRegistroLaboratorio" closable="false" resizable="false"  draggable="false"  modal="true" height="210" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nueva laboratorio" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoLaboratorio" style="border: none;">
+                            <strong><h:outputText value="*Nombre Laboratorio: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreLaboratorio" maxlength="45" value="#{controllerGestionarPlantaLaboratorios.nuevoNombreLaboratorio}" style=" width: 202px; position: absolute; left: 230px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreLaboratorio" value="Nombre del laboratorio" />
+
+                            <strong><h:outputText value="*Facultad Laboratorio: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.nuevoFacultadLaboratorio}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 100px; text-transform: uppercase"
+                                             id="nuevoFacultadLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaFacultades}" var="facultadN"
+                                               itemLabel="#{facultadN.nombrefacultad}" itemValue="#{facultadN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaLaboratorios.actualizarNuevoFacultades(0)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento Laboratorio: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.nuevoDepartamentoLaboratorio}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 130px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarPlantaLaboratorios.activarNuevoDepartamento}" id="nuevoDepartamentoLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaDepartamentos}" var="departamen"
+                                               itemLabel="#{departamen.nombredepartamento}" itemValue="#{departamen}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="limpiarLaboratorio" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarRegistroLaboratorio()}" update="nuevoLaboratorio" process="@this"/>
+                            <p:commandButton id="agregarLaboratorio" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarPlantaLaboratorios.registrarNuevoLaboratorio()}"  />
+                            <p:commandButton id="cancelarLaboratorio" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarRegistroLaboratorio()}" update="nuevoLaboratorio" onclick="NuevoRegistroLaboratorio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroLaboratorio" header="Registro Editar Laboratorio" widgetVar="EditarRegistroLaboratorio" closable="false" resizable="false"  draggable="false"  modal="true" height="210" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del laboratorio a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarLaboratorio" style="border: none;">
+
+                            <strong><h:outputText value="*Nombre Laboratorio: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreLaboratorio" maxlength="45" value="#{controllerGestionarPlantaLaboratorios.editarNombre}" style=" width: 202px; position: absolute; left: 230px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreLaboratorio" value="Nombre del laboratorio" />
+
+                            <strong><h:outputText value="*Facultad Laboratorio: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.editarFacultad}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 100px; text-transform: uppercase"
+                                             id="editarFacultadLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaFacultades}" var="facultadE"
+                                               itemLabel="#{facultadE.nombrefacultad}" itemValue="#{facultadE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaLaboratorios.actualizarNuevoFacultades(1)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento Laboratorio: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaLaboratorios.editarDepartamento}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 130px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarPlantaLaboratorios.activarNuevoDepartamento}" id="editarDepartamentoLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaLaboratorios.listaDepartamentos}" var="departamentoE"
+                                               itemLabel="#{departamentoE.nombredepartamento}" itemValue="#{departamentoE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="limpiarELaboratorio" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarEditarLaboratorio()}" update="editarLaboratorio" process="@this"/>
+                            <p:commandButton id="agregarELaboratorio" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarPlantaLaboratorios.modificarInformacionLaboratorio()}"  />
+                            <p:commandButton id="cancelarELaboratorio" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarPlantaLaboratorios.limpiarEditarLaboratorio()}" update="editarLaboratorio" onclick="EditarRegistroLaboratorio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionLaboratorio" header="ATENCIÓN..!" widgetVar="errorInformacionLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Nombre se encuentra erroneo y/o vacio . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorFacultadDepartamentoLaboratorio" header="ATENCIÓN..!" widgetVar="errorFacultadDepartamentoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Facultad-Departamento se encuentran vacios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoLaboratorio" header="Información de Registro" widgetVar="registroExitosoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el laboratorio en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoLaboratorio" header="Información de Registro" widgetVar="registroFallidoLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el laboratorio para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

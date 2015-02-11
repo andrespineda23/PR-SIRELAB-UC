@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.Facultad;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -24,5 +25,7 @@ public interface FacultadDAOInterface {
     public List<Facultad> consultarFacultades();
 
     public Facultad buscarFacultadPorID(BigInteger idRegistro);
+
+    public List<Facultad> buscarFacultadesPorFiltrado(Map<String, String> filters);
 
 }

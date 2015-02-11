@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Laboratorio.findByIdlaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.idlaboratorio = :idlaboratorio"),
     @NamedQuery(name = "Laboratorio.findByNombrelaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombrelaboratorio = :nombrelaboratorio")})
 public class Laboratorio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,14 +77,14 @@ public class Laboratorio implements Serializable {
     }
 
     public String getNombrelaboratorio() {
-        if(nombrelaboratorio != null){
-            nombrelaboratorio = nombrelaboratorio.toUpperCase();
+        if (null != nombrelaboratorio) {
+            return nombrelaboratorio.toUpperCase();
         }
         return nombrelaboratorio;
     }
 
     public void setNombrelaboratorio(String nombrelaboratorio) {
-        this.nombrelaboratorio = nombrelaboratorio;
+        this.nombrelaboratorio = nombrelaboratorio.toUpperCase();
     }
 
     public Departamento getDepartamento() {
@@ -127,5 +128,5 @@ public class Laboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Laboratorio[ idlaboratorio=" + idlaboratorio + " ]";
     }
-    
+
 }

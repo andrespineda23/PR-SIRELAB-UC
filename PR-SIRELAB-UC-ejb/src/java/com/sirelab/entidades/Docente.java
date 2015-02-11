@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Docente.findByIddocente", query = "SELECT d FROM Docente d WHERE d.iddocente = :iddocente"),
     @NamedQuery(name = "Docente.findByCargodocente", query = "SELECT d FROM Docente d WHERE d.cargodocente = :cargodocente")})
 public class Docente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,14 +74,14 @@ public class Docente implements Serializable {
     }
 
     public String getCargodocente() {
-        if(cargodocente != null){
-            cargodocente = cargodocente.toUpperCase();
+        if (null != cargodocente) {
+            return cargodocente.toUpperCase();
         }
         return cargodocente;
     }
 
     public void setCargodocente(String cargodocente) {
-        this.cargodocente = cargodocente;
+        this.cargodocente = cargodocente.toUpperCase();
     }
 
     public Persona getPersona() {
@@ -123,5 +124,5 @@ public class Docente implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Docente[ iddocente=" + iddocente + " ]";
     }
-    
+
 }

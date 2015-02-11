@@ -118,6 +118,25 @@ public class AdministrarEncargadosLaboratoriosBO implements AdministrarEncargado
         }
     }
 
+    //@Override
+    public void actualizarInformacionPersona(Persona persona) {
+        try {
+            personaDAO.editarPersona(persona);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionPersona : " + e.toString());
+        }
+    }
+
+    //@Override
+    public void actualizarInformacionUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEncargadosLaboratoriosBO actualizarInformacionUsuario : " + e.toString());
+
+        }
+    }
+
     @Override
     public void almacenarNuevoEncargadoLaboratorioEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EncargadoLaboratorio personalNuevo) {
         try {

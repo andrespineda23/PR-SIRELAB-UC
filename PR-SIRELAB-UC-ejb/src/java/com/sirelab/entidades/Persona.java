@@ -116,36 +116,36 @@ public class Persona implements Serializable {
     }
 
     public String getIdentificacionpersona() {
-        if(identificacionpersona != null){
-            identificacionpersona = identificacionpersona.toUpperCase();
+        if (null != identificacionpersona) {
+            return identificacionpersona.toUpperCase();
         }
         return identificacionpersona;
     }
 
     public void setIdentificacionpersona(String identificacionpersona) {
-        this.identificacionpersona = identificacionpersona;
+        this.identificacionpersona = identificacionpersona.toUpperCase();
     }
 
     public String getNombrespersona() {
-        if(nombrespersona != null){
-            nombrespersona = nombrespersona.toUpperCase();
+        if (null != nombrespersona) {
+            return nombrespersona.toUpperCase();
         }
         return nombrespersona;
     }
 
     public void setNombrespersona(String nombrespersona) {
-        this.nombrespersona = nombrespersona;
+        this.nombrespersona = nombrespersona.toUpperCase();
     }
 
     public String getApellidospersona() {
-        if(apellidospersona != null){
-            apellidospersona = apellidospersona.toUpperCase();
+        if (null != apellidospersona) {
+            return apellidospersona.toUpperCase();
         }
         return apellidospersona;
     }
 
     public void setApellidospersona(String apellidospersona) {
-        this.apellidospersona = apellidospersona;
+        this.apellidospersona = apellidospersona.toUpperCase();
     }
 
     public String getEmailpersona() {
@@ -173,14 +173,14 @@ public class Persona implements Serializable {
     }
 
     public String getDireccionpersona() {
-        if(direccionpersona != null){
-            direccionpersona = direccionpersona.toUpperCase();
+        if (null != direccionpersona) {
+            return direccionpersona.toUpperCase();
         }
         return direccionpersona;
     }
 
     public void setDireccionpersona(String direccionpersona) {
-        this.direccionpersona = direccionpersona;
+        this.direccionpersona = direccionpersona.toUpperCase();
     }
 
     @XmlTransient

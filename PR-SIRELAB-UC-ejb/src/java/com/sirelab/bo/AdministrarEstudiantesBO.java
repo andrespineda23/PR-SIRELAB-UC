@@ -7,11 +7,14 @@ import com.sirelab.dao.interfacedao.EstudianteDAOInterface;
 import com.sirelab.dao.interfacedao.FacultadDAOInterface;
 import com.sirelab.dao.interfacedao.PersonaDAOInterface;
 import com.sirelab.dao.interfacedao.PlanEstudiosDAOInterface;
+import com.sirelab.dao.interfacedao.UsuarioDAOInterface;
 import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
+import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterface {
 
+    @EJB
+    UsuarioDAOInterface usuarioDAO;
     @EJB
     FacultadDAOInterface facultadDAO;
     @EJB
@@ -44,7 +49,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Departamento> lista = departamentoDAO.consultarDepartamentos();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerListasDepartamentos : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerListasDepartamentos : " + e.toString());
             return null;
         }
     }
@@ -55,7 +60,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Facultad> lista = facultadDAO.consultarFacultades();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerListaFacultades : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerListaFacultades : " + e.toString());
             return null;
         }
     }
@@ -66,7 +71,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Departamento> lista = departamentoDAO.buscarDepartamentosPorIDFacultad(idFacultad);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerListasCarrerasPorDepartamento : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
             return null;
         }
     }
@@ -77,7 +82,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Carrera> lista = carreraDAO.consultarCarrerasPorDepartamento(idDepartamento);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerListasCarrerasPorDepartamento : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerListasCarrerasPorDepartamento : " + e.toString());
             return null;
         }
     }
@@ -88,7 +93,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<PlanEstudios> lista = planEstudiosDAO.consultarPlanesEstudiosPorCarrera(idCarrera);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerListasPlanesEstudioPorCarrera : " + e.toString());
             return null;
         }
     }
@@ -99,7 +104,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             List<Estudiante> lista = estudianteDAO.buscarEstudiantesPorFiltrado(filtros);
             return lista;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO consultarEstudiantesPorParametro : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO consultarEstudiantesPorParametro : " + e.toString());
             return null;
         }
     }
@@ -110,7 +115,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorID(idEstudiante);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerEstudiantePorIDEstudiante : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerEstudiantePorIDEstudiante : " + e.toString());
             return null;
         }
     }
@@ -121,7 +126,7 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
             Estudiante registro = estudianteDAO.buscarEstudiantePorDocumentoYCorreo(correo, documento);
             return registro;
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO obtenerEstudiantePorCorreoNumDocumento : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO obtenerEstudiantePorCorreoNumDocumento : " + e.toString());
             return null;
         }
     }
@@ -131,7 +136,25 @@ public class AdministrarEstudiantesBO implements AdministrarEstudiantesBOInterfa
         try {
             estudianteDAO.editarEstudiante(estudiante);
         } catch (Exception e) {
-            System.out.println("Error GestionarLoginSistemaBO actualizarInformacionEstudiante : " + e.toString());
+            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionEstudiante : " + e.toString());
+        }
+    }
+
+    //@Override
+    public void actualizarInformacionPersona(Persona persona) {
+        try {
+            personaDAO.editarPersona(persona);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionPersona : " + e.toString());
+        }
+    }
+
+    //@Override
+    public void actualizarInformacionUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEstudiantesBO actualizarInformacionUsuario : " + e.toString());
         }
     }
 }

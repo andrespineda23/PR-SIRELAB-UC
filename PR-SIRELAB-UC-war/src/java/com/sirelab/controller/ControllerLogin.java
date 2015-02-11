@@ -200,8 +200,7 @@ public class ControllerLogin implements Serializable {
 
     public boolean validarDireccionEstudiante() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(direccionEstudiante)) {
-            retorno = false;
+        if (Utilidades.validarNulo(direccionEstudiante)) { 
         }
         return retorno;
     }

@@ -4,6 +4,7 @@ import com.sirelab.bo.interfacebo.AdministrarDocentesBOInterface;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Docente;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Usuario;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
@@ -189,6 +190,7 @@ public class ControllerDetallesDocente implements Serializable {
             docenteDetalles.getPersona().setTelefono2persona(telefono2Docente);
             docenteDetalles.setDepartamento(departamentoDocente);
             docenteDetalles.setCargodocente(cargoDocente);
+            administrarDocentesBO.actualizarInformacionPersona(docenteDetalles.getPersona());
             administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
             context.execute("registroExitosoDocente.show()");
             restaurarInformacionDocente();
@@ -252,8 +254,8 @@ public class ControllerDetallesDocente implements Serializable {
 
     public boolean validarDireccionDocente() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(direccionDocente)) {
-            retorno = false;
+        if (Utilidades.validarNulo(direccionDocente)) {
+
         }
         return retorno;
     }
@@ -293,7 +295,7 @@ public class ControllerDetallesDocente implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(true);
                 docenteDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
+                administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 restaurarInformacionDocente();
                 context.execute("registroExitosoDocente.show()");
                 context.update("formT:form:panelMenu");
@@ -311,7 +313,7 @@ public class ControllerDetallesDocente implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(false);
                 docenteDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarDocentesBO.actualizarInformacionDocente(docenteDetalles);
+                administrarDocentesBO.actualizarInformacionUsuario(docenteDetalles.getPersona().getUsuario());
                 docenteDetalles = new Docente();
                 context.update("formT:form:panelMenu");
                 restaurarInformacionDocente();

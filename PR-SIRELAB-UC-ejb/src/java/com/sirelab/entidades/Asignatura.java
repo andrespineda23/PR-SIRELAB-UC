@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -36,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Asignatura.findByNombreasignatura", query = "SELECT a FROM Asignatura a WHERE a.nombreasignatura = :nombreasignatura"),
     @NamedQuery(name = "Asignatura.findByNumerocreditos", query = "SELECT a FROM Asignatura a WHERE a.numerocreditos = :numerocreditos")})
 public class Asignatura implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,11 +77,14 @@ public class Asignatura implements Serializable {
     }
 
     public String getNombreasignatura() {
+        if (null != nombreasignatura) {
+            return nombreasignatura.toUpperCase();
+        }
         return nombreasignatura;
     }
 
     public void setNombreasignatura(String nombreasignatura) {
-        this.nombreasignatura = nombreasignatura;
+        this.nombreasignatura = nombreasignatura.toUpperCase();
     }
 
     public int getNumerocreditos() {
@@ -124,5 +127,5 @@ public class Asignatura implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Asignatura[ idasignatura=" + idasignatura + " ]";
     }
-    
+
 }

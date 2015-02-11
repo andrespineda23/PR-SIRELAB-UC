@@ -23,4 +23,8 @@ public interface AdministrarEntidadesExternasBOInterface {
 
     public void almacenarNuevaEntidadExternaEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EntidadExterna entidadNueva);
 
+    public void actualizarInformacionPersona(Persona persona);
+
+    public void actualizarInformacionUsuario(Usuario usuario);
+
 }

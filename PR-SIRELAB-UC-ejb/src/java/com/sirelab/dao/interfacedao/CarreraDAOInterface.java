@@ -3,6 +3,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.Carrera;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,5 +22,7 @@ public interface CarreraDAOInterface {
     public Carrera buscarCarreraPorID(BigInteger idRegistro);
 
     public List<Carrera> consultarCarrerasPorDepartamento(BigInteger idDepartamento);
+
+    public List<Carrera> buscarCarrerasPorFiltrado(Map<String, String> filters);
 
 }

@@ -31,5 +31,9 @@ public interface AdministrarEncargadosLaboratoriosBOInterface {
     public void actualizarInformacionEncargadoLaboratorio(EncargadoLaboratorio personalLab);
 
     public void almacenarNuevoEncargadoLaboratorioEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EncargadoLaboratorio personalNuevo);
+    
+    public void actualizarInformacionPersona(Persona persona);
+    
+    public void actualizarInformacionUsuario(Usuario usuario);
 
 }

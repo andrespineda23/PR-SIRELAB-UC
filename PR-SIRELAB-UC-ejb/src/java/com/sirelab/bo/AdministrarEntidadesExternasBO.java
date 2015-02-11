@@ -74,6 +74,24 @@ public class AdministrarEntidadesExternasBO implements AdministrarEntidadesExter
         }
     }
 
+    //@Override 
+    public void actualizarInformacionPersona(Persona persona) {
+        try {
+            personaDAO.editarPersona(persona);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEntidadesExternasBO actualizarInformacionPersona : " + e.toString());
+        }
+    }
+
+    //@Override 
+    public void actualizarInformacionUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEntidadesExternasBO actualizarInformacionUsuario : " + e.toString());
+        }
+    }
+
     @Override
     public void almacenarNuevaEntidadExternaEnSistema(Usuario usuarioNuevo, Persona personaNuevo, EntidadExterna entidadNueva) {
         try {

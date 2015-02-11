@@ -135,7 +135,9 @@ public class ControllerAdministrarAdministradores implements Serializable {
 
     public void limpiarProcesoBusqueda() {
         activarExport = true;
-        desactivarFiltrosTabla();
+        if (null != listaAdministradores) {
+            desactivarFiltrosTabla();
+        }
         parametroNombre = null;
         parametroApellido = null;
         parametroDocumento = null;
@@ -241,10 +243,10 @@ public class ControllerAdministrarAdministradores implements Serializable {
         boolean retorno = true;
         if (tipoRegistro == 0) {
             if ((Utilidades.validarNulo(nuevoNombresAdministrador)) && (Utilidades.validarNulo(nuevoApellidoAdministrador))) {
-                if (!Utilidades.validarCaracterString(nuevoNombresAdministrador)) {
+                if (Utilidades.validarCaracterString(nuevoNombresAdministrador) == false) {
                     retorno = false;
                 }
-                if (!Utilidades.validarCaracterString(nuevoApellidoAdministrador)) {
+                if (Utilidades.validarCaracterString(nuevoApellidoAdministrador) == false) {
                     retorno = false;
                 }
             } else {
@@ -252,10 +254,10 @@ public class ControllerAdministrarAdministradores implements Serializable {
             }
         } else {
             if ((Utilidades.validarNulo(editarApellido)) && (Utilidades.validarNulo(editarNombre))) {
-                if (!Utilidades.validarCaracterString(editarNombre)) {
+                if (Utilidades.validarCaracterString(editarNombre) == false) {
                     retorno = false;
                 }
-                if (!Utilidades.validarCaracterString(editarApellido)) {
+                if (Utilidades.validarCaracterString(editarApellido) == false) {
                     retorno = false;
                 }
             } else {
@@ -332,12 +334,12 @@ public class ControllerAdministrarAdministradores implements Serializable {
     public boolean validarDireccionAdministrador(int tipoRegistro) {
         boolean retorno = true;
         if (tipoRegistro == 0) {
-            if (!Utilidades.validarNulo(nuevoDireccionAdministrador)) {
-                retorno = false;
+            if (Utilidades.validarNulo(nuevoDireccionAdministrador)) {
+
             }
         } else {
-            if (!Utilidades.validarNulo(editarDireccion)) {
-                retorno = false;
+            if (Utilidades.validarNulo(editarDireccion)) {
+
             }
         }
         return retorno;
@@ -456,9 +458,11 @@ public class ControllerAdministrarAdministradores implements Serializable {
             administradorEditar.setNombrespersona(editarNombre);
             administradorEditar.setTelefono1persona(editarNumero1);
             administradorEditar.setTelefono2persona(editarNumero2);
+            administrarAdministradoresBO.actualizarInformacionUsuario(administradorEditar.getUsuario());
             administrarAdministradoresBO.actualizarInformacionAdministrador(administradorEditar);
             limpiarEditarAdministrador();
             context.execute("registroExitosoAdministrador.show()");
+            limpiarProcesoBusqueda();
         } catch (Exception e) {
             System.out.println("Error ControllerAdministrarAdministradores almacenarModificacion : " + e.toString());
             context.execute("registroFallidoAdministrador.show()");

@@ -4,7 +4,9 @@ import com.sirelab.entidades.Carrera;
 import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.Estudiante;
 import com.sirelab.entidades.Facultad;
+import com.sirelab.entidades.Persona;
 import com.sirelab.entidades.PlanEstudios;
+import com.sirelab.entidades.Usuario;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -32,4 +34,8 @@ public interface AdministrarEstudiantesBOInterface {
     public Estudiante obtenerEstudiantePorCorreoNumDocumento(String correo, String documento);
 
     public void actualizarInformacionEstudiante(Estudiante estudiante);
+
+    public void actualizarInformacionPersona(Persona persona);
+
+    public void actualizarInformacionUsuario(Usuario usuario);
 }

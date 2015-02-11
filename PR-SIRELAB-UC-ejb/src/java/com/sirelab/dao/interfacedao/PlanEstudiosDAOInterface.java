@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.PlanEstudios;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,4 +27,6 @@ public interface PlanEstudiosDAOInterface {
     public PlanEstudios buscarPlanEstudiosPorID(BigInteger idRegistro);
 
     public List<PlanEstudios> consultarPlanesEstudiosPorCarrera(BigInteger idCarrera);
+
+    public List<PlanEstudios> buscarPlanesEstudiosPorFiltrado(Map<String, String> filters);
 }

@@ -15,7 +15,7 @@
 
                     <p:panel header="SIRELAB - UC" styleClass="panelFunciones" >
 
-                        <p:tabView  id="tabMenu"  dynamic="true" styleClass="tabViewMenu" widgetVar="tabMenu" activeIndex="0" >  
+                        <p:tabView  id="tabMenu"  dynamic="true" styleClass="tabViewMenu" widgetVar="tabMenu" activeIndex="#{controllerMenuInicial.tabActiva}" >  
                             <p:tab title="Administración Usuario" id="Usuarios">  
 
                                 <h:outputText value="Estudiantes" style="position: absolute; top: 60px; left: 90px;font-weight: bolder"/>
@@ -44,7 +44,7 @@
                                 <p:separator style="left: 789px;" styleClass="separatorMenuInicial"/>
 
                                 <h:outputText value="Personal Laboratorio" style="position: absolute; top: 60px; left: 865px;font-weight: bolder"/>
-                                <p:commandButton id="opcLaboratorio" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/personallaboratorio.png); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                <p:commandButton id="opcPersonalLab" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/personallaboratorio.png); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
                                                  action="administrarencargadoslaboratorios"
                                                  />
                                 <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 805px;width: 240px; height: 80px;;color: #000000"/>
@@ -61,72 +61,87 @@
 
 
                             </p:tab>
-                            <p:tab title="Planta Fisica-Elementos" id="Planta">
+                            <p:tab title="Gestión de Laboratorios" id="Planta">
 
-                                
-                                <h:outputText value="Laboratorios" style="position: absolute; top: 60px; left: 90px;font-weight: bolder"/>
-                                <p:commandButton id="opcrLaboratorio" value="" style="position: absolute; left: 40px; top: 130px;background-image: url(Imagenes/estudiantesuc.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
 
+                                <h:outputText value="Laboratorios" style="position: absolute; top: 60px; left: 115px;font-weight: bolder;font-size: 15px"/>
+                                <p:commandButton id="opcLaboratorio" value="" style="position: absolute; left: 40px; top: 120px;background-image: url(Imagenes/estudiantesuc.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 240px; height: 240px; " process="@this" 
+                                                 action="gestionarplantalaboratorios"
                                                  />
-                                <h:outputText value="Administración de los Estudiantes adscritos a la Universidad. Permite activar, ,...." style="position: absolute; top: 365px; left: 10px;width: 240px; height: 80px;;color: #000000"/>
+                                <h:outputText value="Administración de los Estudiantes adscritos a la Universidad. Permite activar, ,...." style="position: absolute; top: 365px; left: 40px;width: 240px; height: 80px;;color: #000000"/>
+
+                                <p:separator style="left: 328px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Salas de Trabajo" style="position: absolute; top: 60px; left: 430px;font-weight: bolder;font-size: 15px"/>
+                                <p:commandButton id="opcSalas" value="" style="position: absolute; left: 368px; top: 120px;background-image: url(Imagenes/docentes.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 240px; height: 240px; " process="@this" 
+                                                 />
+                                <h:outputText value="Administración de los docentes con los cuales cuenta la universidad para los usos de los laboratorios para tareas educativas." style="position: absolute; top: 365px; left: 368px;width: 240px; height: 80px;;color: #000000"/>
+
+                                <p:separator style="left: 656px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Modulos de Trabajo" style="position: absolute; top: 60px; left: 740px;font-weight: bolder;font-size: 15px"/>
+                                <p:commandButton id="opcModulos" value="" style="position: absolute; left: 696px; top: 120px;background-image: url(Imagenes/modulostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 240px; height: 240px; " process="@this" 
+                                                 />
+                                <h:outputText value="Administración de los convenios externos con diferentes entidades para el uso de los laboratorios." style="position: absolute; top: 365px; left: 696px;width: 240px; height: 80px;;color: #000000"/>
+
+
+                                <p:separator style="left: 984px;" styleClass="separatorMenuInicial"/>
+
+                                <h:outputText value="Equipos de Trabajo" style="position: absolute; top: 60px; left: 1080px;font-weight: bolder;font-size: 15px"/>
+                                <p:commandButton id="opcEquipos" value="" style="position: absolute; left: 1024px; top: 120px;background-image: url(Imagenes/equipostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 240px; height: 240px; " process="@this" 
+                                                 />
+                                <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 1024px;width: 240px; height: 80px;;color: #000000"/>
+
+                            </p:tab>
+                            <p:tab title="Estructura Universidad" id="EstructuraU">  
+
+                                <p:commandButton value="Administrar Sedes" style="position: absolute; top: 65px; left: 65px;font-weight: bolder"
+                                                 action="gestionarsedes"
+                                                 />
+
+                                <h:graphicImage value="Imagenes/flor-uc.png" height="185" width="185" style="position: absolute; left: 40px; top: 130px;" />  
+
+                                <p:commandButton value="Administrar Edificios" style="position: absolute; top: 365px; left: 60px;font-weight: bolder"
+                                                 action="gestionaredificios"
+                                                 />
 
                                 <p:separator style="left: 263px;" styleClass="separatorMenuInicial"/>
 
-                                <h:outputText value="Salas de Trabajo" style="position: absolute; top: 60px; left: 375px;font-weight: bolder"/>
-                                <p:commandButton id="opcSalas" value="" style="position: absolute; left: 305px; top: 130px;background-image: url(Imagenes/docentes.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+
+                                <p:commandButton value="Administrar Facultades" style="position: absolute; top: 60px; left: 315px;font-weight: bolder"
+                                                 action="gestionarfacultades"
                                                  />
-                                <h:outputText value="Administración de los docentes con los cuales cuenta la universidad para los usos de los laboratorios para tareas educativas." style="position: absolute; top: 365px; left: 275px;width: 240px; height: 80px;;color: #000000"/>
+
+                                <h:graphicImage value="Imagenes/flor-uc.png" height="185" width="185" style="position: absolute; left: 305px; top: 130px;" />  
+
+                                <p:commandButton value="Administrar Departamentos" style="position: absolute; top: 365px; left: 305px;font-weight: bolder"
+                                                 action="gestionardepartamentos"
+                                                 />
 
                                 <p:separator style="left: 526px;" styleClass="separatorMenuInicial"/>
 
-                                <h:outputText value="Modulos de Trabajo" style="position: absolute; top: 60px; left: 615px;font-weight: bolder"/>
-                                <p:commandButton id="opcModulos" value="" style="position: absolute; left: 565px; top: 130px;background-image: url(Imagenes/modulostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+                                <h:outputText value="Carreras Universidad" style="position: absolute; top: 60px; left: 590px;font-weight: bolder"/>
+                                <p:commandButton id="opcCarrera" value="" style="position: absolute; left: 565px; top: 130px;background-image: url(Imagenes/modulostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="gestionarcarreras"
                                                  />
                                 <h:outputText value="Administración de los convenios externos con diferentes entidades para el uso de los laboratorios." style="position: absolute; top: 365px; left: 535px;width: 240px; height: 80px;;color: #000000"/>
 
 
                                 <p:separator style="left: 789px;" styleClass="separatorMenuInicial"/>
 
-                                <h:outputText value="Equipos de Trabajo" style="position: absolute; top: 60px; left: 865px;font-weight: bolder"/>
-                                <p:commandButton id="opcEquipos" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/equipostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+                                <h:outputText value="Planes de Estudio" style="position: absolute; top: 60px; left: 870px;font-weight: bolder"/>
+                                <p:commandButton id="opcPlanEst" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/equipostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="gestionarplanesestudios"
                                                  />
                                 <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 805px;width: 240px; height: 80px;;color: #000000"/>
 
 
                                 <p:separator style="left: 1052px;" styleClass="separatorMenuInicial"/>
 
-                                <h:outputText value="Areas de Trabajo" style="position: absolute; top: 60px; left: 1140px;font-weight: bolder"/>
-                                <p:commandButton id="opcAreas" value="" style="position: absolute; left: 1100px; top: 130px;background-image: url(Imagenes/areaprofundizacion1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 />
+                                <h:outputText value="Asignaturas" style="position: absolute; top: 60px; left: 1155px;font-weight: bolder"/>
+                                <p:commandButton id="opcAsignatura" value="" style="position: absolute; left: 1100px; top: 130px;background-image: url(Imagenes/areaprofundizacion1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="gestionarasignaturas"/>
                                 <h:outputText value="Administración de perfiles administradores del sistema. Solo los Administradores tienen permiso de uso." style="position: absolute; top: 365px; left: 1070px;width: 240px; height: 80px;color: #000000"/>
-
-                            </p:tab>
-                            <p:tab title="Estructura Universidad" id="EstructuraU">  
-
-                                <h:graphicImage value="Imagenes/flor-uc.png" height="400" width="400" style="position: absolute; top: 50px; left: 200px;" />  
-                                
-                                <strong><p:commandButton id="opcSede" value="SEDES" style="font-size: 13px; position: absolute; left: 363px; top: 120px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcSede" value="Administración de las Sedes de la Universidad"/>
-                                <strong><p:commandButton id="opcEdificio" value="EDIFICIOS" style="font-size: 13px; position: absolute; left: 230px; top: 233px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcEdificio" value="Administración de los Edificios de la Universidad"/>
-                                <strong><p:commandButton id="opcFacultad" value="FACULTAD" style="font-size: 13px; position: absolute; left: 473px; top: 233px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcFacultad" value="Administración de las Facultades adscritas en la Universidad"/>
-                                <strong><p:commandButton id="opcDepartamento" value="DEPARTAM." style="font-size: 13px; position: absolute; left: 348px; top: 345px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcDepartamento" value="Administración de los Departamentos adscritos en la Universidad"/>
-                                
-                                <h:graphicImage value="Imagenes/flor-uc.png" height="400" width="400" style="position: absolute; top: 50px; left: 700px;" />  
-                                
-                                <strong><p:commandButton id="opcCarrera" value="CARRERA" style="font-size: 13px; position: absolute; left: 853px; top: 120px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcCarrera" value="Administración de las Carreras registradas en la Universidad"/>
-                                <strong><p:commandButton id="opcPlanEst" value="P. ESTUDIO" style="font-size: 13px; position: absolute; left: 725px; top: 233px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcPlanEst" value="Administración de los Planes de Estudio que posee la Universidad"/>
-                                <strong><p:commandButton id="opcPlanAcade" value="P. ACADEM." style="font-size: 13px; position: absolute; left: 973px; top: 233px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcPlanAcade" value="Administración de los Periodos Academicos de la Universidad"/>
-                                <strong><p:commandButton id="opcAsignatura" value="ASIGNATURA" style="font-size: 13px; position: absolute; left: 845px; top: 345px; background: transparent; border-color: transparent; color: white;"/></strong>
-                                <p:tooltip for="opcAsignatura" value="Administración de las Asignaturas registradas en la Universidad"/>
 
 
                             </p:tab>

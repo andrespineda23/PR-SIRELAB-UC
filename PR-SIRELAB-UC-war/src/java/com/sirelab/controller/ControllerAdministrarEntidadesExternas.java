@@ -146,7 +146,9 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
-        desactivarFiltrosTabla();
+        if (null != listaEntidadesExternas) {
+            desactivarFiltrosTabla();
+        }
         activarExport = true;
         parametroNombre = null;
         parametroApellido = null;
@@ -276,10 +278,10 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public boolean validarIdentificacionEntidadExterna() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(nuevoIdentificacionEntidadExterna)) {
+        if (Utilidades.validarNulo(nuevoIdentificacionEntidadExterna) == false) {
             retorno = false;
         }
-        if (!Utilidades.validarNulo(nuevoIDUnicoEntidadExterna)) {
+        if (Utilidades.validarNulo(nuevoIDUnicoEntidadExterna) == false) {
             retorno = false;
         }
         return retorno;
@@ -302,8 +304,8 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public boolean validarDireccionEntidadExterna() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(nuevoDireccionEntidadExterna)) {
-            retorno = false;
+        if (Utilidades.validarNulo(nuevoDireccionEntidadExterna)) {
+
         }
         return retorno;
     }
@@ -377,7 +379,7 @@ public class ControllerAdministrarEntidadesExternas implements Serializable {
 
     public void modificarIdentificacionEntidadExterna() {
         RequestContext context = RequestContext.getCurrentInstance();
-        boolean validar = validarIdentificacionEntidadExterna();
+        boolean validar = Utilidades.validarNulo(nuevoIdentificacionEntidadExterna);
         if (validar == true) {
             nuevoUserEntidadExterna = nuevoIdentificacionEntidadExterna;
             nuevoPassEntidadExterna = nuevoIdentificacionEntidadExterna;

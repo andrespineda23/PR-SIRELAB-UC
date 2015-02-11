@@ -159,7 +159,9 @@ public class ControllerAdministrarEstudiantes implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
-        desactivarFiltrosTabla();
+        if (null != listaEstudiantes) {
+            desactivarFiltrosTabla();
+        }
         activarExport = true;
         activoCarrera = true;
         activoPlan = true;

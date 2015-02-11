@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -35,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Edificio.findByDireccion", query = "SELECT e FROM Edificio e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Edificio.findByDescripcionedificio", query = "SELECT e FROM Edificio e WHERE e.descripcionedificio = :descripcionedificio")})
 public class Edificio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,19 +67,25 @@ public class Edificio implements Serializable {
     }
 
     public String getDireccion() {
+        if (null != direccion) {
+            return direccion.toUpperCase();
+        }
         return direccion;
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getDescripcionedificio() {
+        if (null != descripcionedificio) {
+            return descripcionedificio.toUpperCase();
+        }
         return descripcionedificio;
     }
 
     public void setDescripcionedificio(String descripcionedificio) {
-        this.descripcionedificio = descripcionedificio;
+        this.descripcionedificio = descripcionedificio.toUpperCase();
     }
 
     public Sede getSede() {
@@ -114,5 +120,5 @@ public class Edificio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Edificio[ idedificio=" + idedificio + " ]";
     }
-    
+
 }

@@ -27,4 +27,6 @@ public interface AdministrarAdministradoresBOInterface {
 
     public void almacenarNuevaPersonaEnSistema(Usuario usuarioNuevo, Persona personaNuevo);
 
+    public void actualizarInformacionUsuario(Usuario usuario);
+
 }

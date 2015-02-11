@@ -262,6 +262,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             estudianteDetalles.getPersona().setTelefono2persona(telefono2Estudiante);
             estudianteDetalles.setPlanestudio(planEstudioEstudiante);
             estudianteDetalles.setSemestreestudiante(semestreEstudiante);
+            administrarEstudiantesBO.actualizarInformacionPersona(estudianteDetalles.getPersona());
             administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
             context.execute("registroExitosoEstudiante.show()");
             restaurarInformacionEstudiante();
@@ -325,8 +326,8 @@ public class ControllerDetallesEstudiante implements Serializable {
 
     public boolean validarDireccionEstudiante() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(direccionEstudiante)) {
-            retorno = false;
+        if (Utilidades.validarNulo(direccionEstudiante)) {
+            
         }
         return retorno;
     }
@@ -366,7 +367,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(true);
                 estudianteDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
+                administrarEstudiantesBO.actualizarInformacionUsuario(estudianteDetalles.getPersona().getUsuario());
                 restaurarInformacionEstudiante();
                 context.execute("registroExitosoEstudiante.show()");
                 context.update("formT:form:panelMenu");
@@ -384,7 +385,7 @@ public class ControllerDetallesEstudiante implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(false);
                 estudianteDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEstudiantesBO.actualizarInformacionEstudiante(estudianteDetalles);
+                administrarEstudiantesBO.actualizarInformacionUsuario(estudianteDetalles.getPersona().getUsuario());
                 estudianteDetalles = new Estudiante();
                 context.update("formT:form:panelMenu");
                 restaurarInformacionEstudiante();

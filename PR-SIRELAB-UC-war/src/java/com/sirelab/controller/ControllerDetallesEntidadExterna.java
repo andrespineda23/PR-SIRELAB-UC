@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sirelab.controller;
 
 import com.sirelab.bo.interfacebo.AdministrarEntidadesExternasBOInterface;
-import com.sirelab.entidades.Departamento;
 import com.sirelab.entidades.EntidadExterna;
-import com.sirelab.entidades.Facultad;
 import com.sirelab.utilidades.UsuarioLogin;
 import com.sirelab.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -163,6 +155,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             entidadExternaDetalles.setNombreentidad(nombreUnicoEntidadExterna);
             entidadExternaDetalles.setIdentificacionentidad(idUnicoEntidadExterna);
             entidadExternaDetalles.setEmailentidad(emailUnicoEntidadExterna);
+            administrarEntidadesExternasBO.actualizarInformacionPersona(entidadExternaDetalles.getPersona());
             administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
             context.execute("registroExitosoEntidadExterna.show()");
             restaurarInformacionEntidadExterna();
@@ -237,8 +230,8 @@ public class ControllerDetallesEntidadExterna implements Serializable {
 
     public boolean validarDireccionEntidadExterna() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(direccionEntidadExterna)) {
-            retorno = false;
+        if (Utilidades.validarNulo(direccionEntidadExterna)) {
+
         }
         return retorno;
     }
@@ -266,7 +259,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(true);
                 entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
+                administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 restaurarInformacionEntidadExterna();
                 context.execute("registroExitosoEntidadExterna.show()");
                 context.update("formT:form:panelMenu");
@@ -284,7 +277,7 @@ public class ControllerDetallesEntidadExterna implements Serializable {
             if (modificacionRegistro == false) {
                 Boolean bool = new Boolean(false);
                 entidadExternaDetalles.getPersona().getUsuario().setEstado(bool);
-                administrarEntidadesExternasBO.actualizarInformacionEntidadExterna(entidadExternaDetalles);
+                administrarEntidadesExternasBO.actualizarInformacionUsuario(entidadExternaDetalles.getPersona().getUsuario());
                 entidadExternaDetalles = new EntidadExterna();
                 context.update("formT:form:panelMenu");
                 restaurarInformacionEntidadExterna();
@@ -443,6 +436,4 @@ public class ControllerDetallesEntidadExterna implements Serializable {
         this.idUnicoEntidadExterna = idUnicoEntidadExterna;
     }
 
-    
-    
 }

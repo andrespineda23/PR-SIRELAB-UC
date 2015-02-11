@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE DEPARTAMENTOS</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Departamento: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarDepartamentos.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Facultad: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarDepartamentos.parametroFacultad}"
+                                             style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px"
+                                             id="parametroFacultad">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarDepartamentos.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarDepartamentos.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarDepartamentos.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarDepartamentos.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarDepartamentos.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Departamentos" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarDepartamentos.buscarDepartamentosPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarDepartamentos.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoCarr" rowKey="#{infoCarr.iddepartamento}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarDepartamentos.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarDepartamentos.listaDepartamentos}"
+                                         filteredValue="#{controllerGestionarDepartamentos.filtrarListaDepartamentos}"
+                                         >
+
+                                <p:column  headerText="Nombre Departamento"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoCarr.nombredepartamento}" sortBy="#{infoCarr.nombredepartamento}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Departamento"/></f:facet>
+                                    <h:outputText value="#{infoCarr.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoCarr.facultad.nombrefacultad}" sortBy="#{infoCarr.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Nombre Facultad"/></f:facet>
+                                    <h:outputText value="#{infoCarr.facultad.nombrefacultad}"/>
+                                </p:column>
+
+
+                            </p:dataTable>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Departamento" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarDepartamentos.dispararDialogoNuevoDepartamento()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarDepartamentos.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroDepartamento" header="Registro Nuevo Departamento" widgetVar="NuevoRegistroDepartamento" closable="false" resizable="false"  draggable="false"  modal="true" height="180" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nuevo departamento" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoDepartamento" style="border: none;">
+                            <strong><h:outputText value="*Nombre Departamento: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreDepartamento" maxlength="45" value="#{controllerGestionarDepartamentos.nuevoNombreDepartamento}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreDepartamento" value="Nombre del departamento" />
+
+                            <strong><h:outputText value="*Nombre Facultad: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarDepartamentos.nuevoFacultadDepartamento}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase"
+                                             id="nuevoFacultadDepartamento">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarDepartamentos.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="limpiarDepartamento" value="Limpiar" style="position: absolute; left: 20px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarRegistroDepartamento()}" update="nuevoDepartamento" process="@this"/>
+                            <p:commandButton id="agregarDepartamento" value="Aceptar" style="position: absolute; left: 270px; top: 140px;"  process="@this" actionListener="#{controllerGestionarDepartamentos.registrarNuevoDepartamento()}"  />
+                            <p:commandButton id="cancelarDepartamento" value="Cancelar" style="position: absolute; left: 360px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarRegistroDepartamento()}" update="nuevoDepartamento" onclick="NuevoRegistroDepartamento.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroDepartamento" header="Registro Editar Departamento" widgetVar="EditarRegistroDepartamento" closable="false" resizable="false"  draggable="false"  modal="true" height="180" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del departamento a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarDepartamento" style="border: none;">
+                            <strong><h:outputText value="*Nombre Departamento: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreDepartamento" maxlength="45" value="#{controllerGestionarDepartamentos.editarNombre}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreDepartamento" value="Nombre del departamento" />
+
+                            <strong><h:outputText value="*Nombre Facultad: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarDepartamentos.editarFacultad}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase"
+                                             id="editarFacultadDepartamento">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarDepartamentos.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton id="limpiarEDepartamento" value="Limpiar" style="position: absolute; left: 20px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarEditarDepartamento()}" update="editarDepartamento" process="@this"/>
+                            <p:commandButton id="agregarEDepartamento" value="Aceptar" style="position: absolute; left: 270px; top: 140px;"  process="@this" actionListener="#{controllerGestionarDepartamentos.modificarInformacionDepartamento()}"  />
+                            <p:commandButton id="cancelarEDepartamento" value="Cancelar" style="position: absolute; left: 360px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarEditarDepartamento()}" update="editarDepartamento" onclick="EditarRegistroDepartamento.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionDepartamento" header="ATENCIÓN..!" widgetVar="errorInformacionDepartamento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Nombre se encuentran erroneo y/o vacio . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorFacultadDepartamento" header="ATENCIÓN..!" widgetVar="errorFacultadDepartamento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Facultad se encuentra vacio. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoDepartamento" header="Información de Registro" widgetVar="registroExitosoDepartamento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el departamento en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoDepartamento" header="Información de Registro" widgetVar="registroFallidoDepartamento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el departamento para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

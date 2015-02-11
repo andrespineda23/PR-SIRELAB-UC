@@ -8,6 +8,7 @@ package com.sirelab.dao.interfacedao;
 import com.sirelab.entidades.Departamento;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -27,4 +28,5 @@ public interface DepartamentoDAOInterface {
 
     public List<Departamento> buscarDepartamentosPorIDFacultad(BigInteger idFacultad);
 
+    public List<Departamento> buscarDepartamentosPorFiltrado(Map<String, String> filters);
 }

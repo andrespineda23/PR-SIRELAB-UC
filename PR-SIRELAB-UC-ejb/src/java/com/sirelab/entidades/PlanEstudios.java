@@ -85,25 +85,25 @@ public class PlanEstudios implements Serializable {
     }
 
     public String getCodigoplanestudio() {
-        if(codigoplanestudio != null){
-            codigoplanestudio = codigoplanestudio.toUpperCase();
+        if(null != codigoplanestudio){
+            return codigoplanestudio.toUpperCase();
         }
         return codigoplanestudio;
     }
 
     public void setCodigoplanestudio(String codigoplanestudio) {
-        this.codigoplanestudio = codigoplanestudio;
+        this.codigoplanestudio = codigoplanestudio.toUpperCase();
     }
 
     public String getNombreplanestudio() {
-        if(nombreplanestudio != null){
-            nombreplanestudio = nombreplanestudio.toUpperCase();
+        if(null != nombreplanestudio){
+            return nombreplanestudio.toUpperCase();
         }
         return nombreplanestudio;
     }
 
     public void setNombreplanestudio(String nombreplanestudio) {
-        this.nombreplanestudio = nombreplanestudio;
+        this.nombreplanestudio = nombreplanestudio.toUpperCase();
     }
 
     @XmlTransient

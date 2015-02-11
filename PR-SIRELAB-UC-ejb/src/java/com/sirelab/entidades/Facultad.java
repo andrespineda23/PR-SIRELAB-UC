@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Facultad.findByCodigofacultad", query = "SELECT f FROM Facultad f WHERE f.codigofacultad = :codigofacultad"),
     @NamedQuery(name = "Facultad.findByNombrefacultad", query = "SELECT f FROM Facultad f WHERE f.nombrefacultad = :nombrefacultad")})
 public class Facultad implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,22 +79,25 @@ public class Facultad implements Serializable {
     }
 
     public String getCodigofacultad() {
+        if (null != codigofacultad) {
+            return codigofacultad.toUpperCase();
+        }
         return codigofacultad;
     }
 
     public void setCodigofacultad(String codigofacultad) {
-        this.codigofacultad = codigofacultad;
+        this.codigofacultad = codigofacultad.toUpperCase();
     }
 
     public String getNombrefacultad() {
-        if(nombrefacultad != null){
-            nombrefacultad = nombrefacultad.toUpperCase();
+        if (null != nombrefacultad) {
+            return nombrefacultad.toUpperCase();
         }
         return nombrefacultad;
     }
 
     public void setNombrefacultad(String nombrefacultad) {
-        this.nombrefacultad = nombrefacultad;
+        this.nombrefacultad = nombrefacultad.toUpperCase();
     }
 
     @XmlTransient
@@ -129,5 +133,5 @@ public class Facultad implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.Facultad[ idfacultad=" + idfacultad + " ]";
     }
-    
+
 }

@@ -164,7 +164,9 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
     }
 
     public void limpiarProcesoBusqueda() {
-        desactivarFiltrosTabla();
+        if (null != listaEncargadosLaboratorios) {
+            desactivarFiltrosTabla();
+        }
         activarExport = true;
         activoDepartamento = true;
         activoLaboratorio = true;
@@ -258,17 +260,17 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         try {
             if (Utilidades.validarNulo(nuevoFacultadEncargadoLaboratorio)) {
                 activoNuevoDepartamento = false;
-                nuevoDepartamentoEncargadoLaboratorio = new Departamento();
+                nuevoDepartamentoEncargadoLaboratorio = null;
                 listaDepartamentos = administrarEncargadosLaboratoriosBO.obtenerDepartamentosPorIDFacultad(nuevoFacultadEncargadoLaboratorio.getIdfacultad());
                 activoNuevoLaboratorio = true;
-                nuevoLaboratorioEncargadoLaboratorio = new Laboratorio();
+                nuevoLaboratorioEncargadoLaboratorio = null;
                 listaLaboratorios = null;
             } else {
                 listaDepartamentos = null;
                 activoNuevoDepartamento = false;
-                nuevoDepartamentoEncargadoLaboratorio = new Departamento();
+                nuevoDepartamentoEncargadoLaboratorio = null;
                 activoNuevoLaboratorio = true;
-                nuevoLaboratorioEncargadoLaboratorio = new Laboratorio();
+                nuevoLaboratorioEncargadoLaboratorio = null;
                 listaLaboratorios = null;
             }
             RequestContext context = RequestContext.getCurrentInstance();
@@ -301,12 +303,12 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         try {
             if (Utilidades.validarNulo(nuevoDepartamentoEncargadoLaboratorio)) {
                 activoNuevoLaboratorio = false;
-                nuevoLaboratorioEncargadoLaboratorio = new Laboratorio();
+                nuevoLaboratorioEncargadoLaboratorio = null;
                 listaLaboratorios = administrarEncargadosLaboratoriosBO.obtenerLaboratoriosPorIDDepartamento(nuevoDepartamentoEncargadoLaboratorio.getIddepartamento());
             } else {
                 listaLaboratorios = null;
                 activoNuevoLaboratorio = false;
-                nuevoLaboratorioEncargadoLaboratorio = new Laboratorio();
+                nuevoLaboratorioEncargadoLaboratorio = null;
             }
             RequestContext context = RequestContext.getCurrentInstance();
             context.update("formT:formularioDialogos:nuevoLaboratorioEncargadoLaboratorio");
@@ -332,12 +334,12 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
         activoNuevoDepartamento = true;
         activoLaboratorio = true;
         listaLaboratorios = null;
-        nuevoDepartamentoEncargadoLaboratorio = new Departamento();
+        nuevoDepartamentoEncargadoLaboratorio = null;
         nuevoApellidoEncargadoLaboratorio = null;
-        nuevoLaboratorioEncargadoLaboratorio = new Laboratorio();
+        nuevoLaboratorioEncargadoLaboratorio = null;
         nuevoCorreoEncargadoLaboratorio = null;
         nuevoDireccionEncargadoLaboratorio = null;
-        nuevoFacultadEncargadoLaboratorio = new Facultad();
+        nuevoFacultadEncargadoLaboratorio = null;
         nuevoIdentificacionEncargadoLaboratorio = null;
         nuevoNombresEncargadoLaboratorio = null;
         nuevoNumero1EncargadoLaboratorio = null;
@@ -400,8 +402,8 @@ public class ControllerAdministrarEncargadosLaboratorios implements Serializable
 
     public boolean validarDireccionEncargadoLaboratorio() {
         boolean retorno = true;
-        if (!Utilidades.validarNulo(nuevoDireccionEncargadoLaboratorio)) {
-            retorno = false;
+        if (Utilidades.validarNulo(nuevoDireccionEncargadoLaboratorio)) {
+
         }
         return retorno;
     }

@@ -33,4 +33,8 @@ public interface AdministrarDocentesBOInterface {
     public void actualizarInformacionDocente(Docente docente);
 
     public void almacenarNuevoDocenteEnSistema(Usuario usuarioNuevo, Persona personaNuevo, Docente docenteNuevo);
+
+    public void actualizarInformacionPersona(Persona persona);
+
+    public void actualizarInformacionUsuario(Usuario usuario);
 }

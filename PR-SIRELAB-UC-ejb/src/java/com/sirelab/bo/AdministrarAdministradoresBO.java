@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
@@ -65,6 +64,15 @@ public class AdministrarAdministradoresBO implements AdministrarAdministradoresB
     public void actualizarInformacionAdministrador(Persona administrador) {
         try {
             personaDAO.editarPersona(administrador);
+        } catch (Exception e) {
+            System.out.println("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
+        }
+    }
+
+    //@Override
+    public void actualizarInformacionUsuario(Usuario usuario) {
+        try {
+            usuarioDAO.editarUsuario(usuario);
         } catch (Exception e) {
             System.out.println("Error AdministrarAdministradoresBO almacenarNuevaPersonaEnSistema : " + e.toString());
         }

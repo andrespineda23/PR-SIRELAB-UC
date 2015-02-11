@@ -4,6 +4,7 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    <!-- Menu Inicial -->
     
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
@@ -21,6 +22,8 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    <!-- Administración de Usuarios -->   
     
     <navigation-rule>
         <from-view-id>/menuinicial.xhtml</from-view-id>
@@ -122,7 +125,6 @@
         </navigation-case>
     </navigation-rule>
 
-
     <navigation-rule>
         <from-view-id>/menuinicial.xhtml</from-view-id>
         <navigation-case>
@@ -223,7 +225,7 @@
         </navigation-case>
     </navigation-rule>
     
-        <navigation-rule>
+    <navigation-rule>
         <from-view-id>/administrarencargadoslaboratorios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>detallesencargadolaboratorio</from-outcome>
@@ -247,6 +249,212 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+
+
+
+    <!-- Gestion de la Estructura de la Universidad -->   
+
+
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarsedes</from-outcome>
+            <to-view-id>/gestionarsedes.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarsedes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarsedes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarfacultades</from-outcome>
+            <to-view-id>/gestionarfacultades.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarfacultades.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarfacultades.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionaredificios</from-outcome>
+            <to-view-id>/gestionaredificios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionaredificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionaredificios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionardepartamentos</from-outcome>
+            <to-view-id>/gestionardepartamentos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionardepartamentos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionardepartamentos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarcarreras</from-outcome>
+            <to-view-id>/gestionarcarreras.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarcarreras.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarcarreras.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplanesestudios</from-outcome>
+            <to-view-id>/gestionarplanesestudios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplanesestudios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplanesestudios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarasignaturas</from-outcome>
+            <to-view-id>/gestionarasignaturas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarasignaturas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarasignaturas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplantalaboratorios</from-outcome>
+            <to-view-id>/gestionarplantalaboratorios.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantalaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantalaboratorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
 
     
 </faces-config>

@@ -83,19 +83,25 @@ public class Sede implements Serializable {
     }
 
     public String getNombresede() {
+        if (null != nombresede) {
+            return nombresede.toUpperCase();
+        }
         return nombresede;
     }
 
     public void setNombresede(String nombresede) {
-        this.nombresede = nombresede;
+        this.nombresede = nombresede.toUpperCase();
     }
 
     public String getDireccionsede() {
+        if (null != direccionsede) {
+            return direccionsede.toUpperCase();
+        }
         return direccionsede;
     }
 
     public void setDireccionsede(String direccionsede) {
-        this.direccionsede = direccionsede;
+        this.direccionsede = direccionsede.toUpperCase();
     }
 
     public String getTelefonosede() {
