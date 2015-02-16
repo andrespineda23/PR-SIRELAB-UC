@@ -75,4 +75,20 @@ public final class Utilidades {
         }
     }
 
+    /**
+     * Metodo que valida si un numero es numerlongo y no posee algun caracter
+     * diferente
+     *
+     * @param numero Numero long a validar
+     * @return true-Es numero / false-No es numero
+     */
+    public static boolean isNumberLong(String numero) {
+        try {
+            long validacion = Long.valueOf(numero).longValue();
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 }

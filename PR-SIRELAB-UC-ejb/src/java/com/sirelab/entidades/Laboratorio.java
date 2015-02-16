@@ -38,6 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Laboratorio.findByIdlaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.idlaboratorio = :idlaboratorio"),
     @NamedQuery(name = "Laboratorio.findByNombrelaboratorio", query = "SELECT l FROM Laboratorio l WHERE l.nombrelaboratorio = :nombrelaboratorio")})
 public class Laboratorio implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "laboratorio")
+    private Collection<AreaProfundizacion> areaProfundizacionCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -127,6 +129,15 @@ public class Laboratorio implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Laboratorio[ idlaboratorio=" + idlaboratorio + " ]";
+    }
+
+    @XmlTransient
+    public Collection<AreaProfundizacion> getAreaProfundizacionCollection() {
+        return areaProfundizacionCollection;
+    }
+
+    public void setAreaProfundizacionCollection(Collection<AreaProfundizacion> areaProfundizacionCollection) {
+        this.areaProfundizacionCollection = areaProfundizacionCollection;
     }
 
 }

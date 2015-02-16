@@ -238,10 +238,10 @@ public class ControllerGestionarPlantaLaboratorios implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("NuevoRegistroLaboratorio.hide()");
         try {
-            Laboratorio carreraNuevo = new Laboratorio();
-            carreraNuevo.setNombrelaboratorio(nuevoNombreLaboratorio);
-            carreraNuevo.setDepartamento(nuevoDepartamentoLaboratorio);
-            gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(carreraNuevo);
+            Laboratorio laboratorioNuevo = new Laboratorio();
+            laboratorioNuevo.setNombrelaboratorio(nuevoNombreLaboratorio);
+            laboratorioNuevo.setDepartamento(nuevoDepartamentoLaboratorio);
+            gestionarPlantaLaboratoriosBO.crearNuevaLaboratorio(laboratorioNuevo);
             context.execute("registroExitosoLaboratorio.show()");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaLaboratorios almacenarNuevoLaboratorioEnSistema : " + e.toString());

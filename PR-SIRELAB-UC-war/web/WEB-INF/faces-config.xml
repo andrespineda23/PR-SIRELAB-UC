@@ -455,6 +455,55 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarparametroareaprofundizacion</from-outcome>
+            <to-view-id>/administrarparametroareaprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarparametroareaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrarparametroareaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplantasalas</from-outcome>
+            <to-view-id>/gestionarplantasalas.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantasalas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantasalas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 
     
 </faces-config>

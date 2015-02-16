@@ -150,6 +150,14 @@
                                     <f:facet name="header"><h:outputText value="Plan de Estudios"/></f:facet>
                                     <h:outputText value="#{infoAsign.planestudios.codigoplanestudio}"/>
                                 </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarAsignaturas.dispararDialogoEditarPlanEstudio(infoAsign.idasignatura)}"/>
+                                </p:column>
+
+
                             </p:dataTable>
                         </fieldset>
 

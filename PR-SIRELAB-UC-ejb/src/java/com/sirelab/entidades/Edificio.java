@@ -7,7 +7,9 @@ package com.sirelab.entidades;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +19,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Edificio.findByDireccion", query = "SELECT e FROM Edificio e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Edificio.findByDescripcionedificio", query = "SELECT e FROM Edificio e WHERE e.descripcionedificio = :descripcionedificio")})
 public class Edificio implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "edificio")
+    private Collection<SalaLaboratorio> salaLaboratorioCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -119,6 +125,15 @@ public class Edificio implements Serializable {
     @Override
     public String toString() {
         return "com.sirelab.entidades.Edificio[ idedificio=" + idedificio + " ]";
+    }
+
+    @XmlTransient
+    public Collection<SalaLaboratorio> getSalaLaboratorioCollection() {
+        return salaLaboratorioCollection;
+    }
+
+    public void setSalaLaboratorioCollection(Collection<SalaLaboratorio> salaLaboratorioCollection) {
+        this.salaLaboratorioCollection = salaLaboratorioCollection;
     }
 
 }

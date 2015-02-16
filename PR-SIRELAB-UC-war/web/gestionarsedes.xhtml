@@ -90,7 +90,16 @@
                                     <h:outputText value="#{infoSede.telefonosede}"/>
                                 </p:column>
 
-                            
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarSedes.dispararDialogoEditarSede(infoSede.idsede)}"/>
+                                </p:column>
+
+
+
+
                             </p:dataTable>
 
 
@@ -131,7 +140,7 @@
                             </p:inputText>
                             <p:watermark for="nuevoTelefonoSede" value="Número telefonico del sede" />
 
-                            
+
                             <p:commandButton id="limpiarSede" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarSedes.limpiarRegistroSede()}" update="nuevoSede" process="@this"/>
                             <p:commandButton id="agregarSede" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarSedes.registrarNuevoSede()}"  />
                             <p:commandButton id="cancelarSede" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarSedes.limpiarRegistroSede()}" update="nuevoSede" onclick="NuevoRegistroSede.hide();"  process="@this"/>
@@ -163,8 +172,8 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:inputText>
                             <p:watermark for="editarTelefonoSede" value="Número telefonico del sede" />
-                            
-                            
+
+
                             <p:commandButton id="limpiarESede" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarSedes.limpiarEditarSede()}" update="editarSede" process="@this"/>
                             <p:commandButton id="agregarESede" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarSedes.modificarInformacionSede()}"  />
                             <p:commandButton id="cancelarESede" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarSedes.limpiarEditarSede()}" update="editarSede" onclick="EditarRegistroSede.hide();"  process="@this"/>

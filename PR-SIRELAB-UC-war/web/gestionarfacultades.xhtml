@@ -77,7 +77,15 @@
                                     <f:facet name="header"><h:outputText value="Codigo Facultad"/></f:facet>
                                     <h:outputText value="#{infoFac.codigofacultad}"/>
                                 </p:column>
-                            
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarFacultades.dispararDialogoEditarFacultad(infoFac.idfacultad)}"/>
+                                </p:column>
+
+
+
                             </p:dataTable>
 
 
@@ -112,7 +120,7 @@
                             </p:inputText>
                             <p:watermark for="nuevoCodigoFacultad" value="Codigo del facultad" />
 
-                            
+
                             <p:commandButton id="limpiarFacultad" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarFacultades.limpiarRegistroFacultad()}" update="nuevoFacultad" process="@this"/>
                             <p:commandButton id="agregarFacultad" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarFacultades.registrarNuevoFacultad()}"  />
                             <p:commandButton id="cancelarFacultad" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarFacultades.limpiarRegistroFacultad()}" update="nuevoFacultad" onclick="NuevoRegistroFacultad.hide();"  process="@this"/>
@@ -138,7 +146,7 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:inputText>
                             <p:watermark for="editarCodigoFacultad" value="Codigo del facultad" />
-    
+
                             <p:commandButton id="limpiarEFacultad" value="Limpiar" style="position: absolute; left: 20px; top: 170px;" actionListener="#{controllerGestionarFacultades.limpiarEditarFacultad()}" update="editarFacultad" process="@this"/>
                             <p:commandButton id="agregarEFacultad" value="Aceptar" style="position: absolute; left: 270px; top: 170px;"  process="@this" actionListener="#{controllerGestionarFacultades.modificarInformacionFacultad()}"  />
                             <p:commandButton id="cancelarEFacultad" value="Cancelar" style="position: absolute; left: 360px; top: 170px;" actionListener="#{controllerGestionarFacultades.limpiarEditarFacultad()}" update="editarFacultad" onclick="EditarRegistroFacultad.hide();"  process="@this"/>

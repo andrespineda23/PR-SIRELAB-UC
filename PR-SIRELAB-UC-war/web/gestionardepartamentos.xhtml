@@ -83,6 +83,13 @@
                                     <h:outputText value="#{infoCarr.facultad.nombrefacultad}"/>
                                 </p:column>
 
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarDepartamentos.dispararDialogoEditarDepartamento(infoCarr.iddepartamento)}"/>
+                                </p:column>
+
+
 
                             </p:dataTable>
 
@@ -154,7 +161,7 @@
                                 <f:converter converterId="ConverterGenerico" />
                                 <p:ajax event="change" process="@this" update="@this" />
                             </p:selectOneMenu>
-                            
+
                             <p:commandButton id="limpiarEDepartamento" value="Limpiar" style="position: absolute; left: 20px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarEditarDepartamento()}" update="editarDepartamento" process="@this"/>
                             <p:commandButton id="agregarEDepartamento" value="Aceptar" style="position: absolute; left: 270px; top: 140px;"  process="@this" actionListener="#{controllerGestionarDepartamentos.modificarInformacionDepartamento()}"  />
                             <p:commandButton id="cancelarEDepartamento" value="Cancelar" style="position: absolute; left: 360px; top: 140px;" actionListener="#{controllerGestionarDepartamentos.limpiarEditarDepartamento()}" update="editarDepartamento" onclick="EditarRegistroDepartamento.hide();"  process="@this"/>

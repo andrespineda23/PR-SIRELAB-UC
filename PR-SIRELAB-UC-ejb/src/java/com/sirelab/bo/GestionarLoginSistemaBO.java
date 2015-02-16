@@ -143,7 +143,7 @@ public class GestionarLoginSistemaBO implements GestionarLoginSistemaBOInterface
             }
             String newPass = String.valueOf(nuevaPass) + "SIRELAB";
             persona.getUsuario().setPasswordusuario(newPass);
-            personaDAO.editarPersona(persona);
+            usuarioDAO.editarUsuario(persona.getUsuario());
             Persona registro = personaDAO.buscarPersonaPorID(persona.getIdpersona());
             return registro;
         } catch (Exception e) {

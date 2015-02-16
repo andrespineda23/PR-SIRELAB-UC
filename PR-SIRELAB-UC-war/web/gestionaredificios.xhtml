@@ -96,6 +96,12 @@
                                     <h:outputText value="#{infoEdi.sede.nombresede}"/>
                                 </p:column>
 
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarEdificios.dispararDialogoEditarEdificio(infoEdi.idedificio)}"/>
+                                </p:column>
+
 
                             </p:dataTable>
 
