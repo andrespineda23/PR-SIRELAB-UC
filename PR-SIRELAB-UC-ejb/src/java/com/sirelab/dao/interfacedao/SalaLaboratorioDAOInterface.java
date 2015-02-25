@@ -26,7 +26,5 @@ public interface SalaLaboratorioDAOInterface {
 
     public SalaLaboratorio buscarSalaLaboratorioPorID(BigInteger idRegistro);
 
-    public List<SalaLaboratorio> buscarSalaLaboratorioPorIDDepartamento(BigInteger idDepartamento);
-
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorFiltrado(Map<String, String> filters);
 }

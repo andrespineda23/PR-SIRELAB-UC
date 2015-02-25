@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE MODULOS</strong></legend>
+
+                            <strong><h:outputText value="Detalle Modulo:" style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDetalle" value="#{controllerGestionarPlantaModulos.parametroDetalle}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Codigo Modulo:" style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCodigo" value="#{controllerGestionarPlantaModulos.parametroCodigo}" maxlength="20" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Estado Modulo: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEstado" value="#{controllerGestionarPlantaModulos.parametroEstado}" disabled="#{controllerGestionarPlantaModulos.activarTodosModulo}" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 100px">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="TODOS MODULOS" style="position: absolute; left: 315px; top: 102px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectBooleanCheckbox value="#{controllerGestionarPlantaModulos.activarTodosModulo}" style="position: absolute; left: 440px; top: 99px;" >
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaModulos.modificacionTodosModulos()}"/>
+                            </p:selectBooleanCheckbox>
+
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <strong><h:outputText value="Laboratorio:" style="position: absolute; left: 600px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroLaboratorio" value="#{controllerGestionarPlantaModulos.parametroLaboratorio}" style="position: absolute; left: 770px; top: 35px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaModulos.actualizarLaboratorios()}"/>
+                            </p:selectOneMenu>
+
+
+                            <strong><h:outputText value="Area Profundización:" style="position: absolute; left: 600px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroAreaProfundizacion" disabled="#{controllerGestionarPlantaModulos.activarAreaProfundizacion}" value="#{controllerGestionarPlantaModulos.parametroAreaProfundizacion}" style="position: absolute; left: 770px; top: 65px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Area" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaAreasProfundizacion}" var="areas"
+                                               itemLabel="#{areas.nombrearea}" itemValue="#{areas}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Sede:" style="position: absolute; left: 600px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroSede" value="#{controllerGestionarPlantaModulos.parametroSede}" style="position: absolute; left: 770px; top: 95px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaSedes}" var="sedes"
+                                               itemLabel="#{sedes.nombresede}" itemValue="#{sedes}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaModulos.actualizarSedes()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Edificio: " style="position: absolute; left: 600px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroEdificio" disabled="#{controllerGestionarPlantaModulos.activarEdificio}" value="#{controllerGestionarPlantaModulos.parametroEdificio}" style="position: absolute; left: 770px; top: 125px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaEdificios}" var="edificio"
+                                               itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Sala Laboratorio: " style="position: absolute; left: 600px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu id="parametroSalaLaboratorio" disabled="#{controllerGestionarPlantaModulos.activarSala}" value="#{controllerGestionarPlantaModulos.parametroSalaLaboratorio}" style="position: absolute; left: 770px; top: 155px; text-transform: uppercase; width: 250px">
+                                <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaSalasLaboratorios}" var="sala"
+                                               itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarPlantaModulos.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1070px; top: 25px; " ajax="false" actionListener="#{controllerGestionarPlantaModulos.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarPlantaModulos.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerGestionarPlantaModulos.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+
+                            <p:commandButton value="Salas" icon="ui-icon-search" style="position: absolute; left: 1070px; top: 110px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarPlantaModulos.buscarSalasPorParametros(0)}" process="@this"/>
+                            
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerGestionarPlantaSalas.buscarSalasLaboratorioPorParametros()}" update="panelMenu"/>
+
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoDep" rowKey="#{infoDep.idmodulolaboratorio}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarPlantaModulos.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarPlantaModulos.listaModulosLaboratorios}"
+                                         filteredValue="#{controllerGestionarPlantaModulos.filtrarListaModulosLaboratorios}"
+                                         >
+
+                                <p:column  headerText="Detalle Modulo"  
+                                           filterMatchMode="contains" id="detalleTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.detallemodulo}" sortBy="#{infoDep.detallemodulo}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Detalle Modulo"/></f:facet>
+                                    <h:outputText value="#{infoDep.detallemodulo}"/>
+                                </p:column>
+
+                                <p:column  headerText="Codigo Modulo"  
+                                           filterMatchMode="contains" id="codigoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.codigomodulo}" sortBy="#{infoDep.codigomodulo}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Codigo Modulo"/></f:facet>
+                                    <h:outputText value="#{infoDep.codigomodulo}"/>
+                                </p:column>
+
+                                <p:column  headerText="Estado"  
+                                           filterMatchMode="contains" id="estadoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.strEstado}" sortBy="#{infoDep.strEstado}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Estado"/></f:facet>
+                                    <h:outputText value="#{infoDep.strEstado}"/>
+                                </p:column>
+
+                                <p:column  headerText="Detalle Laboratorio"  
+                                           filterMatchMode="contains" id="laboratorioTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.salalaboratorio.areaprofundizacion.laboratorio.nombrelaboratorio}" sortBy="#{infoDep.salalaboratorio.areaprofundizacion.laboratorio.nombrelaboratorio}">
+                                    <f:facet name="header"><h:outputText value="Detalle Laboratorio"/></f:facet>
+                                    <h:outputText value="#{infoDep.salalaboratorio.areaprofundizacion.laboratorio.nombrelaboratorio}"/>
+                                </p:column>
+
+                                <p:column  headerText="Area Profundización"  
+                                           filterMatchMode="contains" id="areaTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.salalaboratorio.areaprofundizacion.nombrearea}" sortBy="#{infoDep.salalaboratorio.areaprofundizacion.nombrearea}">
+                                    <f:facet name="header"><h:outputText value="Area Profundización"/></f:facet>
+                                    <h:outputText value="#{infoDep.salalaboratorio.areaprofundizacion.nombrearea}"/>
+                                </p:column>
+
+                                <p:column  headerText="Detalle Sede"  
+                                           filterMatchMode="contains" id="sedeTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.salalaboratorio.edificio.sede.nombresede}" sortBy="#{infoDep.salalaboratorio.edificio.sede.nombresede}">
+                                    <f:facet name="header"><h:outputText value="Detalle Sede"/></f:facet>
+                                    <h:outputText value="#{infoDep.salalaboratorio.edificio.sede.nombresede}"/>
+                                </p:column>
+
+                                <p:column  headerText="Descripción Edificio"  
+                                           filterMatchMode="contains" id="edificioTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.salalaboratorio.edificio.descripcionedificio}" sortBy="#{infoDep.salalaboratorio.edificio.descripcionedificio}">
+                                    <f:facet name="header"><h:outputText value="Descripción Edificio"/></f:facet>
+                                    <h:outputText value="#{infoDep.salalaboratorio.edificio.descripcionedificio}"/>
+                                </p:column>
+
+                                <p:column  headerText="Sala de Laboratorio"  
+                                           filterMatchMode="contains" id="salaTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.salalaboratorio.nombresala}" sortBy="#{infoDep.salalaboratorio.nombresala}">
+                                    <f:facet name="header"><h:outputText value="Sala de Laboratorio"/></f:facet>
+                                    <h:outputText value="#{infoDep.salalaboratorio.nombresala}"/>
+                                </p:column>
+
+
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerGestionarPlantaModulos.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesPlantaModulo.recibirIDModulosLaboratorioDetalles(infoDep.idmodulolaboratorio)}"/>
+                                </p:column>
+
+
+
+                            </p:dataTable>
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Modulo" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarPlantaModulos.dispararDialogoNuevoModuloLaboratorio()}"/>
+                        <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1100px; top: 455px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarPlantaModulos.limpiarProcesoBusqueda()}" process="@this"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarPlantaModulos.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroModuloLaboratorio" header="Registro Nuevo Modulo Laboratorio" widgetVar="NuevoRegistroModuloLaboratorio" closable="false" resizable="false"  draggable="false"  modal="true" height="430" width="495" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nuevo modulo laboratorio" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoModuloLaboratorio" style="border: none;">
+
+                            <strong><h:outputText value="*Detalle Modulo: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoDetalleModuloLaboratorio" maxlength="45" value="#{controllerGestionarPlantaModulos.nuevoDetalleModulo}" style=" width: 202px; position: absolute; left: 230px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDetalleModuloLaboratorio" value="Detalle del modulo" />
+
+                            <strong><h:outputText value="*Codigo Modulo: " style=" position: absolute; top: 105px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoCodigoModuloLaboratorio" maxlength="20" value="#{controllerGestionarPlantaModulos.nuevoCodigoModulo}" style=" width: 202px; position: absolute; left: 230px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCodigoModuloLaboratorio" value="Codigo del modulo" />
+
+                            <strong><h:outputText value="Costo Alquiler: " style=" position: absolute; top: 135px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoCostoModuloLaboratorio" maxlength="8" value="#{controllerGestionarPlantaModulos.nuevoCostoModulo}" style=" width: 202px; position: absolute; left: 230px; top: 130px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCostoModuloLaboratorio" value="Valor de alquiler modulo" />
+
+                            <strong><h:outputText value="Capacidad Modulo: " style=" position: absolute; top: 165px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoCapacidadModuloLaboratorio" maxlength="2" value="#{controllerGestionarPlantaModulos.nuevoCapacidadModulo}" style=" width: 202px; position: absolute; left: 230px; top: 160px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCapacidadModuloLaboratorio" value="Capacidad del modulo" />
+
+                            <strong><h:outputText value="Costo de Inversión: " style=" position: absolute; top: 195px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoInversionModuloLaboratorio" maxlength="10" value="#{controllerGestionarPlantaModulos.nuevoInversionModulo}" style=" width: 202px; position: absolute; left: 230px; top: 190px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoInversionModuloLaboratorio" value="Costo inversión del modulo" />
+
+                            <strong><h:outputText value="*Laboratorio: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaModulos.nuevoLaboratorioModulo}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 220px; text-transform: uppercase"
+                                             id="nuevoLaboratorioModuloLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaLaboratorios}" var="laboratorioN"
+                                               itemLabel="#{laboratorioN.nombrelaboratorio}" itemValue="#{laboratorioN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaModulos.actualizarNuevoLaboratorio()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Area Profundización: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaModulos.nuevoAreaProfundizacionModulo}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 250px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarPlantaModulos.activarNuevoAreaProfundizacion}" id="nuevoAreaProfundizacionModuloLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Area" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaAreasProfundizacion}" var="areaN"
+                                               itemLabel="#{areaN.nombrearea}" itemValue="#{areaN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Sede:  " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaModulos.nuevoSedeModulo}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 280px; text-transform: uppercase"
+                                             id="nuevoSedeModuloLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Sede" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaSedes}" var="sedeN"
+                                               itemLabel="#{sedeN.nombresede}" itemValue="#{sedeN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaModulos.actualizarNuevoSede()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Edificio: " style=" position: absolute; top: 315px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaModulos.nuevoEdificioModulo}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 310px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarPlantaModulos.activarNuevoEdificio}" id="nuevoEdificioModuloLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Edificio" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaEdificios}" var="edificioN"
+                                               itemLabel="#{edificioN.descripcionedificio}" itemValue="#{edificioN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton value=" " icon="ui-icon-search"  style="height: 28px; width: 28px; position: absolute; left: 450px; top: 308px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarPlantaModulos.buscarSalasPorParametros(1)}" process="@this"/>
+
+                            <strong><h:outputText value="*Sala Laboratorio: " style=" position: absolute; top: 345px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarPlantaModulos.nuevoSalaLaboratorioModulo}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 340px; text-transform: uppercase"
+                                             disabled="#{controllerGestionarPlantaModulos.activarNuevoSala}" id="nuevoSalaModuloLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarPlantaModulos.listaSalasLaboratorios}" var="salaN"
+                                               itemLabel="#{salaN.nombresala}" itemValue="#{salaN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="limpiarModulo" value="Limpiar" style="position: absolute; left: 20px; top: 390px;" actionListener="#{controllerGestionarPlantaModulos.limpiarRegistroModuloLaboratorio()}" update="nuevoModuloLaboratorio" process="@this"/>
+                            <p:commandButton id="agregarModulo" value="Aceptar" style="position: absolute; left: 270px; top: 390px;"  process="@this" actionListener="#{controllerGestionarPlantaModulos.registrarNuevoModuloLaboratorio()}"  />
+                            <p:commandButton id="cancelarModulo" value="Cancelar" style="position: absolute; left: 360px; top: 390px;" actionListener="#{controllerGestionarPlantaModulos.limpiarRegistroModuloLaboratorio()}" update="nuevoModuloLaboratorio" onclick="NuevoRegistroModuloLaboratorio.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorNumerosModuloLaboratorio" header="ATENCIÓN..!" widgetVar="errorNumerosModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Alquiler-Capacidad encuentran erroneos y/o vacios o el campo Inversion se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorInformacionAreaProfundizacion" header="ATENCIÓN..!" widgetVar="errorInformacionAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Codigo-Detalle encuentran erroneos y/o vacios . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstructuraModuloLaboratorio" header="ATENCIÓN..!" widgetVar="errorEstructuraModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Es necesario seleccionar una SalaLaboratorio para el proceso. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoModuloLaboratorio" header="Información de Registro" widgetVar="registroExitosoModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el modulo en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoModuloLaboratorio" header="Información de Registro" widgetVar="registroFallidoModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el laboratorio para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

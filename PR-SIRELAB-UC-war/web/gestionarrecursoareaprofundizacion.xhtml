@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE AREAS</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Area: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{GestionarRecursoAreasProfundizacion.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Codigo Area: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCodigo" value="#{ControllerAdministrarParametroAreaProfudizacion.parametroCodigo}" maxlength="20" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Nombre Facultad: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.parametroFacultad}"
+                                             style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px"
+                                             id="parametroFacultad">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaFacultades}" var="facultad"
+                                               itemLabel="#{facultad.nombrefacultad}" itemValue="#{facultad}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarFacultades()}" />
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Nombre Departamento: " style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.parametroDepartamento}"
+                                             style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarDepartamento}" id="parametroDepartamento">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaDepartamentos}" var="depa"
+                                               itemLabel="#{depa.nombredepartamento}" itemValue="#{depa}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="Nombre Laboratorio: " style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.parametroLaboratorio}"
+                                             style="position: absolute; left: 200px; top: 1555px; text-transform: uppercase; width: 250px"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarLaboratorio}" id="parametroLaboratorio">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaLaboratorios}" var="labo"
+                                               itemLabel="#{labo.nombrelaboratorio}" itemValue="#{labo}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="exportarXLS" disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{ControllerAdministrarParametroAreaProfudizacion.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Areas" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.buscarAreasProfundizacionPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoDep" rowKey="#{infoDep.idareaprofundizacion}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{ControllerAdministrarParametroAreaProfudizacion.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{ControllerAdministrarParametroAreaProfudizacion.listaAreasProfundizacion}"
+                                         filteredValue="#{ControllerAdministrarParametroAreaProfudizacion.filtrarListaAreasProfundizacion}"
+                                         >
+
+                                <p:column  headerText="Nombre Area"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.nombrearea}" sortBy="#{infoDep.nombrearea}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Area"/></f:facet>
+                                    <h:outputText value="#{infoDep.nombrearea}"/>
+                                </p:column>
+
+                                <p:column  headerText="Codigo Area"  
+                                           filterMatchMode="contains" id="codigoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.codigoarea}" sortBy="#{infoDep.codigoarea}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Codigo Area"/></f:facet>
+                                    <h:outputText value="#{infoDep.codigoarea}"/>
+                                </p:column>
+
+
+                                <p:column  headerText="Nombre Facultad"  
+                                           filterMatchMode="contains" id="facultadTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.laboratorio.departamento.facultad.nombrefacultad}" sortBy="#{infoDep.laboratorio.departamento.facultad.nombrefacultad}">
+                                    <f:facet name="header"><h:outputText value="Nombre Facultad"/></f:facet>
+                                    <h:outputText value="#{infoDep.laboratorio.departamento.facultad.nombrefacultad}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Departamento"  
+                                           filterMatchMode="contains" id="departamentoTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.laboratorio.departamento.nombredepartamento}" sortBy="#{infoDep.laboratorio.departamento.nombredepartamento}">
+                                    <f:facet name="header"><h:outputText value="Nombre Departamento"/></f:facet>
+                                    <h:outputText value="#{infoDep.laboratorio.departamento.nombredepartamento}"/>
+                                </p:column>
+
+                                <p:column  headerText="Nombre Laboratorio"  
+                                           filterMatchMode="contains" id="laboratorioTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoDep.laboratorio.nombrelaboratorio}" sortBy="#{infoDep.laboratorio.nombrelaboratorio}">
+                                    <f:facet name="header"><h:outputText value="Nombre Laboratorio"/></f:facet>
+                                    <h:outputText value="#{infoDep.laboratorio.nombrelaboratorio}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nueva Area" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.dispararDialogoNuevoAreaProfundizacion()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroAreaProfundizacion" header="Registro Nuevo Area Profundizacion" widgetVar="NuevoRegistroAreaProfundizacion" closable="false" resizable="false"  draggable="false"  modal="true" height="270" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nueva area de profundización" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoAreaProfundizacion" style="border: none;">
+                            <strong><h:outputText value="*Nombre Area: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreAreaProfundizacion" maxlength="45" value="#{ControllerAdministrarParametroAreaProfudizacion.nuevoNombreAreaProfundizacion}" style=" width: 202px; position: absolute; left: 230px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreAreaProfundizacion" value="Nombre de la area" />
+                            
+                            <strong><h:outputText value="*Codigo Area: " style=" position: absolute; top: 105px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreAreaProfundizacion" maxlength="20" value="#{ControllerAdministrarParametroAreaProfudizacion.nuevoCodigoAreaProfundizacion}" style=" width: 202px; position: absolute; left: 230px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreAreaProfundizacion" value="Codigo de la area" />
+
+                            <strong><h:outputText value="*Facultad Area:  " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.nuevoFacultadAreaProfundizacion}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 130px; text-transform: uppercase"
+                                             id="nuevoFacultadAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaFacultades}" var="facultadN"
+                                               itemLabel="#{facultadN.nombrefacultad}" itemValue="#{facultadN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarNuevoFacultades(0)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento Area: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.nuevoDepartamentoAreaProfundizacion}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 160px; text-transform: uppercase"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarNuevoDepartamento}" id="nuevoDepartamentoAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaDepartamentos}" var="departamen"
+                                               itemLabel="#{departamen.nombredepartamento}" itemValue="#{departamen}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarNuevoDepartamentos(0)}"/>
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="*Laboratorio Area: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.nuevoDepartamentoAreaProfundizacion}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 190px; text-transform: uppercase"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarNuevoLaboratorio}" id="nuevoLaboratorioAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaLaboratorios}" var="laboratorios"
+                                               itemLabel="#{laboratorios.nombrelaboratorio}" itemValue="#{laboratorios}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="limpiarAreaProfundizacion" value="Limpiar" style="position: absolute; left: 20px; top: 230px;" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarRegistroAreaProfundizacion()}" update="nuevoAreaProfundizacion" process="@this"/>
+                            <p:commandButton id="agregarAreaProfundizacion" value="Aceptar" style="position: absolute; left: 270px; top: 230px;"  process="@this" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.registrarNuevoAreaProfundizacion()}"  />
+                            <p:commandButton id="cancelarAreaProfundizacion" value="Cancelar" style="position: absolute; left: 360px; top: 230px;" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarRegistroAreaProfundizacion()}" update="nuevoAreaProfundizacion" onclick="NuevoRegistroAreaProfundizacion.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroAreaProfundizacion" header="Registro Editar AreaProfundizacion" widgetVar="EditarRegistroAreaProfundizacion" closable="false" resizable="false"  draggable="false"  modal="true" height="270" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del laboratorio a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarAreaProfundizacion" style="border: none;">
+
+                            <strong><h:outputText value="*Nombre Area: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreAreaProfundizacion" maxlength="45" value="#{ControllerAdministrarParametroAreaProfudizacion.editarNombre}" style=" width: 202px; position: absolute; left: 230px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreAreaProfundizacion" value="Nombre de la area" />
+                            
+                            <strong><h:outputText value="*Codigo Area: " style=" position: absolute; top: 105px; left: 50px;" /></strong>
+                            <p:inputText id="editarCodigoAreaProfundizacion" maxlength="20" value="#{ControllerAdministrarParametroAreaProfudizacion.editarCodigo}" style=" width: 202px; position: absolute; left: 230px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreAreaProfundizacion" value="Codigo de la area" />
+
+                            <strong><h:outputText value="*Facultad Area: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.editarFacultad}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 130px; text-transform: uppercase"
+                                             id="editarFacultadAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Facultad" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaFacultades}" var="facultadE"
+                                               itemLabel="#{facultadE.nombrefacultad}" itemValue="#{facultadE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarNuevoFacultades(1)}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Departamento Area: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.editarDepartamento}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 160px; text-transform: uppercase"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarNuevoDepartamento}" id="editarDepartamentoAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Departamento" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaDepartamentos}" var="departamentoE"
+                                               itemLabel="#{departamentoE.nombredepartamento}" itemValue="#{departamentoE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{ControllerAdministrarParametroAreaProfudizacion.actualizarNuevoDepartamentos(1)}"/>
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="*Laboratorio Area: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{ControllerAdministrarParametroAreaProfudizacion.editarDepartamento}"
+                                             style=" width: 202px; position: absolute; left: 230px; top: 190px; text-transform: uppercase"
+                                             disabled="#{ControllerAdministrarParametroAreaProfudizacion.activarNuevoDepartamento}" id="editarDepartamentoAreaProfundizacion">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{ControllerAdministrarParametroAreaProfudizacion.listaLaboratorios}" var="laboraatorioE"
+                                               itemLabel="#{laboraatorioE.nombrelaboratorio}" itemValue="#{laboraatorioE}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="limpiarEAreaProfundizacion" value="Limpiar" style="position: absolute; left: 20px; top: 230px;" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarEditarAreaProfundizacion()}" update="editarAreaProfundizacion" process="@this"/>
+                            <p:commandButton id="agregarEAreaProfundizacion" value="Aceptar" style="position: absolute; left: 270px; top: 230px;"  process="@this" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.modificarInformacionAreaProfundizacion()}"  />
+                            <p:commandButton id="cancelarEAreaProfundizacion" value="Cancelar" style="position: absolute; left: 360px; top: 230px;" actionListener="#{ControllerAdministrarParametroAreaProfudizacion.limpiarEditarAreaProfundizacion()}" update="editarAreaProfundizacion" onclick="EditarRegistroAreaProfundizacion.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionAreaProfundizacion" header="ATENCIÓN..!" widgetVar="errorInformacionAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campo Codigo-Nombre encuentran erroneos y/o vacios . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstructuraAreaProfundizacion" header="ATENCIÓN..!" widgetVar="errorEstructuraAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Facultad-Departamento-Laboratorio se encuentran vacios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoAreaProfundizacion" header="Información de Registro" widgetVar="registroExitosoAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la area en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoAreaProfundizacion" header="Información de Registro" widgetVar="registroFallidoAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el laboratorio para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

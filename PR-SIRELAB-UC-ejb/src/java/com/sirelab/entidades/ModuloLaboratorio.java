@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sirelab.entidades;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ModuloLaboratorio.findByCostomodulo", query = "SELECT m FROM ModuloLaboratorio m WHERE m.costomodulo = :costomodulo"),
     @NamedQuery(name = "ModuloLaboratorio.findByCostoalquiler", query = "SELECT m FROM ModuloLaboratorio m WHERE m.costoalquiler = :costoalquiler")})
 public class ModuloLaboratorio implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +70,8 @@ public class ModuloLaboratorio implements Serializable {
     @JoinColumn(name = "salalaboratorio", referencedColumnName = "idsalalaboratorio")
     @ManyToOne(optional = false)
     private SalaLaboratorio salalaboratorio;
+    @Transient
+    private String strEstado;
 
     public ModuloLaboratorio() {
     }
@@ -93,7 +96,7 @@ public class ModuloLaboratorio implements Serializable {
     }
 
     public String getCodigomodulo() {
-        if(null != codigomodulo){
+        if (null != codigomodulo) {
             return codigomodulo.toUpperCase();
         }
         return codigomodulo;
@@ -104,7 +107,7 @@ public class ModuloLaboratorio implements Serializable {
     }
 
     public String getDetallemodulo() {
-        if(null != detallemodulo){
+        if (null != detallemodulo) {
             return detallemodulo.toUpperCase();
         }
         return detallemodulo;
@@ -120,6 +123,20 @@ public class ModuloLaboratorio implements Serializable {
 
     public void setEstadomodulo(boolean estadomodulo) {
         this.estadomodulo = estadomodulo;
+    }
+
+    public String getStrEstado() {
+        getEstadomodulo();
+        if (estadomodulo == true) {
+            strEstado = "ACTIVO";
+        } else {
+            strEstado = "INACTIVO";
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
     public Integer getCapacidadmodulo() {
@@ -178,5 +195,5 @@ public class ModuloLaboratorio implements Serializable {
     public String toString() {
         return "com.sirelab.entidades.ModuloLaboratorio[ idmodulolaboratorio=" + idmodulolaboratorio + " ]";
     }
-    
+
 }

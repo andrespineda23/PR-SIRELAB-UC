@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE PROVEEDORES</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Proveedor: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarRecursoProveedor.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="NIT Proveedor: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNIT" value="#{controllerGestionarRecursoProveedor.parametroNIT}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Dirección Proveedor: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroDireccion" value="#{controllerGestionarRecursoProveedor.parametroDireccion}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Telefono Proveedor: " style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroTelefono" value="#{controllerGestionarRecursoProveedor.parametroTelefono}" maxlength="45" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarRecursoProveedor.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarRecursoProveedor.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarRecursoProveedor.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarRecursoProveedor.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Proveedores" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarRecursoProveedor.buscarProveedoresPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarRecursoProveedor.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoFac" rowKey="#{infoFac.idproveedor}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarRecursoProveedor.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarRecursoProveedor.listaProveedores}"
+                                         filteredValue="#{controllerGestionarRecursoProveedor.filtrarListaProveedores}"
+                                         >
+
+                                <p:column  headerText="Nombre Proveedor"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoFac.nombreproveedor}" sortBy="#{infoFac.nombreproveedor}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Proveedor"/></f:facet>
+                                    <h:outputText value="#{infoFac.nombreproveedor}"/>
+                                </p:column>
+
+                                <p:column  headerText="NIT Proveedor"  
+                                           filterMatchMode="contains" id="nitTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoFac.nitproveedor}" sortBy="#{infoFac.nitproveedor}">
+                                    <f:facet name="header"><h:outputText value="NIT Proveedor"/></f:facet>
+                                    <h:outputText value="#{infoFac.nitproveedor}"/>
+                                </p:column>
+
+                                <p:column  headerText="Dirección Proveedor"  
+                                           filterMatchMode="contains" id="direccionTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoFac.nitproveedor}" sortBy="#{infoFac.nitproveedor}">
+                                    <f:facet name="header"><h:outputText value="Dirección Proveedor"/></f:facet>
+                                    <h:outputText value="#{infoFac.nitproveedor}"/>
+                                </p:column>
+
+                                <p:column  headerText="Telefono Proveedor"  
+                                           filterMatchMode="contains" id="telefonoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoFac.nitproveedor}" sortBy="#{infoFac.nitproveedor}">
+                                    <f:facet name="header"><h:outputText value="Telefono Proveedor"/></f:facet>
+                                    <h:outputText value="#{infoFac.nitproveedor}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarRecursoProveedor.dispararDialogoEditarProveedor(infoFac.idproveedor)}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Proveedor" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarRecursoProveedor.dispararDialogoNuevoProveedor()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarRecursoProveedor.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroProveedor" header="Registro Nuevo Proveedor" widgetVar="NuevoRegistroProveedor" closable="false" resizable="false"  draggable="false"  modal="true" height="400" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nuevo proveedor" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoProveedor" style="border: none;">
+                            
+                            <strong><h:outputText value="*Nombre Proveedor: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoNombreProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreProveedor" value="Nombres del proveedor" />
+
+                            <strong><h:outputText value="*Codigo Proveedor: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNitProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoNITProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNitProveedor" value="NIT del proveedor" />
+                            
+                            <strong><h:outputText value="*Telefono Proveedor: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="nuevoTelefonoProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoTelefonoProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoTelefonoProveedor" value="Telefono del proveedor" />
+                            
+                            <strong><h:outputText value="*Dirección Proveedor: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="nuevoDireccionProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoDireccionProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoDireccionProveedor" value="Dirección del proveedor" />
+                            
+                            <strong><h:outputText value="Nombre Vendedor: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:inputText id="nuevoVendedorProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoVendedorProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoVendedorProveedor" value="Nonbre vendedor del proveedor" />
+                            
+                            <strong><h:outputText value="Telefono Vendedor: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="nuevoTelVendedorProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.nuevoTelVendedorProveedor}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoTelVendedorProveedor" value="Telefono vendedor del proveedor" />
+
+
+                            <p:commandButton id="limpiarProveedor" value="Limpiar" style="position: absolute; left: 20px; top: 260px;" actionListener="#{controllerGestionarRecursoProveedor.limpiarRegistroProveedor()}" update="nuevoProveedor" process="@this"/>
+                            <p:commandButton id="agregarProveedor" value="Aceptar" style="position: absolute; left: 270px; top: 260px;"  process="@this" actionListener="#{controllerGestionarRecursoProveedor.registrarNuevoProveedor()}"  />
+                            <p:commandButton id="cancelarProveedor" value="Cancelar" style="position: absolute; left: 360px; top: 260px;" actionListener="#{controllerGestionarRecursoProveedor.limpiarRegistroProveedor()}" update="nuevoProveedor" onclick="NuevoRegistroProveedor.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroProveedor" header="Registro Editar Proveedor" widgetVar="EditarRegistroProveedor" closable="false" resizable="false"  draggable="false"  modal="true" height="400" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del proveedor a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarProveedor" style="border: none;">
+                            <strong><h:outputText value="*Nombre Proveedor: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarNombre}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreProveedor" value="Nombres del proveedor" />
+
+                            <strong><h:outputText value="*NIT Proveedor: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="editarNitProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarNIT}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNitProveedor" value="NIT del proveedor" />
+                            
+                            <strong><h:outputText value="*Telefono Proveedor: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="editarTelefonoProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarTelefono}" style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarTelefonoProveedor" value="Telefono del proveedor" />
+                            
+                            <strong><h:outputText value="*Dirección Proveedor: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="editarDireccionProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarDireccion}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarDireccionProveedor" value="Dirección del proveedor" />
+                            
+                            <strong><h:outputText value="Nombre Vendedor: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:inputText id="editarVendedorProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarVendedor}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarVendedorProveedor" value="Nombre vendedor del proveedor" />
+                            
+                            <strong><h:outputText value="Telefono Vendedor: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="editarTelVendedorProveedor" maxlength="45" value="#{controllerGestionarRecursoProveedor.editarTelVendedor}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarTelVendedorProveedor" value="Telefono vendedor del proveedor" />
+
+                            <p:commandButton id="limpiarEProveedor" value="Limpiar" style="position: absolute; left: 20px; top: 260px;" actionListener="#{controllerGestionarRecursoProveedor.limpiarEditarProveedor()}" update="editarProveedor" process="@this"/>
+                            <p:commandButton id="agregarEProveedor" value="Aceptar" style="position: absolute; left: 270px; top: 260px;"  process="@this" actionListener="#{controllerGestionarRecursoProveedor.modificarInformacionProveedor()}"  />
+                            <p:commandButton id="cancelarEProveedor" value="Cancelar" style="position: absolute; left: 360px; top: 260px;" actionListener="#{controllerGestionarRecursoProveedor.limpiarEditarProveedor()}" update="editarProveedor" onclick="EditarRegistroProveedor.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionObligatoriaProveedor" header="ATENCIÓN..!" widgetVar="errorInformacionObligatoriaProveedor"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombre-NIT-Telefono-Direccioón se encuentran vacios o se encuentran erroneos . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorInformacionOpcionalProveedor" header="ATENCIÓN..!" widgetVar="errorInformacionOpcionalProveedor"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos del vendedor se encuentran erroneos . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoProveedor" header="Información de Registro" widgetVar="registroExitosoProveedor"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el proveedor en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoProveedor" header="Información de Registro" widgetVar="registroFallidoProveedor"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

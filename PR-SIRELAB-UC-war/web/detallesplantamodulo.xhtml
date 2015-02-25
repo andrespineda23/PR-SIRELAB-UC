@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 25px;left: 1010px"  />  
+
+                        <fieldset class="fieldsetDatosPersonales">
+                            <legend style="font-size: 14px; color: darkblue"><strong>INFORMACIÓN MODULO LABORATORIO</strong></legend>
+
+                            <strong><h:outputText value="*Detalle Modulo" style="position: absolute; left: 150px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.detalleModuloLaboratorio}"  style="position: absolute; left: 150px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Codigo Modulo" style="position: absolute; left: 400px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.codigoModuloLaboratorio}" style="position: absolute; left: 400px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Estado Modulo" style="position: absolute; left: 650px; top: 50px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesPlantaModulo.moduloLaboratorioDetalles.strEstado}" style="position: absolute; left: 650px; top: 75px; width: 200px; text-transform: uppercase"/>
+
+                            <strong><h:outputText value="Costo Alquiler" style="position: absolute; left: 150px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="8" readonly="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.costoModuloLaboratorio}" style="position: absolute; left: 150px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Capacidad Modulo" style="position: absolute; left: 400px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.capacidadModuloLaboratorio}" style="position: absolute; left: 400px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Inversión de Modulo" style="position: absolute; left: 650px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="10" readonly="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.inversionModuloLaboratorio}" style="position: absolute; left: 650px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Detalle Sede" style="position: absolute; left: 150px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.sedeModuloLaboratorio}"
+                                             style="position: absolute; left: 150px; top: 215px; width: 200px; text-transform: uppercase"
+                                             id="sedeModuloLaboratorio">
+                                <f:selectItems value="#{controllerDetallesPlantaModulo.listaSedes}" var="sede"
+                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.actualizarSedes()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Edificio" style="position: absolute; left: 400px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaModulo.activarEdificio}" value="#{controllerDetallesPlantaModulo.edificioModuloLaboratorio}"
+                                             style="position: absolute; left: 400px; top: 215px; width: 200px; text-transform: uppercase"
+                                             id="edificioModuloLaboratorio">
+                                <f:selectItem itemLabel="Detalle Edificio" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesPlantaModulo.listaEdificios}" var="edificio"
+                                               itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Laboratorio" style="position: absolute; left: 650px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.laboratorioModuloLaboratorio}"
+                                             style="position: absolute; left: 650px; top: 215px; width: 200px; text-transform: uppercase"
+                                             id="departamentoModuloLaboratorio">
+                                <f:selectItems value="#{controllerDetallesPlantaModulo.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.actualizarLaboratorios()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Area Profundización" style="position: absolute; left: 150px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaModulo.activarEditar}" value="#{controllerDetallesPlantaModulo.areaModuloLaboratorio}"
+                                             style="position: absolute; left: 150px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="departamentoModuloLaboratorio">
+                                <f:selectItems value="#{controllerDetallesPlantaModulo.listaAreasProfundizacion}" var="area"
+                                               itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Sala de Laboratorio" style="position: absolute; left: 400px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaModulo.activarSala}" value="#{controllerDetallesPlantaModulo.laboratorioModuloLaboratorio}"
+                                             style="position: absolute; left: 400px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="laboratorioModuloLaboratorio">
+                                <f:selectItem itemLabel="Detalle Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesPlantaModulo.listaSalasLaboratorio}" var="sala"
+                                               itemLabel="#{sala.nombresala}" itemValue="#{sala}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaModulo.modificacionesRegistroModuloLaboratorio()}"/>
+                            </p:selectOneMenu>
+
+                        </fieldset>
+
+                        <fieldset class="fieldsetOpcionesDetalles">
+                            <legend style="font-size: 14px; color: darkblue"><strong>OPCIONES DE TRABAJO</strong></legend>
+
+                            <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 230px"  />  
+                            <p:tooltip for="infoRegistro" value="Solo el perfil ADMINISTRADOR puede 
+                                       editar la información del modulo"/>
+
+                            <p:commandButton value="ACTIVAR" onclick="dlgActivarModulo.show()" disabled="#{controllerDetallesPlantaModulo.disabledActivar}" id="activar" style="position: absolute; left: 70px; top: 60px; width: 120px; text-align: center"/>
+                            <p:commandButton value="INACTIVAR" onclick="dlgInactivarModulo.show()" disabled="#{controllerDetallesPlantaModulo.disabledInactivar}" id="inactivar" style="position: absolute; left: 70px; top: 110px; width: 120px; text-align: center"/>
+                            <p:commandButton value="EDITAR" disabled="#{controllerDetallesPlantaModulo.disabledEditar}" id="editar" style="position: absolute; left: 70px; top: 160px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaModulo.activarEditarRegistro()}" process="@this"/>
+                            <p:commandButton value="RESTAURAR" disabled="#{controllerDetallesPlantaModulo.activarEditar}" id="restaurar" style="position: absolute; left: 70px; top: 210px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaModulo.restaurarInformacionModuloLaboratorio()}" process="@this"/>
+                            <p:commandButton value="GUARDAR" rendered="#{controllerDetallesPlantaModulo.visibleGuardar}" id="guardar" style="position: absolute; left: 70px; top: 260px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaModulo.almacenarModificacionesModuloLaboratorio()}" process="@this"/>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="gestionarplantamodulos" process="@this" icon="ui-icon-arrowthick-1-w" />
+                    </p:panel>
+
+                    <p:dialog id="dlgActivarModulo" header="ATENCIÓN...!" widgetVar="dlgActivarModulo"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a ACTIVAR el modulo. ¿Desea continuar con la inactivación?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgActivarModulo.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesPlantaModulo.activarModuloLaboratorio()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgActivarModulo.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="dlgInactivarModulo" header="ATENCIÓN...!" widgetVar="dlgInactivarModulo"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a INACTIVAR el modulo. ¿Desea continuar con la inactivación?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgInactivarModulo.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesPlantaModulo.inactivarModuloLaboratorio()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgInactivarModulo.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="errorInformacionModuloLaboratorio" header="ATENCIÓN..!" widgetVar="errorInformacionModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Detalles-Codigo se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosModuloLaboratorio" header="ATENCIÓN..!" widgetVar="errorNumerosModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Alquiler-Capacidad-Inversión se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstructuraSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorEstructuraSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo SalaLaboratorio es obligatorio. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorModuloLaboratorioRegistrado" header="ERROR..!" widgetVar="errorModuloLaboratorioRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El modulo laboratorio registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoModuloLaboratorio" header="Información de Registro" widgetVar="registroExitosoModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la modificación del modulo laboratorio." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoModuloLaboratorio" header="Información de Registro" widgetVar="registroFallidoModuloLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="mensajeNoCambiosReg" header="Información de Registro" widgetVar="mensajeNoCambiosReg"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="No se altero el estado de la información del registro, el proceso de guardado fue omitido." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="confirmarGuardar" header="Información de Registro" widgetVar="confirmarGuardar"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Existen modificaciones en proceso. Guarde los cambios primero para realizar el proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

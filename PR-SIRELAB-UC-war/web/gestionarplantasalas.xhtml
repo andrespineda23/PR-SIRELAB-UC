@@ -33,7 +33,7 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:inputText>
 
-                            <strong><h:outputText value="Estado Docente:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <strong><h:outputText value="Estado Modulo:" style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
                             <p:selectOneMenu id="parametroEstado" value="#{controllerGestionarPlantaSalas.parametroEstado}" disabled="#{controllerGestionarPlantaSalas.activarTodosSala}" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 100px">
                                 <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
@@ -41,7 +41,7 @@
                                 <p:ajax event="change" process="@this" update="@this"/>
                             </p:selectOneMenu>
 
-                            <strong><h:outputText value="TODAS AREAS" style="position: absolute; left: 315px; top: 132px; text-transform: uppercase;color: black"/></strong>
+                            <strong><h:outputText value="TODAS SALAS" style="position: absolute; left: 315px; top: 132px; text-transform: uppercase;color: black"/></strong>
                             <p:selectBooleanCheckbox value="#{controllerGestionarPlantaSalas.activarTodosSala}" style="position: absolute; left: 440px; top: 129px;" >
                                 <p:ajax event="change" process="@this" update="@this" listener="#{controllerGestionarPlantaSalas.modificacionTodosSalas()}"/>
                             </p:selectBooleanCheckbox>
@@ -102,6 +102,9 @@
                             <p:commandButton id="exportarPDF" disabled="#{controllerGestionarPlantaSalas.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 1100px; top: 25px; " actionListener="#{controllerGestionarPlantaSalas.exportPDF()}" ajax="false"/>
                             <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
 
+
+                            <p:commandButton value="Buscar" style="position: absolute; left: 1070px; top: 155px; color: white; background-color: dodgerblue" process="@this"
+                                             actionListener="#{controllerGestionarPlantaSalas.buscarSalasLaboratorioPorParametros()}" update="panelMenu"/>
 
                         </fieldset>
 
@@ -197,7 +200,7 @@
                                 <p:column  headerText="Ver"  
                                            filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
                                     <f:facet name="header"><h:outputText value="Ver"/></f:facet>
-                                    <p:commandLink value="Detalles" style="color: blue" />
+                                    <p:commandLink value="Detalles" style="color: blue" action="#{controllerGestionarPlantaSalas.cambiarPaginaDetalles()}" actionListener="#{controllerDetallesPlantaSala.recibirIDSalasLaboratorioDetalles(infoDep.idsalalaboratorio)}"/>
                                 </p:column>
 
 
@@ -331,12 +334,12 @@
 
                     <p:dialog id="errorNumerosSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorNumerosSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
                         <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
-                        <h:outputText value="Los campo Alquiler-Capacidad encuentran erroneos y/o vacios o el campo Inversion se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                        <h:outputText value="Los campos Alquiler-Capacidad encuentran erroneos y/o vacios o el campo Inversion se encuentra erroneo. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
                     </p:dialog>
 
                     <p:dialog id="errorInformacionAreaProfundizacion" header="ATENCIÓN..!" widgetVar="errorInformacionAreaProfundizacion"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
                         <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
-                        <h:outputText value="Los campo Codigo-Nombre encuentran erroneos y/o vacios . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                        <h:outputText value="Los campos Codigo-Nombre encuentran erroneos y/o vacios . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
                     </p:dialog>
 
                     <p:dialog id="errorEstructuraSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorEstructuraSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  

@@ -1,7 +1,7 @@
 package com.sirelab.dao;
 
-import com.sirelab.dao.interfacedao.SalaLaboratorioDAOInterface;
-import com.sirelab.entidades.SalaLaboratorio;
+import com.sirelab.dao.interfacedao.ModuloLaboratorioDAOInterface;
+import com.sirelab.entidades.ModuloLaboratorio;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -16,87 +16,101 @@ import javax.persistence.TypedQuery;
  * @author ANDRES PINEDA
  */
 @Stateless
-public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
+public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
 
-    /**
+     /**
      * Atributo EntityManager. Representa la comunicación con la base de datos
      */
     @PersistenceContext(unitName = "SIRELAB-UC-ejbPU")
     private EntityManager em;
 
     @Override
-    public void crearSalaLaboratorio(SalaLaboratorio salalaboratorio) {
+    public void crearModuloLaboratorio(ModuloLaboratorio modulolaboratorio) {
         try {
-            em.persist(salalaboratorio);
+            em.persist(modulolaboratorio);
         } catch (Exception e) {
-            System.out.println("Error crearSalaLaboratorio SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error crearModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
     @Override
-    public void editarSalaLaboratorio(SalaLaboratorio salalaboratorio) {
+    public void editarModuloLaboratorio(ModuloLaboratorio modulolaboratorio) {
         try {
-            em.merge(salalaboratorio);
+            em.merge(modulolaboratorio);
         } catch (Exception e) {
-            System.out.println("Error editarSalaLaboratorio SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error editarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
     @Override
-    public void eliminarSalaLaboratorio(SalaLaboratorio salalaboratorio) {
+    public void eliminarModuloLaboratorio(ModuloLaboratorio modulolaboratorio) {
         try {
-            em.remove(em.merge(salalaboratorio));
+            em.remove(em.merge(modulolaboratorio));
         } catch (Exception e) {
-            System.out.println("Error eliminarSalaLaboratorio SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error eliminarModuloLaboratorio ModuloLaboratorioDAO : " + e.toString());
         }
     }
 
     @Override
-    public List<SalaLaboratorio> consultarSalasLaboratorios() {
+    public List<ModuloLaboratorio> consultarModulosLaboratorios() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            List<SalaLaboratorio> lista = query.getResultList();
+            List<ModuloLaboratorio> lista = query.getResultList();
             return lista;
         } catch (Exception e) {
-            System.out.println("Error consultarSalasLaboratorios SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error consultarModulosLaboratorios ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
 
     @Override
-    public SalaLaboratorio buscarSalaLaboratorioPorID(BigInteger idRegistro) {
+    public ModuloLaboratorio buscarModuloLaboratorioPorID(BigInteger idRegistro) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.idsalalaboratorio=:idRegistro");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.idmodulolaboratorio=:idRegistro");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idRegistro", idRegistro);
-            SalaLaboratorio registro = (SalaLaboratorio) query.getSingleResult();
+            ModuloLaboratorio registro = (ModuloLaboratorio) query.getSingleResult();
             return registro;
         } catch (Exception e) {
-            System.out.println("Error buscarSalaLaboratorioPorID SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarModuloLaboratorioPorID ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
 
-    
     @Override
-    public List<SalaLaboratorio> buscarSalasLaboratoriosPorFiltrado(Map<String, String> filters) {
+    public List<ModuloLaboratorio> buscarModuloLaboratorioPorIDSalaLaboratorio(BigInteger idSala) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.modulolaboratorio.idmodulolaboratorio=:idSala");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idSala", idSala);
+            List<ModuloLaboratorio> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error buscarModuloLaboratorioPorIDDepartamento ModuloLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ModuloLaboratorio> buscarModulosLaboratoriosPorFiltrado(Map<String, String> filters) {
         try {
             final String alias = "a";
             final StringBuilder jpql = new StringBuilder();
             String jpql2;
-            jpql.append("SELECT a FROM ").append(SalaLaboratorio.class.getSimpleName()).append(" " + alias);
+            jpql.append("SELECT a FROM ").append(ModuloLaboratorio.class.getSimpleName()).append(" " + alias);
             //
             jpql2 = adicionarFiltros(jpql.toString(), filters, alias);
             //
             System.out.println("jpql2.toString() : " + jpql2.toString());
-            TypedQuery<SalaLaboratorio> tq = em.createQuery(jpql2.toString(), SalaLaboratorio.class);
+            TypedQuery<ModuloLaboratorio> tq = em.createQuery(jpql2.toString(), ModuloLaboratorio.class);
             tq = asignarValores(tq, filters);
             return tq.getResultList();
         } catch (Exception e) {
-            System.out.println("Error buscarSalasLaboratoriosPorFiltrado SalaLaboratorioDAO : " + e.toString());
+            System.out.println("Error buscarModulosLaboratoriosPorFiltrado ModuloLaboratorioDAO : " + e.toString());
             return null;
         }
     }
@@ -113,48 +127,43 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
                     }
                     if ("parametroNombre".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".nombresala")
+                                .append(".nombremodulo")
                                 .append(") Like :parametroNombre");
                         camposFiltro++;
                     }
-                    if ("parametroCodigo".equals(entry.getKey())) {
+                    if ("parametroDetalle".equals(entry.getKey())) {
                         wheres.append("UPPER(").append(alias)
-                                .append(".codigosala")
-                                .append(") Like :parametroCodigo");
+                                .append(".detallemodulo")
+                                .append(") Like :parametroDetalle");
                         camposFiltro++;
                     }
                     if ("parametroEstado".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "estadosala");
+                        wheres.append(alias).append("." + "estadomodulo");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroCapacidad".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "capacidadsala");
-                        wheres.append("= :").append(entry.getKey());
-                        camposFiltro++;
-                    }
-                    if ("parametroAreaProfundizacion".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "areaprofundizacion.idareaprofundizacion");
+                    if ("parametroSalaLaboratorio".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "salalaboratorio.idsalalaboratorio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
                     if ("parametroLaboratorio".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "areaprofundizacion.laboratorio.idlaboratorio");
+                        wheres.append(alias).append("." + "salalaboratorio.areaprofundizacion.laboratorio.idlaboratorio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
-                    if ("parametroDepartamento".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "areaprofundizacion.laboratorio.departamento.iddepartamento");
+                    if ("parametroAreaProfundizacion".equals(entry.getKey())) {
+                        wheres.append(alias).append("." + "salalaboratorio.areaprofundizacion.idareaprofundizacion");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
                     if ("parametroSede".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "edificio.sede.idsede");
+                        wheres.append(alias).append("." + "salalaboratorio.edificio.sede.idsede");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
                     if ("parametroEdificio".equals(entry.getKey())) {
-                        wheres.append(alias).append("." + "edificio.idedificio");
+                        wheres.append(alias).append("." + "salalaboratorio.edificio.idedificio");
                         wheres.append("= :").append(entry.getKey());
                         camposFiltro++;
                     }
@@ -170,24 +179,21 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
         return jpql;
     }
 
-    private TypedQuery<SalaLaboratorio> asignarValores(TypedQuery<SalaLaboratorio> tq, Map<String, String> filters) {
+    private TypedQuery<ModuloLaboratorio> asignarValores(TypedQuery<ModuloLaboratorio> tq, Map<String, String> filters) {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             if (null != entry.getValue() && !entry.getValue().isEmpty()) {
                 if (("parametroNombre".equals(entry.getKey()))
-                        || ("parametroCodigo".equals(entry.getKey()))) {
+                        || ("parametroDetalle".equals(entry.getKey()))) {
                     tq.setParameter(entry.getKey(), "%" + entry.getValue().toUpperCase() + "%");
                 }
                 if ("parametroEstado".equals(entry.getKey())) {
                     tq.setParameter(entry.getKey(), Boolean.valueOf(entry.getValue()));
                 }
-                if ("parametroCapacidad".equals(entry.getKey())) {
-                    tq.setParameter(entry.getKey(), Integer.valueOf(entry.getValue()).intValue());
-                }
                 if (("parametroEdificio".equals(entry.getKey()))
                         || ("parametroSede".equals(entry.getKey()))
                         || ("parametroLaboratorio".equals(entry.getKey()))
                         || ("parametroAreaProfundizacion".equals(entry.getKey()))
-                        || ("parametroDepartamento".equals(entry.getKey()))) {
+                        || ("parametroSalaLaboratorio".equals(entry.getKey()))) {
                     //
                     tq.setParameter(entry.getKey(), new BigInteger(entry.getValue()));
                 }

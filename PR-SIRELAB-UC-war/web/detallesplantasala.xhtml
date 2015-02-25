@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 25px;left: 1010px"  />  
+
+                        <fieldset class="fieldsetDatosPersonales">
+                            <legend style="font-size: 14px; color: darkblue"><strong>INFORMACIÓN SALA LABORATORIO</strong></legend>
+
+                            <strong><h:outputText value="*Nombre Sala" style="position: absolute; left: 150px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.nombreSalaLaboratorio}"  style="position: absolute; left: 150px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Codigo Sala" style="position: absolute; left: 400px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="20" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.codigoSalaLaboratorio}" style="position: absolute; left: 400px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Ubicacion Sala" style="position: absolute; left: 650px; top: 50px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.ubicacionSalaLaboratorio}" style="position: absolute; left: 650px; top: 75px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Costo Alquiler" style="position: absolute; left: 150px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="8" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.costoSalaLaboratorio}" style="position: absolute; left: 150px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="*Capacidad Sala" style="position: absolute; left: 400px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="45" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.capacidadSalaLaboratorio}" style="position: absolute; left: 400px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+                            <strong><h:outputText value="Inversión de Sala" style="position: absolute; left: 650px; top: 120px;color: green"/></strong>
+                            <p:inputText maxlength="10" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.inversionSalaLaboratorio}" style="position: absolute; left: 650px; top: 145px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Nombre Sede" style="position: absolute; left: 150px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.sedeSalaLaboratorio}"
+                                             style="position: absolute; left: 150px; top: 215px; width: 200px; text-transform: uppercase"
+                                             id="sedeSalaLaboratorio">
+                                <f:selectItems value="#{controllerDetallesPlantaSala.listaSedes}" var="sede"
+                                               itemLabel="#{sede.nombresede}" itemValue="#{sede}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.actualizarSedes()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Edificio" style="position: absolute; left: 400px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaSala.activarEdificio}" value="#{controllerDetallesPlantaSala.edificioSalaLaboratorio}"
+                                             style="position: absolute; left: 400px; top: 215px; width: 200px; text-transform: uppercase"
+                                             id="edificioSalaLaboratorio">
+                                <f:selectItem itemLabel="Nombre Edificio" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesPlantaSala.listaEdificios}" var="edificio"
+                                               itemLabel="#{edificio.descripcionedificio}" itemValue="#{edificio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="Estado Sala" style="position: absolute; left: 650px; top: 190px;color: green"/></strong>
+                            <p:inputText readonly="true" value="#{controllerDetallesPlantaSala.salaLaboratorioDetalles.strEstado}" style="position: absolute; left: 650px; top: 215px; width: 200px; text-transform: uppercase"/>
+
+                            <strong><h:outputText value="*Departamento" style="position: absolute; left: 150px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.departamentoSalaLaboratorio}"
+                                             style="position: absolute; left: 150px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="departamentoSalaLaboratorio">
+                                <f:selectItems value="#{controllerDetallesPlantaSala.listaDepartamentos}" var="departamento"
+                                               itemLabel="#{departamento.nombredepartamento}" itemValue="#{departamento}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.actualizarDepartamentos()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Laboratorio" style="position: absolute; left: 400px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaSala.activarLaboratorio}" value="#{controllerDetallesPlantaSala.laboratorioSalaLaboratorio}"
+                                             style="position: absolute; left: 400px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="laboratorioSalaLaboratorio">
+                                <f:selectItem itemLabel="Nombre Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesPlantaSala.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.actualizarLaboratorios()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Area Profundización" style="position: absolute; left: 650px; top: 260px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerDetallesPlantaSala.activarAreaProfundizacion}" value="#{controllerDetallesPlantaSala.areaSalaLaboratorio}"
+                                             style="position: absolute; left: 650px; top: 285px; width: 200px; text-transform: uppercase"
+                                             id="areaSalaLaboratorio">
+                                <f:selectItem itemLabel="Nombre Area Profundización" itemValue="null" />
+                                <f:selectItems value="#{controllerDetallesPlantaSala.listaAreasProfundizacion}" var="area"
+                                               itemLabel="#{area.nombrearea}" itemValue="#{area}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="*Descripción Sala" style="position: absolute; left: 150px; top: 330px;color: green"/></strong>
+                            <p:inputText maxlength="2" readonly="#{controllerDetallesPlantaSala.activarEditar}" value="#{controllerDetallesPlantaSala.descripcionSalaLaboratorio}" style="position: absolute; left: 150px; top: 355px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerDetallesPlantaSala.modificacionesRegistroSalaLaboratorio()}"/>
+                            </p:inputText>
+
+                        </fieldset>
+
+                        <fieldset class="fieldsetOpcionesDetalles">
+                            <legend style="font-size: 14px; color: darkblue"><strong>OPCIONES DE TRABAJO</strong></legend>
+
+                            <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 230px"  />  
+                            <p:tooltip for="infoRegistro" value="Solo el perfil ADMINISTRADOR puede 
+                                       editar la información de la sala"/>
+
+                            <p:commandButton value="ACTIVAR" onclick="dlgActivarSala.show()" disabled="#{controllerDetallesPlantaSala.disabledActivar}" id="activar" style="position: absolute; left: 70px; top: 60px; width: 120px; text-align: center"/>
+                            <p:commandButton value="INACTIVAR" onclick="dlgInactivarSala.show()" disabled="#{controllerDetallesPlantaSala.disabledInactivar}" id="inactivar" style="position: absolute; left: 70px; top: 110px; width: 120px; text-align: center"/>
+                            <p:commandButton value="EDITAR" disabled="#{controllerDetallesPlantaSala.disabledEditar}" id="editar" style="position: absolute; left: 70px; top: 160px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaSala.activarEditarRegistro()}" process="@this"/>
+                            <p:commandButton value="RESTAURAR" disabled="#{controllerDetallesPlantaSala.activarEditar}" id="restaurar" style="position: absolute; left: 70px; top: 210px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaSala.restaurarInformacionSalaLaboratorio()}" process="@this"/>
+                            <p:commandButton value="GUARDAR" rendered="#{controllerDetallesPlantaSala.visibleGuardar}" id="guardar" style="position: absolute; left: 70px; top: 260px; width: 120px; text-align: center" actionListener="#{controllerDetallesPlantaSala.almacenarModificacionesSalaLaboratorio()}" process="@this"/>
+
+
+                        </fieldset>
+
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="gestionarplantasalas" process="@this" icon="ui-icon-arrowthick-1-w" />
+                    </p:panel>
+
+                    <p:dialog id="dlgActivarSala" header="ATENCIÓN...!" widgetVar="dlgActivarSala"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a ACTIVAR la sala. ¿Desea continuar con la inactivación?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgActivarSala.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesPlantaSala.activarSalaLaboratorio()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgActivarSala.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="dlgInactivarSala" header="ATENCIÓN...!" widgetVar="dlgInactivarSala"  resizable="false" draggable="false" modal="true" height="95" width="350" style="font-size: 12px" closable="false">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Esta proximo a INACTIVAR la sala. ¿Desea continuar con la inactivación?" style="position: absolute; left: 70px; top: 10px; width: 250px; font-weight:bold; text-align: center" />
+                        <p:commandButton value="Aceptar" onclick="dlgInactivarSala.hide();" style="position: absolute; top: 60px; left: 180px"  process="@this" actionListener="#{controllerDetallesPlantaSala.inactivarSalaLaboratorio()}"/>
+                        <p:commandButton value="Cancelar" onclick="dlgInactivarSala.hide();" style="position: absolute; top: 60px; left: 260px" process="@this" />
+                    </p:dialog>
+
+                    <p:dialog id="errorInformacionSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorNombreApellidoSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombre-Codigo-Ubicación se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorNumerosSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Costo-Capacidad-Inversión se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                     <p:dialog id="errorEstructuraSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorUniversidadSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos AreaProfundización-Edificio son obligatorios. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorSalaLaboratorioRegistrado" header="ERROR..!" widgetVar="errorSalaLaboratorioRegistrado"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El sala laboratorio registrado ya se encuentra en la base de datos del sistema." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoSalaLaboratorio" header="Información de Registro" widgetVar="registroExitosoSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la modificación de la sala laboratorio." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoSalaLaboratorio" header="Información de Registro" widgetVar="registroFallidoSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="mensajeNoCambiosReg" header="Información de Registro" widgetVar="mensajeNoCambiosReg"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="No se altero el estado de la información del registro, el proceso de guardado fue omitido." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="confirmarGuardar" header="Información de Registro" widgetVar="confirmarGuardar"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Existen modificaciones en proceso. Guarde los cambios primero para realizar el proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
