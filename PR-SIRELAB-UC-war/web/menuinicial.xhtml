@@ -89,6 +89,7 @@
 
                                 <h:outputText value="Equipos de Trabajo" style="position: absolute; top: 60px; left: 1080px;font-weight: bolder;font-size: 15px"/>
                                 <p:commandButton id="opcEquipos" value="" style="position: absolute; left: 1024px; top: 120px;background-image: url(Imagenes/equipostrabajo1.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 240px; height: 240px; " process="@this" 
+                                                 action="gestionarplantaequiposelementos"
                                                  />
                                 <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 1024px;width: 240px; height: 80px;;color: #000000"/>
 
@@ -145,7 +146,7 @@
 
                             </p:tab>
                             <p:tab title="Recursos Laboratorios" id="RecursosLab">  
-                                
+
                                 <h:outputText value="Proveedores" style="position: absolute; top: 60px; left: 90px;font-weight: bolder"/>
                                 <p:commandButton id="opcProveedor" value="" style="position: absolute; left: 40px; top: 130px;background-image: url(Imagenes/estudiantesuc.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
                                                  action="gestionarrecursoproveedor"
@@ -156,7 +157,7 @@
 
                                 <h:outputText value="Insumos" style="position: absolute; top: 60px; left: 370px;font-weight: bolder"/>
                                 <p:commandButton id="opcInsumos" value="" style="position: absolute; left: 305px; top: 130px;background-image: url(Imagenes/docentes.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+                                                 action="gestionarrecursoinsumo"
                                                  />
                                 <h:outputText value="Administración de los docentes con los cuales cuenta la universidad para los usos de los laboratorios para tareas educativas." style="position: absolute; top: 365px; left: 275px;width: 240px; height: 80px;;color: #000000"/>
 
@@ -164,7 +165,7 @@
 
                                 <h:outputText value="Guias Laboratorio" style="position: absolute; top: 60px; left: 605px;font-weight: bolder"/>
                                 <p:commandButton id="opcGuiasLab" value="" style="position: absolute; left: 565px; top: 130px;background-image: url(Imagenes/acuerdoexterno.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+
                                                  />
                                 <h:outputText value="Administración de los convenios externos con diferentes entidades para el uso de los laboratorios." style="position: absolute; top: 365px; left: 535px;width: 240px; height: 80px;;color: #000000"/>
 
@@ -173,7 +174,7 @@
 
                                 <h:outputText value="Manuales de Laboratorio" style="position: absolute; top: 60px; left: 855px;font-weight: bolder"/>
                                 <p:commandButton id="opcManualesLab" value="" style="position: absolute; left: 835px; top: 130px;background-image: url(Imagenes/personallaboratorio.png); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
-                                                 
+
                                                  />
                                 <h:outputText value="Administración del personal de laboratorio que se encuentra trabajando en los diferentes laboratorios de la universidad." style="position: absolute; top: 365px; left: 805px;width: 240px; height: 80px;;color: #000000"/>
 
@@ -182,6 +183,7 @@
 
                                 <h:outputText value="Areas de Profundización" style="position: absolute; top: 60px; left: 1120px;font-weight: bolder"/>
                                 <p:commandButton id="opcAreasProfundizacion" value="" style="position: absolute; left: 1100px; top: 130px;background-image: url(Imagenes/administrador2.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 185px; height: 185px; " process="@this" 
+                                                 action="gestionarrecursoareaprofundizacion"
                                                  />
                                 <h:outputText value="Administración de perfiles administradores del sistema. Solo los Administradores tienen permiso de uso." style="position: absolute; top: 365px; left: 1070px;width: 240px; height: 80px;color: #000000"/>
 

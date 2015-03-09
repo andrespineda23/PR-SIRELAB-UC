@@ -80,7 +80,50 @@ public class SalaLaboratorioDAO implements SalaLaboratorioDAOInterface {
         }
     }
 
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorAreaProfundizacion(BigInteger areaProfundizacion) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.areaprofundizacion.idareaprofundizacion=:areaProfundizacion");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("areaProfundizacion", areaProfundizacion);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
     
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorLaboratorio(BigInteger laboratorio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.areaprofundizacion.laboratorio.idlaboratorio=:laboratorio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("laboratorio", laboratorio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorAreaProfundizacion SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<SalaLaboratorio> buscarSalasLaboratoriosPorEdificio(BigInteger edificio) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM SalaLaboratorio p WHERE p.edificio.idedificio=:edificio");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("edificio", edificio);
+            List<SalaLaboratorio> registro = query.getResultList();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error buscarSalasLaboratoriosPorEdificio SalaLaboratorioDAO : " + e.toString());
+            return null;
+        }
+    }
     @Override
     public List<SalaLaboratorio> buscarSalasLaboratoriosPorFiltrado(Map<String, String> filters) {
         try {

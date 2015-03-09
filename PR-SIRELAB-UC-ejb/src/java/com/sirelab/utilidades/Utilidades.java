@@ -6,6 +6,7 @@
 package com.sirelab.utilidades;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,7 +70,11 @@ public final class Utilidades {
     public static boolean isNumber(String numero) {
         try {
             BigInteger validacion = new BigInteger(numero);
-            return true;
+            if (validacion.intValue() >= 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (NumberFormatException e) {
             return false;
         }
@@ -85,8 +90,38 @@ public final class Utilidades {
     public static boolean isNumberLong(String numero) {
         try {
             long validacion = Long.valueOf(numero).longValue();
-            return true;
+            if (validacion >= 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Metodo encargado de validar si una fecha ingresada es menor o igual a la
+     * fecha actual
+     *
+     * @param fechaValidar Fecha a validar
+     * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
+     */
+    public static boolean fechaIngresadaCorrecta(Date fechaValidar) {
+        try {
+            boolean retorno = true;
+            Date fechaDia = new Date();
+            if (fechaDia.getDay() < fechaValidar.getDay()) {
+                retorno = false;
+            }
+            if (fechaDia.getMonth() < fechaValidar.getMonth()) {
+                retorno = false;
+            }
+            if (fechaDia.getYear() < fechaValidar.getYear()) {
+                retorno = false;
+            }
+            return retorno;
+        } catch (Exception e) {
             return false;
         }
     }

@@ -84,7 +84,7 @@ public class ModuloLaboratorioDAO implements ModuloLaboratorioDAOInterface {
     public List<ModuloLaboratorio> buscarModuloLaboratorioPorIDSalaLaboratorio(BigInteger idSala) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.modulolaboratorio.idmodulolaboratorio=:idSala");
+            Query query = em.createQuery("SELECT p FROM ModuloLaboratorio p WHERE p.salalaboratorio.idsalalaboratorio=:idSala");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             query.setParameter("idSala", idSala);
             List<ModuloLaboratorio> lista = query.getResultList();

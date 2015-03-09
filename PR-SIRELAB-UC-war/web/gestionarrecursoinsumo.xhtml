@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <fieldset class="fieldsetBusqueda">
+                            <legend style="font-size: 14px; color: darkblue"><strong>BUSQUEDA DE INSUMOS</strong></legend>
+
+
+                            <strong><h:outputText value="Nombre Insumo: " style="position: absolute; left: 30px; top: 40px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroNombre" value="#{controllerGestionarRecursoInsumo.parametroNombre}" maxlength="45" style="position: absolute; left: 200px; top: 35px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Codigo Insumo: " style="position: absolute; left: 30px; top: 70px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroCodigo" value="#{controllerGestionarRecursoInsumo.parametroCodigo}" maxlength="20" style="position: absolute; left: 200px; top: 65px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Marca Insumo: " style="position: absolute; left: 30px; top: 100px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroMarca" value="#{controllerGestionarRecursoInsumo.parametroMarca}" maxlength="45" style="position: absolute; left: 200px; top: 95px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+
+                            <strong><h:outputText value="Modelo Insumo: " style="position: absolute; left: 30px; top: 130px; text-transform: uppercase;color: black"/></strong>
+                            <p:inputText id="parametroModelo" value="#{controllerGestionarRecursoInsumo.parametroModelo}" maxlength="45" style="position: absolute; left: 200px; top: 125px; text-transform: uppercase; width: 250px">
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            
+                            <strong><h:outputText value="Proveedor: " style="position: absolute; left: 30px; top: 160px; text-transform: uppercase;color: black"/></strong>
+                            <p:selectOneMenu value="#{controllerGestionarRecursoInsumo.parametroProveedor}"
+                                             style="position: absolute; left: 200px; top: 155px; text-transform: uppercase; width: 250px"
+                                             id="parametroProveedor">
+                                <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarRecursoInsumo.listaProveedores}" var="proveedor"
+                                               itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+
+
+                            <p:commandButton id="exportarXLS" disabled="#{controllerGestionarRecursoInsumo.activarExport}" value="" style="background-image: url(Imagenes/excel.png); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 490px; top: 28px; " ajax="false" actionListener="#{controllerGestionarRecursoInsumo.exportXLS()}" />
+                            <p:tooltip for="exportarXLS" value="Exportar Resultado a XLS" />
+
+                            <p:commandButton id="exportarPDF" disabled="#{controllerGestionarRecursoInsumo.activarExport}" value="" style="background-image: url(Imagenes/pdf.jpg); background-size: 100% 100%; background-repeat: no-repeat; width: 25px; height: 25px;position: absolute; left: 520px; top: 28px; " actionListener="#{controllerGestionarRecursoInsumo.exportPDF()}" ajax="false"/>
+                            <p:tooltip for="exportarPDF" value="Exportar Resultado a PDF" />
+
+                            <p:separator style="position: absolute; left: 550px; top: 15px; height: 150px; width: 2px; color: darkblue"/>
+
+                            <h:graphicImage value="Imagenes/sysadmin.png" height="177" width="150" style="position: absolute; top: 15px;left: 600px"  />  
+                            <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 15px;left: 800px"  />  
+
+
+
+                            <p:commandButton value="Buscar Insumos" style="position: absolute; left: 800px; top: 155px; color: white; background-color: dodgerblue" process="@this" actionListener="#{controllerGestionarRecursoInsumo.buscarInsumosPorParametros()}" update="panelMenu"/>
+                            <p:commandButton value="Limpiar Busqueda" style="position: absolute; left: 1000px; top: 155px; color: white; background-color: dodgerblue" update="panelMenu" actionListener="#{controllerGestionarRecursoInsumo.limpiarProcesoBusqueda()}" process="@this"/>
+
+
+                        </fieldset>
+
+
+                        <fieldset class="fieldsetResultados">
+                            <legend style="font-size: 14px; color: darkblue"><strong>RESULTADOS DE BUSQUEDA</strong></legend>
+                            <p:dataTable id="datosBusqueda" var="infoIns" rowKey="#{infoIns.idinsumo}" widgetVar="datosBusqueda" rowIndexVar="indice" 
+                                         style="border: 1px;width: 1250px;text-transform: uppercase"
+                                         scrollable="true" scrollHeight="#{controllerGestionarRecursoInsumo.altoTabla}" scrollWidth="1250"
+                                         emptyMessage="No se encontraron resultados para la busqueda."
+                                         editable="true" editMode="cell" liveScroll="true" scrollRows="20"
+                                         value="#{controllerGestionarRecursoInsumo.listaInsumos}"
+                                         filteredValue="#{controllerGestionarRecursoInsumo.filtrarListaInsumos}"
+                                         >
+
+                                <p:column  headerText="Nombre Insumo"  
+                                           filterMatchMode="contains" id="nombreTabla"  filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoIns.nombreinsumo}" sortBy="#{infoIns.nombreinsumo}"
+                                           >  
+                                    <f:facet name="header"><h:outputText value="Nombre Insumo"/></f:facet>
+                                    <h:outputText value="#{infoIns.nombreinsumo}"/>
+                                </p:column>
+
+                                <p:column  headerText="Codigo Insumo"  
+                                           filterMatchMode="contains" id="codigoTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                            filterBy="#{infoIns.codigoinsumo}" sortBy="#{infoIns.codigoinsumo}">
+                                    <f:facet name="header"><h:outputText value="Codigo Insumo"/></f:facet>
+                                    <h:outputText value="#{infoIns.codigoinsumo}"/>
+                                </p:column>
+
+                                <p:column  headerText="Marca Insumo"  
+                                           filterMatchMode="contains" id="marcaTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoIns.codigoinsumo}" sortBy="#{infoIns.codigoinsumo}">
+                                    <f:facet name="header"><h:outputText value="Marca Insumo"/></f:facet>
+                                    <h:outputText value="#{infoIns.codigoinsumo}"/>
+                                </p:column>
+
+                                <p:column  headerText="Modelo Insumo"  
+                                           filterMatchMode="contains" id="modeloTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoIns.codigoinsumo}" sortBy="#{infoIns.codigoinsumo}">
+                                    <f:facet name="header"><h:outputText value="Modelo Insumo"/></f:facet>
+                                    <h:outputText value="#{infoIns.codigoinsumo}"/>
+                                </p:column>
+                                
+                                <p:column  headerText="Proveedor"  
+                                           filterMatchMode="contains" id="proveedorTabla" filterStyle="display: none; visibility: hidden;" 
+                                           width="300"
+                                           filterBy="#{infoIns.proveedor.nombreproveedor}" sortBy="#{infoIns.proveedor.nombreproveedor}">
+                                    <f:facet name="header"><h:outputText value="Proveedor"/></f:facet>
+                                    <h:outputText value="#{infoIns.proveedor.nombreproveedor}"/>
+                                </p:column>
+
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarRecursoInsumo.dispararDialogoEditarInsumo(infoIns.idinsumo)}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </fieldset>
+
+                        <p:commandButton value="Registrar Nuevo Insumo" style="position: absolute; left: 20px; top: 455px; color: white; background-color: dodgerblue" actionListener="#{controllerGestionarRecursoInsumo.dispararDialogoNuevoInsumo()}"/>
+                        <p:commandButton value="Atras" style="position: absolute; left: 1250px; top: 455px;" action="menuinicial" actionListener="#{controllerGestionarRecursoInsumo.limpiarProcesoBusqueda()}" process="@this" icon="ui-icon-arrowthick-1-w"/>
+
+
+                    </p:panel>
+                </h:form>
+
+                <h:form id="formularioDialogos"  >
+
+                    <p:dialog id="NuevoRegistroInsumo" header="Registro Nuevo Insumo" widgetVar="NuevoRegistroInsumo" closable="false" resizable="false"  draggable="false"  modal="true" height="380" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del nuevo insumo" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistro" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="nuevoInsumo" style="border: none;">
+                            
+                            <strong><h:outputText value="*Nombre Insumo: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="nuevoNombreInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.nuevoNombreInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNombreInsumo" value="Nombres del insumo" />
+
+                            <strong><h:outputText value="*Codigo Insumo: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="nuevoNitInsumo" maxlength="20" value="#{controllerGestionarRecursoInsumo.nuevoCodigoInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoNitInsumo" value="Codigo del insumo" />
+                            
+                            <strong><h:outputText value="Modelo Insumo: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="nuevoModeloInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.nuevoModeloInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoModeloInsumo" value="Modelo del insumo" />
+                            
+                            <strong><h:outputText value="Marca Insumo: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="nuevoMarcaInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.nuevoMarcaInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoMarcaInsumo" value="Marca del insumo" />
+                            
+                            <strong><h:outputText value="Cantidad Existente: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCantidadExistenciaInsumo" maxlength="3" value="#{controllerGestionarRecursoInsumo.nuevoCantidadExistenciaInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCantidadExistenciaInsumo" value="Cantidad existente del insumo" />
+                            
+                            <strong><h:outputText value="Cantidad Minima: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="nuevoCantidadMinInsumo" maxlength="2" value="#{controllerGestionarRecursoInsumo.nuevoCantidadMinInsumo}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="nuevoCantidadMinInsumo" value="Cantidad minima del insumo" />
+                            
+                            <strong><h:outputText value="*Proveedor: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarRecursoInsumo.nuevoProveedorInsumo}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase"
+                                             id="nuevoProveedorInsumo">
+                                <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarRecursoInsumo.listaProveedores}" var="proveedorN"
+                                               itemLabel="#{proveedorN.nombreproveedor}" itemValue="#{proveedorN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="Descripción: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:inputTextarea id="nuevoDescripcionInsumo" maxlength="500" value="#{controllerGestionarRecursoInsumo.nuevoDescripcionInsumo}" styleClass="textarea" style=" width: 202px; position: absolute; left: 220px; top: 280px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputTextarea>
+                            <p:watermark for="nuevoDescripcionInsumo" value="Descripción general del insumo" />
+
+
+                            <p:commandButton id="limpiarInsumo" value="Limpiar" style="position: absolute; left: 20px; top: 340px;" actionListener="#{controllerGestionarRecursoInsumo.limpiarRegistroInsumo()}" update="nuevoInsumo" process="@this"/>
+                            <p:commandButton id="agregarInsumo" value="Aceptar" style="position: absolute; left: 270px; top: 340px;"  process="@this" actionListener="#{controllerGestionarRecursoInsumo.registrarNuevoInsumo()}"  />
+                            <p:commandButton id="cancelarInsumo" value="Cancelar" style="position: absolute; left: 360px; top: 340px;" actionListener="#{controllerGestionarRecursoInsumo.limpiarRegistroInsumo()}" update="nuevoInsumo" onclick="NuevoRegistroInsumo.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+                    <p:dialog id="EditarRegistroInsumo" header="Registro Editar Insumo" widgetVar="EditarRegistroInsumo" closable="false" resizable="false"  draggable="false"  modal="true" height="380" width="480" style=" padding: 0px">  
+
+                        <center><strong><h:outputText value="Ingrese la información del insumo a editar" style="font-size: 14px; color: blue; position: relative; top: 10px" /></strong></center> 
+                        <h:graphicImage id="infoRegistroEditar" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 440px"  />  
+                        <p:tooltip for="infoRegistroEditar" value="Los campos marcados con (*) son obligatorios.
+                                   Los caracteres especiales estan prohibidos."/>
+
+                        <p:panel id="editarInsumo" style="border: none;">
+                            <strong><h:outputText value="*Nombre Insumo: " style=" position: absolute; top: 75px; left: 50px;" /></strong>
+                            <p:inputText id="editarNombreInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.editarNombre}" style=" width: 202px; position: absolute; left: 220px; top: 70px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarNombreInsumo" value="Nombres del insumo" />
+
+                            <strong><h:outputText value="*Codigo Insumo: " style=" position: absolute; top: 105px; left: 50px" /></strong>
+                            <p:inputText id="editarCodigoInsumo" maxlength="20" value="#{controllerGestionarRecursoInsumo.editarCodigo}" style=" width: 202px; position: absolute; left: 220px; top: 100px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarCodigoInsumo" value="Codigo del insumo" />
+                            
+                            <strong><h:outputText value="Modelo Insumo: " style=" position: absolute; top: 135px; left: 50px" /></strong>
+                            <p:inputText id="editarModeloInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.editarModelo}" style=" width: 202px; position: absolute; left: 220px; top: 130px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarModeloInsumo" value="Modelo del insumo" />
+                            
+                            <strong><h:outputText value="Marca Insumo: " style=" position: absolute; top: 165px; left: 50px" /></strong>
+                            <p:inputText id="editarMarcaInsumo" maxlength="45" value="#{controllerGestionarRecursoInsumo.editarMarca}" style=" width: 202px; position: absolute; left: 220px; top: 160px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarMarcaInsumo" value="Marca del insumo" />
+                            
+                            <strong><h:outputText value="Cantidad Existente: " style=" position: absolute; top: 195px; left: 50px" /></strong>
+                            <p:inputText id="editarCantExistenteInsumo" maxlength="3" value="#{controllerGestionarRecursoInsumo.editarCantidadExistencia}" style=" width: 202px; position: absolute; left: 220px; top: 190px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarCantExistenteInsumo" value="Cantidad existente del insumo" />
+                            
+                            <strong><h:outputText value="Cantidad Minima: " style=" position: absolute; top: 225px; left: 50px" /></strong>
+                            <p:inputText id="editarCantiMinimaInsumo" maxlength="2" value="#{controllerGestionarRecursoInsumo.editarCantidadMin}" style=" width: 202px; position: absolute; left: 220px; top: 220px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputText>
+                            <p:watermark for="editarCantiMinimaInsumo" value="Cantidad minima del insumo" />
+                            
+                            <strong><h:outputText value="*Proveedor: " style=" position: absolute; top: 255px; left: 50px" /></strong>
+                            <p:selectOneMenu value="#{controllerGestionarRecursoInsumo.editarProveedor}"
+                                             style=" width: 202px; position: absolute; left: 220px; top: 250px; text-transform: uppercase"
+                                             id="editarProveedorInsumo">
+                                <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                <f:selectItems value="#{controllerGestionarRecursoInsumo.listaProveedores}" var="proveedorN"
+                                               itemLabel="#{proveedorN.nombreproveedor}" itemValue="#{proveedorN}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="Descripción: " style=" position: absolute; top: 285px; left: 50px" /></strong>
+                            <p:inputTextarea id="editarDescripcionInsumo" maxlength="500" value="#{controllerGestionarRecursoInsumo.editarDescripcion}" styleClass="textarea" style=" width: 202px; position: absolute; left: 220px; top: 280px; text-transform: uppercase" onclick="select();" >
+                                <p:ajax event="change" process="@this" update="@this"/>
+                            </p:inputTextarea>
+                            <p:watermark for="editarDescripcionInsumo" value="Descripción general del insumo" />
+
+
+                            <p:commandButton id="limpiarEInsumo" value="Limpiar" style="position: absolute; left: 20px; top: 340px;" actionListener="#{controllerGestionarRecursoInsumo.limpiarEditarInsumo()}" update="editarInsumo" process="@this"/>
+                            <p:commandButton id="agregarEInsumo" value="Aceptar" style="position: absolute; left: 270px; top: 340px;"  process="@this" actionListener="#{controllerGestionarRecursoInsumo.modificarInformacionInsumo()}"  />
+                            <p:commandButton id="cancelarEInsumo" value="Cancelar" style="position: absolute; left: 360px; top: 340px;" actionListener="#{controllerGestionarRecursoInsumo.limpiarEditarInsumo()}" update="editarInsumo" onclick="EditarRegistroInsumo.hide();"  process="@this"/>
+                        </p:panel>
+                    </p:dialog>
+
+
+                    <p:dialog id="errorInformacionObligatoriaInsumo" header="ATENCIÓN..!" widgetVar="errorInformacionObligatoriaInsumo"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombre-Codigo-Proveedor se encuentran vacios o se encuentran erroneos . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorInformacionOpcionalInsumo" header="ATENCIÓN..!" widgetVar="errorInformacionOpcionalInsumo"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Descripción-Marca-Modelo-Cant. Existente/Minima se encuentran erroneos . Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoInsumo" header="Información de Registro" widgetVar="registroExitosoInsumo"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 20px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO el insumo en el sistema de información." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoInsumo" header="Información de Registro" widgetVar="registroFallidoInsumo"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="consultaSinDatos" header="Información de Registro" widgetVar="consultaSinDatos"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los parametros de busqueda no han retornado ningun resultado de busqueda." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -127,7 +127,7 @@ public class ControllerGestionarRecursoAreasProfundizacion implements Serializab
     }
 
     public void buscarAreasProfundizacionPorParametros() {
-        try {
+        //try {
             RequestContext context = RequestContext.getCurrentInstance();
             inicializarFiltros();
             listaAreasProfundizacion = null;
@@ -147,9 +147,9 @@ public class ControllerGestionarRecursoAreasProfundizacion implements Serializab
             context.update("form:exportarXLS");
             context.update("form:exportarXML");
             context.update("form:exportarPDF");
-        } catch (Exception e) {
-            System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());
-        }
+      //  } catch (Exception e) {
+      //      System.out.println("Error ControllerAdministrarAreaProfudizacion buscarLaboratoriosPorParametros : " + e.toString());
+      //  }
     }
 
     public void limpiarProcesoBusqueda() {
@@ -244,6 +244,9 @@ public class ControllerGestionarRecursoAreasProfundizacion implements Serializab
     public boolean validarEstructuraAreaProfundizacion(int tipoRegistro) {
         boolean retorno = true;
         if (tipoRegistro == 0) {
+            System.out.println("nuevoFacultadAreaProfundizacion: "+nuevoFacultadAreaProfundizacion);
+            System.out.println("nuevoDepartamentoAreaProfundizacion: "+nuevoDepartamentoAreaProfundizacion);
+            System.out.println("nuevoLaboratorioAreaProfundizacion: "+nuevoLaboratorioAreaProfundizacion);
             if (!Utilidades.validarNulo(nuevoFacultadAreaProfundizacion)) {
                 retorno = false;
             }

@@ -367,8 +367,8 @@ public class ControllerGestionarPlantaSalas implements Serializable {
             salaNuevo.setEstadosala(true);
             salaNuevo.setCapacidadsala(Integer.valueOf(nuevoCapacidadSala).intValue());
             salaNuevo.setValorinversion(new BigInteger(nuevoInversionSala));
-            salaNuevo.setEdificio(parametroEdificio);
-            salaNuevo.setAreaprofundizacion(parametroAreaProfundizacion);
+            salaNuevo.setEdificio(nuevoEdificioSala);
+            salaNuevo.setAreaprofundizacion(nuevoAreaProfundizacionSala);
             gestionarPlantaSalasBO.crearNuevaSalaLaboratorio(salaNuevo);
             context.execute("registroExitosoSalaLaboratorio.show()");
         } catch (Exception e) {

@@ -82,9 +82,9 @@ public class TipoUsuarioDAO implements TipoUsuarioDAOInterface {
     public TipoUsuario buscarTipoUsuarioPorNombre(String nombreTipoUsuario) {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM TipoUsuario p WHERE p.nombretipousuario=:nombreTipoUsuario");
+            Query query = em.createQuery("SELECT p FROM TipoUsuario p WHERE UPPER(p.nombretipousuario) Like :nombreTipoUsuario");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-            query.setParameter("nombreTipoUsuario", nombreTipoUsuario);
+            query.setParameter("nombreTipoUsuario", "%"+nombreTipoUsuario+"%");
             TipoUsuario registro = (TipoUsuario) query.getSingleResult();
             return registro;
         } catch (Exception e) {

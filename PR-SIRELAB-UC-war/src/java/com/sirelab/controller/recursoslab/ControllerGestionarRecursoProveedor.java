@@ -159,11 +159,6 @@ public class ControllerGestionarRecursoProveedor implements Serializable {
         filtrarListaProveedores = null;
     }
 
-    public String verDetallesProveedor() {
-        limpiarProcesoBusqueda();
-        return "detallesentidadexterna";
-    }
-
     public void dispararDialogoNuevoProveedor() {
         limpiarRegistroProveedor();
         RequestContext context = RequestContext.getCurrentInstance();
@@ -193,6 +188,7 @@ public class ControllerGestionarRecursoProveedor implements Serializable {
                 editarTelVendedor = proveedorEditar.getTelefonovendedor();
                 editarVendedor = proveedorEditar.getVendedorproveedor();
                 editarTelefono = proveedorEditar.getTelefonoproveedor();
+                editarNIT = proveedorEditar.getNitproveedor();
             }
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarProveedores cargarInformacionUsuarioEditar : " + e.toString());
@@ -241,26 +237,26 @@ public class ControllerGestionarRecursoProveedor implements Serializable {
     public boolean validarInformacionOpcionalProveedor(int tipoRegistro) {
         boolean retorno = true;
         if (tipoRegistro == 0) {
-            if ((Utilidades.validarNulo(nuevoVendedorProveedor)) && (Utilidades.validarNulo(nuevoTelVendedorProveedor))) {
+            if (Utilidades.validarNulo(nuevoVendedorProveedor)) {
                 if (!Utilidades.validarCaracterString(nuevoVendedorProveedor)) {
                     retorno = false;
                 }
+            }
+            if ((Utilidades.validarNulo(nuevoTelVendedorProveedor))) {
                 if (!Utilidades.isNumber(nuevoTelVendedorProveedor)) {
                     retorno = false;
                 }
-            } else {
-                retorno = false;
             }
         } else {
-            if ((Utilidades.validarNulo(editarTelVendedor)) && (Utilidades.validarNulo(editarVendedor))) {
-                if (!Utilidades.validarCaracterString(editarVendedor)) {
+            if (Utilidades.validarNulo(editarTelVendedor)) {
+                if (!Utilidades.validarCaracterString(editarTelVendedor)) {
                     retorno = false;
                 }
+            }
+            if ((Utilidades.validarNulo(editarTelVendedor))) {
                 if (!Utilidades.isNumber(editarTelVendedor)) {
                     retorno = false;
                 }
-            } else {
-                retorno = false;
             }
         }
         return retorno;
@@ -288,8 +284,16 @@ public class ControllerGestionarRecursoProveedor implements Serializable {
             nuevaProveedor.setNombreproveedor(nuevoNombreProveedor);
             nuevaProveedor.setDireccionproveedor(nuevoDireccionProveedor);
             nuevaProveedor.setTelefonoproveedor(nuevoTelefonoProveedor);
-            nuevaProveedor.setVendedorproveedor(nuevoVendedorProveedor);
-            nuevaProveedor.setTelefonovendedor(nuevoTelVendedorProveedor);
+            if (Utilidades.validarNulo(editarTelVendedor)) {
+                nuevaProveedor.setVendedorproveedor(nuevoVendedorProveedor);
+            } else {
+                nuevaProveedor.setVendedorproveedor("");
+            }
+            if (Utilidades.validarNulo(editarTelVendedor)) {
+                nuevaProveedor.setTelefonovendedor(nuevoTelVendedorProveedor);
+            } else {
+                nuevaProveedor.setTelefonovendedor("");
+            }
             gestionarRecursoProveedoresBO.crearNuevoProveedor(nuevaProveedor);
             context.execute("registroExitosoProveedor.show()");
         } catch (Exception e) {

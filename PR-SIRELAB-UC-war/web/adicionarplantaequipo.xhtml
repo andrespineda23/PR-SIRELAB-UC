@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="body">                  
+                <h:form id="form" > 
+
+                    <p:panel id="panelMenu" header="SIRELAB - UC" styleClass="panelFunciones" >
+
+                        <h:graphicImage value="Imagenes/logo-universidad-central.png" height="90" width="340" style="position: absolute; top: 25px;left: 1010px"  />  
+
+                        <fieldset class="fieldsetDatosPersonales">
+                            <legend style="font-size: 14px; color: darkblue"><strong>INFORMACIÓN EQUIPO TRABAJO</strong></legend>
+
+                            <strong><h:outputText value="*Nombre Equipo" style="position: absolute; left: 150px; top: 35px;color: green"/></strong>
+                            <p:inputText maxlength="45" value="#{controllerAdicionarPlantaEquipo.nuevoNombreEquipo}"  style="position: absolute; left: 150px; top: 50px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            <strong><h:outputText value="*Inventario Equipo" style="position: absolute; left: 400px; top: 35px;color: green"/></strong>
+                            <p:inputText maxlength="45" value="#{controllerAdicionarPlantaEquipo.nuevoInventarioEquipo}" style="position: absolute; left: 400px; top: 50px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            <strong><h:outputText value="*Marca Equipo" style="position: absolute; left: 650px; top: 35px;color: green"/></strong>
+                            <p:inputText maxlength="45" value="#{controllerAdicionarPlantaEquipo.nuevoMarcaEquipo}" style="position: absolute; left: 650px; top: 50px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            
+                            <strong><h:outputText value="Modelo Equipo" style="position: absolute; left: 150px; top: 90px;color: green"/></strong>
+                            <p:inputText maxlength="45" value="#{controllerAdicionarPlantaEquipo.nuevoModeloEquipo}"  style="position: absolute; left: 150px; top: 105px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            <strong><h:outputText value="Serie Equipo" style="position: absolute; left: 400px; top: 90px;color: green"/></strong>
+                            <p:inputText maxlength="45" value="#{controllerAdicionarPlantaEquipo.nuevoSerieEquipo}" style="position: absolute; left: 400px; top: 105px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            <strong><h:outputText value="Fecha Adquisición" style="position: absolute; left: 650px; top: 90px;color: green"/></strong>
+                            <p:calendar value="#{controllerAdicionarPlantaEquipo.nuevoFechaAdquisicionEquipo}" pattern="dd/MM/yy" style="position: absolute; left: 650px; top: 105px; width: 200px; text-transform: uppercase">
+                                <p:ajax event="dateSelect" process="@this" update="@this" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                                <f:convertDateTime pattern="dd/MM/yy" />
+                            </p:calendar>
+
+                            <strong><h:outputText value="Costo Alquiler" style="position: absolute; left: 150px; top: 140px;color: green"/></strong>
+                            <p:inputText maxlength="8" value="#{controllerAdicionarPlantaEquipo.nuevoCostoAlquilerEquipo}" style="position: absolute; left: 150px; top: 155px; width: 155px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+                            
+                            <strong><h:outputText value="Inversión de Equipo" style="position: absolute; left: 650px; top: 140px;color: green"/></strong>
+                            <p:inputText maxlength="10" value="#{controllerAdicionarPlantaEquipo.nuevoCostoInversionEquipo}" style="position: absolute; left: 650px; top: 155px; width: 155px; text-transform: uppercase">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputText>
+
+                            <strong><h:outputText value="*Laboratorio" style="position: absolute; left: 150px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu value="#{controllerAdicionarPlantaEquipo.nuevoLaboratorioEquipo}"
+                                             style="position: absolute; left: 150px; top: 205px; width: 200px; text-transform: uppercase"
+                                             id="nuevoLaboratorioEquipo">
+                                <f:selectItem itemLabel="Seleccione Laboratorio" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaLaboratorios}" var="laboratorio"
+                                               itemLabel="#{laboratorio.nombrelaboratorio}" itemValue="#{laboratorio}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdicionarPlantaEquipo.actualizarNuevoLaboratorio()}"/>
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Sala de Laboratorio" style="position: absolute; left: 650px; top: 190px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerAdicionarPlantaEquipo.activarNuevoSalaLaboratorio}" value="#{controllerAdicionarPlantaEquipo.nuevoSalaLaboratorioEquipo}"
+                                             style="position: absolute; left: 650px; top: 205px; width: 200px; text-transform: uppercase"
+                                             id="nuevoSalaLaboratorioEquipo">
+                                <f:selectItem itemLabel="Seleccione Sala" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaSalasLaboratorios}" var="salas"
+                                               itemLabel="#{salas.nombresala}" itemValue="#{salas}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" listener="#{controllerAdicionarPlantaEquipo.actualizarNuevoSalaLaboratorio()}"/>
+                            </p:selectOneMenu>
+
+                            <strong><h:outputText value="*Modulo de Laboratorio" style="position: absolute; left: 150px; top: 250px;color: green"/></strong>
+                            <p:selectOneMenu disabled="#{controllerAdicionarPlantaEquipo.activarNuevoModuloLaboratorio}" value="#{controllerAdicionarPlantaEquipo.nuevoModuloLaboratorioEquipo}"
+                                             style="position: absolute; left: 150px; top: 265px; width: 200px; text-transform: uppercase"
+                                             id="nuevoModuloLaboratorioEquipo">
+                                <f:selectItem itemLabel="Seleccione Modulo" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaModulosLaboratorios}" var="modulo"
+                                               itemLabel="#{modulo.detallemodulo}" itemValue="#{modulo}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Tipo Activo" style="position: absolute; left: 400px; top: 250px;color: green"/></strong>
+                            <p:selectOneMenu value="#{controllerAdicionarPlantaEquipo.nuevoTipoActivoEquipo}"
+                                             style="position: absolute; left: 400px; top: 265px; width: 200px; text-transform: uppercase"
+                                             id="nuevoTipoActivoEquipo">
+                                <f:selectItem itemLabel="Seleccione Activo" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaTiposActivos}" var="tipo"
+                                               itemLabel="#{tipo.nombretipoactivo}" itemValue="#{tipo}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="*Estado del Equipo" style="position: absolute; left: 650px; top: 250px;color: green"/></strong>
+                            <p:selectOneMenu value="#{controllerAdicionarPlantaEquipo.nuevoEstadoEquipoEquipo}"
+                                             style="position: absolute; left: 650px; top: 265px; width: 200px; text-transform: uppercase"
+                                             id="nuevoEstadoEquipo">
+                                <f:selectItem itemLabel="Seleccione Estado" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaEstadosEquipos}" var="estado"
+                                               itemLabel="#{estado.nombreestadoequipo}" itemValue="#{estado}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            
+                            <strong><h:outputText value="*Proveedor" style="position: absolute; left: 150px; top: 310px;color: green"/></strong>
+                            <p:selectOneMenu value="#{controllerAdicionarPlantaEquipo.nuevoProveedorEquipo}"
+                                             style="position: absolute; left: 150px; top: 325px; width: 200px; text-transform: uppercase"
+                                             id="nuevoProveedorEquipo">
+                                <f:selectItem itemLabel="Seleccione Proveedor" itemValue="null" />
+                                <f:selectItems value="#{controllerAdicionarPlantaEquipo.listaProveedores}" var="proveedor"
+                                               itemLabel="#{proveedor.nombreproveedor}" itemValue="#{proveedor}"/>
+                                <f:converter converterId="ConverterGenerico" />
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:selectOneMenu>
+                            <strong><h:outputText value="Especificaciones Tecnicas" style="position: absolute; left: 400px; top: 310px;color: green"/></strong>
+                            <p:inputTextarea  value="#{controllerAdicionarPlantaEquipo.nuevoEspecificacionEquipo}"
+                                             style="position: absolute; left: 400px; top: 325px; width: 440px; text-transform: uppercase"
+                                             id="especificacionesEquipoElemento" styleClass="textarea">
+                                <p:ajax event="change" process="@this" update="@this" />
+                            </p:inputTextarea>
+                            
+                        </fieldset>
+
+                        <fieldset class="fieldsetOpcionesDetalles">
+                            <legend style="font-size: 14px; color: darkblue"><strong>OPCIONES DE TRABAJO</strong></legend>
+
+                            <h:graphicImage id="infoRegistro" value="Imagenes/informacion.png" height="25" width="25" style="position: absolute; top: 15px; left: 230px"  />  
+                            <p:tooltip for="infoRegistro" value="Los caracteres especiales estan prohibidos. Los campos (*) son obligatorios."/>
+
+                            <p:commandButton value="AGREGAR" id="agregar" style="position: absolute; left: 70px; top: 160px; width: 120px; text-align: center" actionListener="#{controllerAdicionarPlantaEquipo.registrarNuevoEquipoElemento()}" process="@this"/>
+                            <p:commandButton value="ATRAS" id="atras" style="position: absolute; left: 70px; top: 210px; width: 120px; text-align: center" actionListener="#{controllerAdicionarPlantaEquipo.limpiarRegistroEquipoElemento()}" action="gestionarplantaequiposelementos" process="@this"/>
+
+                        </fieldset>
+
+                    </p:panel>
+
+                    <p:dialog id="errorInformacionEquipoElemento" header="ATENCIÓN..!" widgetVar="errorInformacionEquipoElemento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Nombre-Inventario-Marca se encuentran vacios o se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorNumerosEquipoElemento" header="ATENCIÓN..!" widgetVar="errorNumerosEquipoElemento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Los campos Alquiler-Inversión se encuentran erroneos. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="errorEstructuraSalaLaboratorio" header="ATENCIÓN..!" widgetVar="errorEstructuraSalaLaboratorio"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="El campo Modulo-TipoActivo-Estado-Proveedor es obligatorio. Por favor, corregir para continuar." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroExitosoEquipoElemento" header="Información de Registro" widgetVar="registroExitosoEquipoElemento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/bien.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Se ha registrado con ÉXITO la modificación del equipo de trabajo." style="position: absolute; left: 70px; top: 20px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="registroFallidoEquipoElemento" header="Información de Registro" widgetVar="registroFallidoEquipoElemento"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/error.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Ha ocurrido un error en el registro, pongase en contacto con el administrador para notificar este proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="mensajeNoCambiosReg" header="Información de Registro" widgetVar="mensajeNoCambiosReg"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="No se altero el estado de la información del registro, el proceso de guardado fue omitido." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                    <p:dialog id="confirmarGuardar" header="Información de Registro" widgetVar="confirmarGuardar"  resizable="false" draggable="false" modal="true" height="70" width="335"  closable="true">  
+                        <h:graphicImage value="Imagenes/informacion.png" width="50" height="50" style="position: absolute; left: 10px; top: 10px;"  />
+                        <h:outputText value="Existen modificaciones en proceso. Guarde los cambios primero para realizar el proceso." style="position: absolute; left: 70px; top: 10px; width: 245px; font-weight:bold;text-align: center" />
+                    </p:dialog>
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

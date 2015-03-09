@@ -102,6 +102,14 @@
                                     <f:facet name="header"><h:outputText value="Nombre Departamento"/></f:facet>
                                     <h:outputText value="#{infoDep.departamento.nombredepartamento}"/>
                                 </p:column>
+                                
+                                <p:column  headerText="Ver"  
+                                           filterMatchMode="contains" width="60" filterStyle="display: none; visibility: hidden;" >
+                                    <f:facet name="header"><h:outputText value="Ver"/></f:facet>
+                                    <p:commandLink value="Detalles" style="color: blue" actionListener="#{controllerGestionarPlantaLaboratorios.dispararDialogoEditarLaboratorio(infoDep.idlaboratorio)}"/>
+                                </p:column>
+                                
+                                
                             </p:dataTable>
                         </fieldset>
 

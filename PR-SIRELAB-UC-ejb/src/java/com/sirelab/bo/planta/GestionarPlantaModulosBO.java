@@ -84,6 +84,17 @@ public class GestionarPlantaModulosBO implements GestionarPlantaModulosBOInterfa
     }
 
     @Override
+    public List<SalaLaboratorio> consultarSalasLaboratorioPorIDEdificio(BigInteger edificio) {
+        try {
+            List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorEdificio(edificio);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error GestionarPlantaModulosBO consultarSalasLaboratorioPorIDEdificio : " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public List<SalaLaboratorio> consultarSalasLaboratorioPorParametroFiltrado(Map<String, String> filtros) {
         try {
             List<SalaLaboratorio> lista = salaLaboratorioDAO.buscarSalasLaboratoriosPorFiltrado(filtros);

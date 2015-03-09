@@ -64,7 +64,7 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     private List<ModuloLaboratorio> listaModulosLaboratorios;
     private List<ModuloLaboratorio> filtrarListaModulosLaboratorios;
     //
-    private Column nombreTabla, detalleTabla, estadoTabla, laboratorioTabla, areaTabla, sedeTabla, edificioTabla, salaTabla;
+    private Column codigoTabla, detalleTabla, estadoTabla, laboratorioTabla, areaTabla, sedeTabla, edificioTabla, salaTabla;
     //
     private String altoTabla;
     //
@@ -115,7 +115,7 @@ public class ControllerGestionarPlantaModulos implements Serializable {
         filtros.put("parametroLaboratorio", null);
         filtros.put("parametroEdificio", null);
         filtros.put("parametroSede", null);
-        filtros.put("parametroSalaLaboratorioLaboratorio", null);
+        filtros.put("parametroSalaLaboratorio", null);
         agregarFiltrosAdicionales();
     }
 
@@ -151,29 +151,29 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     }
 
     public void buscarModulosLaboratorioPorParametros() {
-        try {
-            RequestContext context = RequestContext.getCurrentInstance();
-            inicializarFiltros();
-            listaModulosLaboratorios = null;
-            listaModulosLaboratorios = gestionarPlantaModulosBO.consultarModulosLaboratorioPorParametro(filtros);
-            if (listaModulosLaboratorios != null) {
-                if (listaModulosLaboratorios.size() > 0) {
-                    activarExport = false;
-                    activarFiltrosTabla();
-                } else {
-                    activarExport = true;
-                    context.execute("consultaSinDatos.show();");
-                }
+        //try {
+        RequestContext context = RequestContext.getCurrentInstance();
+        inicializarFiltros();
+        listaModulosLaboratorios = null;
+        listaModulosLaboratorios = gestionarPlantaModulosBO.consultarModulosLaboratorioPorParametro(filtros);
+        if (listaModulosLaboratorios != null) {
+            if (listaModulosLaboratorios.size() > 0) {
+                activarExport = false;
+                activarFiltrosTabla();
             } else {
-                context.execute("consultaSinDatos.show()");
+                activarExport = true;
+                context.execute("consultaSinDatos.show();");
             }
-            context.update("form:datosBusqueda");
-            context.update("form:exportarXLS");
-            context.update("form:exportarXML");
-            context.update("form:exportarPDF");
-        } catch (Exception e) {
-            System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
+        } else {
+            context.execute("consultaSinDatos.show()");
         }
+        context.update("form:datosBusqueda");
+        context.update("form:exportarXLS");
+        context.update("form:exportarXML");
+        context.update("form:exportarPDF");
+        //} catch (Exception e) {
+        //    System.out.println("Error ControllerGestionarPlantaModulos buscarModulosLaboratorioPorParametros : " + e.toString());
+        //}
     }
 
     public void limpiarProcesoBusqueda() {
@@ -185,6 +185,7 @@ public class ControllerGestionarPlantaModulos implements Serializable {
         if (null != listaModulosLaboratorios) {
             desactivarFiltrosTabla();
         }
+        listaModulosLaboratorios = null;
         activarExport = true;
         parametroCodigo = null;
         parametroDetalle = null;
@@ -203,8 +204,8 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     public void activarFiltrosTabla() {
         altoTabla = "128";
         FacesContext c = FacesContext.getCurrentInstance();
-        nombreTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:nombreTabla");
-        nombreTabla.setFilterStyle("width: 80px");
+        codigoTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:codigoTabla");
+        codigoTabla.setFilterStyle("width: 80px");
         detalleTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:detalleTabla");
         detalleTabla.setFilterStyle("width: 80px");
         estadoTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:estadoTabla");
@@ -225,8 +226,8 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     public void desactivarFiltrosTabla() {
         altoTabla = "150";
         FacesContext c = FacesContext.getCurrentInstance();
-        nombreTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:nombreTabla");
-        nombreTabla.setFilterStyle("display: none; visibility: hidden;");
+        codigoTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:codigoTabla");
+        codigoTabla.setFilterStyle("display: none; visibility: hidden;");
         detalleTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:detalleTabla");
         detalleTabla.setFilterStyle("display: none; visibility: hidden;");
         estadoTabla = (Column) c.getViewRoot().findComponent("formT:form:datosBusqueda:estadoTabla");
@@ -274,7 +275,7 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     public boolean validarStringModuloLaboratorio() {
         boolean retorno = true;
         if ((Utilidades.validarNulo(nuevoCodigoModulo)) && (Utilidades.validarNulo(nuevoDetalleModulo))) {
-            if (!Utilidades.validarCaracterString(nuevoCodigoModulo)) {
+            if (!Utilidades.validarCaracterString(nuevoDetalleModulo)) {
                 retorno = false;
             }
         } else {
@@ -329,6 +330,7 @@ public class ControllerGestionarPlantaModulos implements Serializable {
     }
 
     public void almacenaNuevoModuloEnSistema() {
+        System.out.println("Proceso OK");
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("NuevoRegistroModuloLaboratorio.hide()");
         try {
@@ -339,9 +341,10 @@ public class ControllerGestionarPlantaModulos implements Serializable {
             salaNuevo.setCostomodulo(new BigInteger(nuevoInversionModulo));
             salaNuevo.setCapacidadmodulo(Integer.valueOf(nuevoCapacidadModulo));
             salaNuevo.setEstadomodulo(true);
-            salaNuevo.setSalalaboratorio(parametroSalaLaboratorio);
+            salaNuevo.setSalalaboratorio(nuevoSalaLaboratorioModulo);
             gestionarPlantaModulosBO.crearNuevoModuloLaboratorio(salaNuevo);
             context.execute("registroExitosoModuloLaboratorio.show()");
+            System.out.println("Finish !");
         } catch (Exception e) {
             System.out.println("Error ControllerGestionarPlantaModulos almacenaNuevoModuloEnSistema : " + e.toString());
             context.execute("registroFallidoModuloLaboratorio.show()");
@@ -376,35 +379,42 @@ public class ControllerGestionarPlantaModulos implements Serializable {
         context.update("formT:form:parametroEdificio");
     }
 
-    public void actualizarNuevoLaboratorio() {
-        RequestContext context = RequestContext.getCurrentInstance();
-        if (Utilidades.validarNulo(nuevoLaboratorioModulo)) {
-            nuevoAreaProfundizacionModulo = null;
-            listaAreasProfundizacion = gestionarPlantaModulosBO.consultarAreasProfundizacionPorIDLaboratorio(nuevoLaboratorioModulo.getIdlaboratorio());
-            activarNuevoAreaProfundizacion = false;
-        } else {
-            nuevoAreaProfundizacionModulo = null;
-            listaAreasProfundizacion = null;
-            activarNuevoAreaProfundizacion = true;
-        }
-        context.update("formT:formularioDialogos:nuevoAreaProfundizacionModuloLaboratorio");
-    }
-
     public void actualizarNuevoSede() {
         RequestContext context = RequestContext.getCurrentInstance();
         if (Utilidades.validarNulo(nuevoSedeModulo)) {
             nuevoEdificioModulo = null;
             listaEdificios = gestionarPlantaModulosBO.consultarEdificiosPorIDSede(nuevoSedeModulo.getIdsede());
             activarNuevoEdificio = false;
+            activarNuevoSala = true;
+            listaSalasLaboratorios = null;
+            nuevoSalaLaboratorioModulo = null;
         } else {
             nuevoEdificioModulo = null;
             listaEdificios = null;
             activarNuevoEdificio = true;
+            activarNuevoSala = true;
+            listaSalasLaboratorios = null;
+            nuevoSalaLaboratorioModulo = null;
         }
         context.update("formT:formularioDialogos:nuevoEdificioModuloLaboratorio");
+        context.update("formT:formularioDialogos:nuevoSalaModuloLaboratorio");
     }
 
-    public void buscarSalasPorParametros(int tipoRegistro) {
+    public void actualizarNuevoEdificio() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        if (Utilidades.validarNulo(nuevoEdificioModulo)) {
+            nuevoSalaLaboratorioModulo = null;
+            listaSalasLaboratorios = gestionarPlantaModulosBO.consultarSalasLaboratorioPorIDEdificio(nuevoEdificioModulo.getIdedificio());
+            activarNuevoSala = false;
+        } else {
+            activarNuevoSala = true;
+            listaSalasLaboratorios = null;
+            nuevoSalaLaboratorioModulo = null;
+        }
+        context.update("formT:formularioDialogos:nuevoSalaModuloLaboratorio");
+    }
+
+    public void buscarSalasPorParametros() {
         RequestContext context = RequestContext.getCurrentInstance();
         Map<String, String> filtrosSala = filtrosSala = new HashMap<String, String>();
         filtrosSala.put("parametroEdificio", null);
@@ -412,55 +422,26 @@ public class ControllerGestionarPlantaModulos implements Serializable {
         filtrosSala.put("parametroLaboratorio", null);
         filtrosSala.put("parametroAreaProfundizacion", null);
         listaSalasLaboratorios = null;
-        if (tipoRegistro == 0) {
-            if (parametroLaboratorio.getIdlaboratorio() != null) {
-                filtrosSala.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
-            }
-            if (parametroEdificio.getIdedificio() != null) {
-                filtrosSala.put("parametroEdificio", parametroEdificio.getIdedificio().toString());
-            }
-            if (parametroSede.getIdsede() != null) {
-                filtrosSala.put("parametroSede", parametroSede.getIdsede().toString());
-            }
-            if (parametroAreaProfundizacion.getIdareaprofundizacion() != null) {
-                filtrosSala.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
-            }
-            parametroSalaLaboratorio = new SalaLaboratorio();
-        } else {
-            if (Utilidades.validarNulo(parametroLaboratorio)) {
-                filtrosSala.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
-            }
-            if (Utilidades.validarNulo(parametroEdificio)) {
-                filtrosSala.put("parametroEdificio", parametroEdificio.getIdedificio().toString());
-            }
-            if (Utilidades.validarNulo(parametroSede)) {
-                filtrosSala.put("parametroSede", parametroSede.getIdsede().toString());
-            }
-            if (Utilidades.validarNulo(parametroAreaProfundizacion)) {
-                filtrosSala.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
-            }
-            nuevoSalaLaboratorioModulo = null;
+        if (parametroLaboratorio.getIdlaboratorio() != null) {
+            filtrosSala.put("parametroLaboratorio", parametroLaboratorio.getIdlaboratorio().toString());
         }
+        if (parametroEdificio.getIdedificio() != null) {
+            filtrosSala.put("parametroEdificio", parametroEdificio.getIdedificio().toString());
+        }
+        if (parametroSede.getIdsede() != null) {
+            filtrosSala.put("parametroSede", parametroSede.getIdsede().toString());
+        }
+        if (parametroAreaProfundizacion.getIdareaprofundizacion() != null) {
+            filtrosSala.put("parametroAreaProfundizacion", parametroAreaProfundizacion.getIdareaprofundizacion().toString());
+        }
+        parametroSalaLaboratorio = new SalaLaboratorio();
         listaSalasLaboratorios = gestionarPlantaModulosBO.consultarSalasLaboratorioPorParametroFiltrado(filtrosSala);
         if (null != listaSalasLaboratorios) {
-            if (tipoRegistro == 0) {
-                activarSala = false;
-            } else {
-                activarNuevoSala = false;
-            }
+            activarSala = false;
         } else {
-            if (tipoRegistro == 0) {
-                activarSala = true;
-            } else {
-                activarNuevoSala = true;
-            }
+            activarSala = true;
         }
-        if (tipoRegistro == 0) {
-            context.update("formT:form:parametroSalaLaboratorio");
-        } else {
-            context.update("formT:formularioDialogos:nuevoSalaModuloLaboratorio");
-        }
-
+        context.update("formT:form:parametroSalaLaboratorio");
     }
 
     //EXPORTAR

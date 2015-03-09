@@ -144,41 +144,48 @@ public class ControllerDetallesPlantaModulo implements Serializable {
         RequestContext.getCurrentInstance().update("formT:form:panelMenu");
     }
 
-    public void actualizarLaboratorios() {
-        try {
-            if (Utilidades.validarNulo(laboratorioModuloLaboratorio)) {
-                activarAreaProfundizacion = false;
-                areaModuloLaboratorio = null;
-                listaAreasProfundizacion = gestionarPlantaModulosBO.consultarAreasProfundizacionPorIDLaboratorio(laboratorioModuloLaboratorio.getIdlaboratorio());
-                modificacionesRegistroModuloLaboratorio();
-            } else {
-                areaModuloLaboratorio = null;
-                listaAreasProfundizacion = null;
-                activarAreaProfundizacion = true;
-            }
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.update("formT:form:areaModuloLaboratorio");
-        } catch (Exception e) {
-            System.out.println("Error ControllerDetallesPlantaModulo actualizarLaboratorios : " + e.toString());
-        }
-    }
-
     public void actualizarSedes() {
         try {
             if (Utilidades.validarNulo(sedeModuloLaboratorio)) {
                 activarEdificio = false;
                 edificioModuloLaboratorio = null;
                 listaEdificios = gestionarPlantaModulosBO.consultarEdificiosPorIDSede(sedeModuloLaboratorio.getIdsede());
+                activarSala = true;
+                salaModuloLaboratorio = null;
+                listaSalasLaboratorio = null;
                 modificacionesRegistroModuloLaboratorio();
             } else {
                 edificioModuloLaboratorio = null;
                 listaEdificios = null;
                 activarEdificio = true;
+                activarSala = true;
+                salaModuloLaboratorio = null;
+                listaSalasLaboratorio = null;
             }
             RequestContext context = RequestContext.getCurrentInstance();
             context.update("formT:form:edificioModuloLaboratorio");
+            context.update("formT:form:salaModuloLaboratorio");
         } catch (Exception e) {
             System.out.println("Error ControllerDetallesPlantaModulo actualizarSedes : " + e.toString());
+        }
+    }
+
+    public void actualizarEdificios() {
+        try {
+            if (Utilidades.validarNulo(edificioModuloLaboratorio)) {
+                activarSala = false;
+                salaModuloLaboratorio = null;
+                listaSalasLaboratorio = gestionarPlantaModulosBO.consultarSalasLaboratorioPorIDEdificio(edificioModuloLaboratorio.getIdedificio());
+                modificacionesRegistroModuloLaboratorio();
+            } else {
+                activarSala = true;
+                salaModuloLaboratorio = null;
+                listaSalasLaboratorio = null;
+            }
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.update("formT:form:salaModuloLaboratorio");
+        } catch (Exception e) {
+            System.out.println("Error ControllerDetallesPlantaModulo actualizarEdificios : " + e.toString());
         }
     }
 

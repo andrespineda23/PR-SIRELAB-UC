@@ -580,7 +580,83 @@
         </navigation-case>
     </navigation-rule>
     
-     <navigation-rule>
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplantaequiposelementos</from-outcome>
+            <to-view-id>/gestionarplantaequiposelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantaequiposelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantaequiposelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/detallesplantaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplantaequiposelementos</from-outcome>
+            <to-view-id>/gestionarplantaequiposelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/detallesplantaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantaequiposelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesplantaequipo</from-outcome>
+            <to-view-id>/detallesplantaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/adicionarplantaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarplantaequiposelementos</from-outcome>
+            <to-view-id>/gestionarplantaequiposelementos.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/adicionarplantaequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarplantaequiposelementos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>adicionarplantaequipo</from-outcome>
+            <to-view-id>/adicionarplantaequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/menuinicial.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>gestionarrecursoproveedor</from-outcome>
@@ -605,5 +681,55 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarrecursoinsumo</from-outcome>
+            <to-view-id>/gestionarrecursoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarrecursoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarrecursoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/menuinicial.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gestionarrecursoareaprofundizacion</from-outcome>
+            <to-view-id>/gestionarrecursoareaprofundizacion.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarrecursoareaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/gestionarrecursoareaprofundizacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>menuinicial</from-outcome>
+            <to-view-id>/menuinicial.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
     
 </faces-config>
